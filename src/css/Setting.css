@@ -1,0 +1,130 @@
+/* CSS (Setting.css) */
+.setting-container {
+    display: flex;
+    overflow-x: hidden;
+    width: 80%;
+    margin-left: 20%;
+    height: 120vh;
+    overflow-y: hidden;
+    justify-content: center;
+}
+
+.setting-container-container {
+    justify-items: center;
+    max-width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: white;
+    border: 1px solid rgb(219, 221, 226);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+h1 {
+    font-size: 40px;
+    color: #333;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.setting-section {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.account-input-field {
+    width: 100%;
+    padding: 10px ;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+.submit-account-button {
+    background-color: #4CAF50;
+    width: 100%;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-account-button:hover {
+    background-color: #45a049;
+}
+
+.password-input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+.submit-password-button {
+    background-color: #4CAF50;
+    width: 100%;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-password-button:hover {
+    background-color: #45a049;
+}
+
+@media (max-width: 900px) {
+    .setting-container {
+      width: 100%; /* 컨테이너의 너비를 화면 너비에 맞춤 */
+      margin-left: 0; /* 좌우 마진 제거 */
+      height: auto; /* 높이를 자동 조정으로 변경 */
+      overflow-y: auto; /* 필요 시 스크롤 표시 */
+    }
+  
+    .setting-container-container {
+      max-width: 100%; /* 최대 너비를 100%로 조정 */
+      padding: 10px; /* 내부 패딩 감소 */
+      margin: 10px; /* 주변 마진 추가 */
+    }
+  
+    h1, h2 {
+      font-size: 30px; /* 제목 폰트 크기 감소 */
+      margin-bottom: 15px; /* 제목 아래 마진 감소 */
+    }
+  
+    h2 {
+      font-size: 20px; /* 소제목 폰트 크기 추가 감소 */
+    }
+  
+    .setting-section {
+      margin-bottom: 20px; /* 섹션 간 간격 감소 */
+    }
+  
+    .account-input-field,
+    .password-input-field {
+      padding: 8px; /* 입력 필드 패딩 감소 */
+      font-size: 14px; /* 폰트 크기 감소 */
+      width: 95%;
+    }
+  
+    .submit-account-button,
+    .submit-password-button {
+      padding: 10px; /* 버튼 패딩 감소 */
+      font-size: 14px; /* 버튼 폰트 크기 감소 */
+    }
+  }
+  

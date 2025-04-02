@@ -1,0 +1,247 @@
+/* .order-management-container {
+    display: flex;
+    overflow-x: hidden;
+    width: 80%;
+    margin-left: 20%;
+    height: 120vh;
+    overflow-y: hidden;
+    justify-content: center;
+    
+  }
+  
+  .order-management-container-container {
+    max-width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: white;
+    border: 1px solid rgb(219, 221, 226);
+  }
+  
+  .order-container {
+    width: 95%;
+    height: 100%;
+  }
+  
+  h1 {
+    font-size: 40px;
+    color: #333;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  
+  
+  .order-table {
+    width: 1000px;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .order-table th:nth-child(1),
+  .order-table td:nth-child(1) {
+    width: 3%;
+  }
+  .order-table th:nth-child(2),
+  .order-table td:nth-child(2) {
+    width: 5%;
+  }
+  .order-table th:nth-child(3),
+  .order-table td:nth-child(3) {
+    width: 15%;
+  }
+  .order-table th:nth-child(4),
+  .order-table td:nth-child(4) {
+    width: 5%;
+  }
+  .order-table th:nth-child(5),
+  .order-table td:nth-child(5) {
+    width: 7%;
+  }
+  
+  .order-table th:nth-child(6),
+  .order-table td:nth-child(6) {
+    width: 5%;
+  }
+  .order-table th:nth-child(7),
+  .order-table td:nth-child(7) {
+    width: 5%;
+  }
+  
+  .order-table td {
+    background-color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: break-word;
+  }
+  
+  .order-table th,
+  .order-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+  }
+  
+  .order-table th {
+    background-color: #6B4EFF;
+    font-weight: bold;
+    font-size: 1rem;
+    color: white;
+    width: 10%;
+  }
+  
+  .order-table td {
+    background-color: #fff;
+    font-size: 1rem;
+  }
+  
+  .prev-page-btn, 
+  .next-page-btn {
+    border: none;
+    background-color: white;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  #page-number-btn {
+    color: #ccc;
+    border: none;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  
+  #page-number-btn.active {
+    color: #000;
+  }
+  
+  .prev-page-btn:hover, 
+  .next-page-btn:hover {
+    border: none;
+    background-color: white;
+    color: #013872;
+    cursor: pointer;
+  }
+  
+  .pagination {
+    margin-top: 5%;
+    justify-self: center;
+    display: flex;
+    cursor: pointer;
+  }
+  
+  .write-btn-container {
+    width: 100%;
+    height: 50px;
+  }
+  
+  .write-btn {
+    margin-top: 10%;
+    width: 30%;
+    height: 100%;
+    cursor: pointer;
+    background-color: #000;
+    color: white;
+    border: none;
+  }
+  
+  .order-title {
+    color: blue;
+    cursor: pointer;
+  }
+  
+  .order-title:hover {
+    color: orange;
+  }
+  
+  .size-stock {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .size-item {
+    padding: 5px 5px;
+  }
+  
+  
+  @media (max-width: 900px) {
+  
+    .order-management-container {
+      width: 100%;
+      margin-left: 0;
+      height: 100vh; 
+      overflow-y: auto; 
+    }
+  
+    .order-management-container-container {
+      max-width: 100%;
+      padding-left: 2%;
+      padding-right: 2%;
+    }
+    
+    .order-container {
+      width: 100%;
+      height: 100%;
+    }
+    
+    
+    
+    
+    .order-table {
+      width: 100%; 
+      height: 60%;
+      margin-top: 10px;
+    }
+  
+    .order-table, .order-table th, .order-table td {
+      padding: 8px; 
+      border: 1px solid #ddd; 
+    }
+  
+    .order-table th, .order-table td {
+      font-size: 0.5rem; 
+  
+    .order-table th:nth-child(1), .order-table td:nth-child(1) { width: 10%; }
+    .order-table th:nth-child(2), .order-table td:nth-child(2) { width: 15%; }
+    .order-table th:nth-child(3), .order-table td:nth-child(3) { width: 25%; }
+    .order-table th:nth-child(4), .order-table td:nth-child(4) { width: 10%; }
+    .order-table th:nth-child(5), .order-table td:nth-child(5) { width: 15%; }
+    .order-table th:nth-child(6), .order-table td:nth-child(6) { width: 10%; }
+    .order-table th:nth-child(7), .order-table td:nth-child(7) { width: 15%; }
+  
+    .delivery-info-btn {
+      font-size: 0.5rem;
+      flex-direction: row;
+    }
+    .order-select {
+      font-size: 0.2rem;
+    }
+  
+    .order-title {
+      color: blue;
+      cursor: pointer;
+    }
+    
+    .order-title:hover {
+      color: orange;
+    }
+    
+    .size-stock {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .size-item {
+      padding: 5px 5px;
+    }
+  }
+  
+   */

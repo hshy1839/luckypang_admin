@@ -1,0 +1,250 @@
+/* 기본 스타일 */
+.promotion-management-container {
+    display: flex;
+    overflow-x: hidden;
+    width: 80%;
+    margin-left: 20%;
+    height: 120vh;
+    overflow-y: hidden;
+    justify-content: center;
+  }
+  
+  .promotion-management-container-container {
+    justify-items: center;
+    max-width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: white;
+    border: 1px solid rgb(219, 221, 226);
+  }
+  
+  .promotion-container {
+    width: 95%;
+    height: 100%;
+  }
+  
+  h1 {
+    font-size: 40px;
+    color: #333;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  /* 검색 박스 스타일 */
+  .promotion-search-box {
+    margin-top: 10%;
+    text-align: left;
+    display: flex;
+  }
+  
+  .promotion-search-box input {
+    width: 30%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .promotion-search-box input:focus {
+    border-color: #007bff;
+  }
+  
+  .search-category {
+    width: 10%;
+    padding: 10px;
+    font-size: 15px;
+    margin-right: 2%;
+  }
+  
+  .search-button {
+    width: 10%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease background-color;
+  }
+  
+  .search-button:hover {
+    background-color: rgb(191, 189, 189);
+  }
+  
+  /* 테이블 스타일 */
+  .promotion-table {
+    width: 1000px;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .promotion-table th:nth-child(1),
+  .promotion-table td:nth-child(1) {
+    width: 5%;
+  }
+  .promotion-table th:nth-child(4),
+  .promotion-table td:nth-child(4) {
+    width: 5%;
+  }
+  .promotion-table th:nth-child(5),
+  .promotion-table td:nth-child(5) {
+    width: 7%;
+  }
+  
+  .promotion-table th:nth-child(6),
+  .promotion-table td:nth-child(6) {
+    width: 5%;
+  }
+  .promotion-table th:nth-child(7),
+  .promotion-table td:nth-child(7) {
+    width: 5%;
+  }
+  
+  .promotion-table td {
+    background-color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: break-word;
+  }
+  
+  .promotion-table th,
+  .promotion-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+  }
+  
+  .promotion-table th {
+    background-color: #6B4EFF;
+    font-weight: bold;
+    font-size: 1rem;
+    color: white;
+    width: 10%;
+  }
+  
+  .promotion-table td {
+    background-color: #fff;
+    font-size: 1rem;
+  }
+  
+  /* 페이지 버튼 */
+ 
+  
+  
+ 
+  
+ 
+  
+  .write-btn-container {
+    width: 100%;
+    height: 50px;
+  }
+  
+  .write-btn {
+    margin-top: 10%;
+    width: 30%;
+    height: 100%;
+    cursor: pointer;
+    background-color: #000;
+    color: white;
+    border: none;
+  }
+  
+  
+  .promotion-title:hover {
+    color: orange;
+  }
+  
+  .size-stock {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .size-item {
+    padding: 5px 5px;
+  }
+  .action-buttons {
+    justify-content: center;
+    display: flex;
+    gap: 10px;
+  }
+  .delete-btn-promotion {
+    width: 10%;
+    height: 10%;
+   color: red;
+  }
+  /* 반응형 스타일 */
+  
+  /* 900px 이하 화면 (태블릿 이하) */
+  @media (max-width: 900px) {
+  
+    .promotion-management-container {
+        width: 100%;
+      overflow-x: hidden;
+      margin-left: 0%;
+      height: 100vh;
+        flex-direction: column;
+    }
+  
+    .promotion-management-container-container {
+      justify-items: center;
+      max-width: 90%;
+      overflow-x: hidden;
+      height: 100%;
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+
+    .promotion-search-box {
+        margin-top: 5%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+  
+    .promotion-search-box input {
+        width: 100%;
+        margin-bottom: 10px;
+        margin-top: 10%;
+    }
+  
+    .search-category, .search-button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+  
+    .promotion-table {
+        width: 100%;
+        overflow-x: auto;
+    }
+  
+    .promotion-table th,
+    .promotion-table td {
+        padding: 8px;
+        font-size: 0.7rem;
+
+    }
+  
+  
+    .write-btn {
+        width: 100%;
+        font-size: 20px;
+    }
+  
+    .write-btn-container {
+        height: 60px;
+    }
+    .delete-btn-promotion {
+      width: 40%;
+      height: 40%;
+      color: #f44336;
+   
+    }
+  }
+  
+  
+
+  

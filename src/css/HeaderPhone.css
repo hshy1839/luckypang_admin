@@ -1,0 +1,249 @@
+/* headerphone 기본 스타일 */
+a {
+    text-decoration: none;
+  }
+  
+  .headerphone-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    z-index: 100;
+    color: black;
+    background-color: #6B4EFF;
+    padding-top: 2%;
+  }
+  
+  .headerphone-container-container {
+    padding: 10%;
+  }
+  
+  /* headerphone 섹션1 */
+  .headerphone-section1 {
+    margin-top: 20%;
+  }
+  
+  .headerphone-section1-logo {
+    font-weight: bold;
+    color: white;
+    user-select: none;
+    font-size: 40px;
+  }
+  
+  .headerphone-section1-greeting {
+    color: rgb(221, 221, 221);
+    font-size: 1.2rem;
+    margin-top: 20%;
+    user-select: none;
+  }
+  
+  /* headerphone 섹션2 */
+  .headerphone-section2 {
+    margin-top: 20%;
+    border-top: 1px solid white;
+    justify-content: center;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .headerphone-section2-item {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    align-self: center;
+    display: flex;
+    color: white;
+    transition: 0.3s ease color;
+    cursor: pointer;
+  }
+  
+  .headerphone-section2-item:hover {
+    color: rgba(221, 221, 221, 0.633);
+  }
+  
+  .headerphone-section2-item-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  .headerphone-section2-item-text {
+    margin-left: 10%;
+    padding: 2px;
+    height: 1.2rem;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .headerphone-section2-item-employee-container {
+    position: relative; /* 'absolute'에서 'relative'로 변경 */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .headerphone-section2-item-employee {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    align-self: center;
+    display: flex;
+    color: white;
+    transition: 0.3s ease color;
+    cursor: pointer;
+  }
+  
+  .headerphone-section2-item-employee:hover {
+    color: rgba(221, 221, 221, 0.633);
+  }
+  
+  .headerphone-section2-item-employee-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  .headerphone-section2-item-employee-text {
+    margin-left: 10%;
+    padding: 2px;
+    height: 1.2rem;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  /* 서브 메뉴 스타일 */
+  .submenu-employee {
+    display: none;
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: #513bbe;
+    width: 90%;
+    padding: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+  }
+  
+  .submenu-employee.open {
+    display: block;
+    margin-left: 15%;
+    max-height: 300px; /* 메뉴가 열릴 때 충분한 공간 */
+    padding: 10px 0; /* padding을 동적으로 조정 */
+  }
+  /* 서브 메뉴 항목 */
+  .submenu-item-employee {
+    display: block;
+    padding: 10px 20px;
+    color: rgb(221, 221, 221);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s ease background-color;
+  }
+  
+  .submenu-item-employee:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .submenu-item-employee:active {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  /* headerphone 섹션3 */
+  .headerphone-section3 {
+    margin-top: 0%;
+    border-top: 1px solid white;
+    justify-content: center;
+    padding-top: 10%;
+    padding-bottom: 10%;
+  }
+  
+  .headerphone-section3-item {
+    display: flex;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: white;
+    align-self: center;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: 0.3s ease color;
+  }
+  
+  .headerphone-section3-item:hover {
+    color: rgba(221, 221, 221, 0.633);
+  }
+  .close-menu {
+    position: relative;
+    bottom: 0%;
+    left: 10%;
+    width: 10%;
+    height: 5%;
+    margin-bottom: 10%;
+    background-color: transparent;
+    border: none;
+  }
+  .close-icon {
+    color: white;font-size: 40px;
+  }
+  @media (max-width: 900px) {
+    .headerphone-container {
+      padding-top: 1%; /* 패딩 상단 감소 */
+    }
+  
+    .headerphone-container-container {
+      padding: 5%; /* 내부 패딩 감소 */
+    }
+  
+    .headerphone-section1-logo {
+      font-size: 30px; /* 로고 폰트 크기 감소 */
+    }
+  
+    .headerphone-section1-greeting {
+      font-size: 1rem; /* 인사말 폰트 크기 감소 */
+      margin-top: 5%; /* 상단 여백 감소 */
+    }
+  
+    .headerphone-section2-item,
+    .headerphone-section2-item-employee,
+    .headerphone-section3-item {
+      padding-top: 10px; /* 아이템 상단 패딩 감소 */
+      padding-bottom: 10px; /* 아이템 하단 패딩 감소 */
+      font-size: 0.9rem; /* 아이템 폰트 크기 감소 */
+    }
+  
+    .headerphone-section2-item-icon,
+    .headerphone-section2-item-employee-icon {
+      width: 1.2rem; /* 아이콘 크기 감소 */
+      height: 1.2rem; /* 아이콘 높이 감소 */
+    }
+  
+    .headerphone-section2-item-text,
+    .headerphone-section2-item-employee-text {
+      margin-left: 5%; /* 텍스트 왼쪽 마진 감소 */
+    }
+  
+    .submenu-employee {
+      width: 100%; /* 서브 메뉴 너비를 100%로 조정 */
+      margin-left: 0; /* 왼쪽 마진 제거 */
+    }
+  
+    .submenu-item-employee {
+      padding: 10px 10px; /* 서브 메뉴 아이템 패딩 조정 */
+    }
+  
+    .close-menu {
+      width: 15%; /* 닫기 메뉴 버튼 너비 조정 */
+      height: 10%; /* 닫기 메뉴 버튼 높이 조정 */
+    }
+  
+    .close-icon {
+      font-size: 30px; /* 닫기 아이콘 폰트 크기 감소 */
+    }
+  }
+  

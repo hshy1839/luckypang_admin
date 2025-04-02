@@ -1,0 +1,148 @@
+/* 기존 공지사항 디테일 CSS */
+.notice-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin-left: 20%;
+    height: 100%;
+    justify-content: flex-start;
+    padding-top: 20px;
+}
+
+.notice-detail-container-container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid rgb(219, 221, 226);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.notice-detail-container-container h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.notice-detail-container-container p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.notice-content {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.edit-button, .delete-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.edit-button:hover, .delete-button:hover {
+    background-color: #0056b3;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* 수정 폼 스타일 */
+.edit-input,
+.edit-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.edit-input {
+    height: 40px;
+}
+
+.edit-textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.save-button {
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.save-button:hover {
+    background-color: #218838;
+}
+@media (max-width: 900px) {
+    .notice-detail-container {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-left: 0;
+        padding-top: 10px;
+    }
+
+    .notice-detail-container-container {
+        width: 90%;
+        padding: 15px;
+        margin-top: 5px;
+    }
+
+    .notice-detail-container-container h1 {
+        font-size: 2rem; /* 작은 화면에 맞게 폰트 크기 조정 */
+        margin-bottom: 20%;
+    }
+
+    .notice-detail-container-container p {
+        font-size: 1rem; /* 작은 화면에 맞게 폰트 크기 조정 */
+        text-align: left;
+        color: black;
+    }
+
+    .edit-input,
+    .edit-textarea {
+        font-size: 0.9rem; /* 입력 필드 폰트 크기 조정 */
+    }
+
+    .edit-button, .delete-button, .save-button {
+        padding: 8px 16px; /* 버튼 크기 조정 */
+        font-size: 0.9rem; /* 버튼 폰트 크기 조정 */
+    }
+
+    .button-container {
+        flex-direction: row; /* 버튼을 수직으로 정렬 */
+        gap: 0px; /* 버튼 간격 추가 */
+        margin-top: 0px;
+    }
+    .delete-button {
+        margin-top: 0px;
+    }
+}

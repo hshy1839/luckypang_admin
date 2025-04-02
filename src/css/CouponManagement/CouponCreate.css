@@ -1,0 +1,121 @@
+.coupon-create-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .coupon-create-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .coupon-create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .coupon-create-field {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .coupon-create-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+    
+  .coupon-create-input,
+  .coupon-create-textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  .coupon-create-input {
+    resize: vertical;
+  }
+  
+  .coupon-create-input:focus,
+  .coupon-create-textarea:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .coupon-create-sizes label {
+    margin-right: 10px;
+    font-size: 14px;
+  }
+  
+  
+  .coupon-create-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .coupon-create-button:hover {
+    background-color: #0056b3;
+  }
+  .coupon-create-preview-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 5%;
+    margin-bottom: 10%;
+  }
+  .coupon-create-image-item {
+    position: relative; /* 삭제 버튼을 절대 위치로 설정하기 위해 필요 */
+    width: 200px;  /* 각 이미지 항목의 너비 설정 */
+    height: 200px;  /* 이미지 항목의 높이 설정 */
+    padding: 10px;
+    margin-bottom: 0%;
+    border: 1px solid rgb(180, 180, 180);
+    background-color: white;
+  }
+  
+  .coupon-create-image-item img {
+    width: 100%;  /* 이미지의 너비를 항목에 맞춤 */
+    height: 100%;  /* 이미지의 높이를 항목에 맞춤 */
+    object-fit: contain;  /* 이미지 비율을 유지하면서 크기 맞추기 */
+  }
+  
+  /* 삭제 버튼 스타일 */
+  .delete-image-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 20%;
+    background-color: red;
+    border: 2px solid red;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .delete-image-button:hover {
+    background-color: red;
+    color: white;
+  }
+  

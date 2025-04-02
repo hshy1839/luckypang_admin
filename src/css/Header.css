@@ -1,0 +1,224 @@
+/* Header 기본 스타일 */
+a {
+  text-decoration: none;
+}
+
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  height: 200%;
+  overflow-y: hidden;
+  z-index: 100;
+  color: black;
+  background-color: #6B4EFF;
+  padding-top: 2%;
+}
+
+.header-container-container {
+  padding: 10%;
+}
+
+/* Header 섹션1 */
+.header-section1 {
+  margin-top: 20%;
+}
+
+.header-section1-logo {
+  font-weight: bold;
+  color: white;
+  user-select: none;
+  font-size: 40px;
+}
+
+.header-section1-greeting {
+  color: rgb(221, 221, 221);
+  font-size: 1.2rem;
+  margin-top: 20%;
+  user-select: none;
+}
+
+/* Header 섹션2 */
+.header-section2 {
+  margin-top: 20%;
+  border-top: 1px solid white;
+  justify-content: center;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-section2-item {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  align-self: center;
+  display: flex;
+  color: white;
+  transition: 0.3s ease color;
+  cursor: pointer;
+}
+
+.header-section2-item:hover {
+  color: rgba(221, 221, 221, 0.633);
+}
+
+.header-section2-item-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.header-section2-item-text {
+  margin-left: 10%;
+  padding: 2px;
+  height: 1.2rem;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.header-section2-item-employee-container {
+  position: relative; /* 'absolute'에서 'relative'로 변경 */
+  display: flex;
+  flex-direction: column;
+}
+
+.header-section2-item-employee {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  align-self: center;
+  display: flex;
+  color: white;
+  transition: 0.3s ease color;
+  cursor: pointer;
+}
+
+.header-section2-item-employee:hover {
+  color: rgba(221, 221, 221, 0.633);
+}
+
+.header-section2-item-employee-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.header-section2-item-employee-text {
+  margin-left: 10%;
+  padding: 2px;
+  height: 1.2rem;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* 서브 메뉴 스타일 */
+.submenu-employee {
+  display: none;
+  position: relative;
+  top: 0;
+  left: 0;
+  background-color: #513bbe;
+  width: 90%;
+  padding: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.submenu-employee.open {
+  display: block;
+  margin-left: 15%;
+  max-height: 300px; /* 메뉴가 열릴 때 충분한 공간 */
+  padding: 10px 0; /* padding을 동적으로 조정 */
+}
+/* 서브 메뉴 항목 */
+.submenu-item-employee {
+  display: block;
+  padding: 10px 20px;
+  color: rgb(221, 221, 221);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: 0.3s ease background-color;
+}
+
+.submenu-item-employee:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.submenu-item-employee:active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Header 섹션3 */
+.header-section3 {
+  margin-top: 0%;
+  border-top: 1px solid white;
+  justify-content: center;
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+
+.header-section3-item {
+  display: flex;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: white;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: 0.3s ease color;
+}
+
+.header-section3-item:hover {
+  color: rgba(221, 221, 221, 0.633);
+}
+.burger-menu {
+  display:none; /* 기본적으로 숨겨둡니다 */
+  position: fixed;
+  bottom: 5%;
+  left: 1%;
+  background-color: #6B4EFF;
+  font-size: 24px;
+  padding: 20px;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  z-index: 110; /* 헤더보다 위에 표시되도록 설정 */
+}
+
+
+
+@media screen and (max-width: 900px) {
+  .header-container {
+    width: 0px;
+  }
+  .header-container-container {
+    display: none; /* 작은 화면에서는 헤더 숨김 */
+  }
+
+  .burger-menu {
+    display:flex; /* 기본적으로 숨겨둡니다 */
+    position: fixed;
+    bottom: 5%;
+    left: 1%;
+    background-color: #6B4EFF;
+    font-size: 24px;
+    padding: 20px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    z-index: 110; /* 헤더보다 위에 표시되도록 설정 */
+  }
+
+
+    .header-container-container {
+      display: block; /* 메뉴가 열릴 때 내용을 보여줍니다 */
+    }
+  }
+  
