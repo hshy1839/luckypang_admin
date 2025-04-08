@@ -19,7 +19,7 @@ const NoticeCreate = () => {
           return;
         }
 
-        const response = await axios.get('http://3.36.74.8:8865/api/users/userinfo', {
+        const response = await axios.get('http://localhost:7778/api/users/userinfo', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -66,7 +66,7 @@ const NoticeCreate = () => {
     try {
       // POST 요청 보내기 (헤더에 토큰 포함)
       const response = await axios.post(
-        'http://3.36.74.8:8865/api/users/notice', 
+        'http://localhost:7778/api/users/notice', 
         noticeData, 
         {
           headers: {

@@ -19,7 +19,7 @@ const ProductDetail = () => {
                 }
 
                 const response = await axios.get(
-                    `http://3.36.74.8:8865/api/products/Product/${id}`,
+                    `http://localhost:7778/api/products/Product/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ const ProductDetail = () => {
             }
 
             const response = await axios.delete(
-                `http://3.36.74.8:8865/api/products/delete/${id}`, // URL 수정
+                `http://localhost:7778/api/products/delete/${id}`, // URL 수정
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -93,7 +93,7 @@ const ProductDetail = () => {
 
                     {/* 카테고리 상위 및 하위 표시 */}
                     <p className="product-category">
-                        <strong>카테고리:</strong> {product.category.main} &gt; {product.category.sub}
+                        <strong>카테고리:</strong> {product.category}
                     </p>
 
                     <p className="product-price">

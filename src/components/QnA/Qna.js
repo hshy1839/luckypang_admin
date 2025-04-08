@@ -24,7 +24,7 @@
 //                     return;
 //                 }
 
-//                 const response = await axios.get('http://3.36.74.8:8865/api/qnaQuestion/getinfoAll', {
+//                 const response = await axios.get('http://localhost:7778/api/qnaQuestion/getinfoAll', {
 //                     headers: {
 //                         Authorization: `Bearer ${token}`,
 //                     },

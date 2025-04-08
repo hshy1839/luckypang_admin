@@ -14,7 +14,7 @@ a {
   overflow-y: hidden;
   z-index: 100;
   color: black;
-  background-color: #6B4EFF;
+  background-color: #271386;
   padding-top: 2%;
 }
 
@@ -183,7 +183,7 @@ a {
   position: fixed;
   bottom: 5%;
   left: 1%;
-  background-color: #6B4EFF;
+  background-color: #271386;
   font-size: 24px;
   padding: 20px;
   border-radius: 50%;
@@ -207,7 +207,7 @@ a {
     position: fixed;
     bottom: 5%;
     left: 1%;
-    background-color: #6B4EFF;
+    background-color: #271386;
     font-size: 24px;
     padding: 20px;
     border-radius: 50%;

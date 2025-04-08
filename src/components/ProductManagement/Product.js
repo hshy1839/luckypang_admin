@@ -21,7 +21,7 @@ const Product = () => {
                 return;
             }
 
-            const response = await axios.get('http:///3.36.74.8:8865/api/products/allProduct', {
+            const response = await axios.get('http:///localhost:7778/api/products/allProduct', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -58,7 +58,7 @@ const Product = () => {
                     return;
                 }
 
-                const response = await axios.get('http:///3.36.74.8:8865/api/products/allProduct', {
+                const response = await axios.get('http:///localhost:7778/api/products/allProduct', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -72,13 +72,13 @@ const Product = () => {
                         if (searchCategory === 'all') {
                             return (
                                 product.name.includes(searchTerm) ||
-                                (product.category.main.includes(searchTerm) || product.category.sub.includes(searchTerm))
+                                (product.category.includes(searchTerm) || product.category.sub.includes(searchTerm))
                             );
                         } else if (searchCategory === 'name') {
                             return product.name.includes(searchTerm);
                         } else if (searchCategory === 'category') {
                             return (
-                                product.category.main.includes(searchTerm) || product.category.sub.includes(searchTerm)
+                                product.category.includes(searchTerm) || product.category.sub.includes(searchTerm)
                             );
                         }
                         return true;
@@ -97,7 +97,7 @@ const Product = () => {
 
     const getCategoryDisplay = (category) => {
         if (!category) return 'Unknown Category';
-        return `${category.main} > ${category.sub}`;
+        return `${category}`;
     };
 
     const handleProductClick = (id) => {
@@ -159,7 +159,7 @@ const Product = () => {
                         >
                             <option value="all">전체</option>
                             <option value="name">상품 이름</option>
-                            <option value="category">카테고리</option>
+                            <option value="category">박스종류</option>
                         </select>
                         <input
                             type="text"
@@ -177,7 +177,7 @@ const Product = () => {
                             <tr>
                                 <th>번호</th>
                                 <th>상품 이름</th>
-                                <th>카테고리</th>
+                                <th>박스종류</th>
                                 {/* <th>사이즈</th> */}
                                 {/* <th>총 재고</th> */}
                                 <th>가격</th>

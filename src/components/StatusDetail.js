@@ -22,7 +22,7 @@ const StatusDetail = () => {
                     return;
                 }
 
-                const response = await axios.get('http://3.36.74.8:8865/api/users/allAttendanceInfo', {
+                const response = await axios.get('http://localhost:7778/api/users/allAttendanceInfo', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -35,7 +35,7 @@ const StatusDetail = () => {
                     const newUserNames = {};
                     for (const record of response.data) {
                         if (record.userId && !newUserNames[record.userId]) {
-                            const userResponse = await axios.get(`http://3.36.74.8:8865/api/users/userinfo/${record.userId}`, {
+                            const userResponse = await axios.get(`http://localhost:7778/api/users/userinfo/${record.userId}`, {
                                 headers: {
                                     Authorization: `Bearer ${token}`,
                                 },

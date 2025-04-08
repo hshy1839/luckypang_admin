@@ -28,7 +28,7 @@
 //                 }
 
 //                 const response = await axios.get(
-//                     `http://3.36.74.8:8865/api/qnaQuestion/getinfoByid/${id}`,
+//                     `http://localhost:7778/api/qnaQuestion/getinfoByid/${id}`,
 //                     {
 //                         headers: {
 //                             Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@
 //                 }
 
 //                 const response = await axios.get(
-//                     `http://3.36.74.8:8865/api/qnaQuestion/getAnswers/${id}`,
+//                     `http://localhost:7778/api/qnaQuestion/getAnswers/${id}`,
 //                     {
 //                         headers: {
 //                             Authorization: `Bearer ${token}`,
@@ -92,7 +92,7 @@
 //             }
 
 //             const response = await axios.post(
-//                 `http://3.36.74.8:8865/api/qnaQuestion/addAnswer/${id}`,
+//                 `http://localhost:7778/api/qnaQuestion/addAnswer/${id}`,
 //                 { body: newAnswer },
 //                 {
 //                     headers: {

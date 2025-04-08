@@ -7,12 +7,9 @@ import '../../css/ProductManagement/ProductCreate.css';
 const ProductCreate = () => {
   const [name, setName] = useState('');
   const [categoryMain, setCategoryMain] = useState('');
-  const [categorySub, setCategorySub] = useState('');
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null); // 대표 이미지 미리보기
 const [imagePreviews, setImagePreviews] = useState([]); // 추가 이미지 미리보기
-  const [size, setSize] = useState([]);
-  const [sizeStock, setSizeStock] = useState({});
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);  // 추가 이미지 배열
@@ -20,82 +17,6 @@ const [imagePreviews, setImagePreviews] = useState([]); // 추가 이미지 미�
 
   const handleCategoryMainChange = (e) => {
     setCategoryMain(e.target.value);
-    setCategorySub('');
-  };
-
-  const handleSizeChange = (e) => {
-    const { value, checked } = e.target;
-    if (checked) {
-      setSize([...size, value]);
-      setSizeStock({
-        ...sizeStock,
-        [value]: 0,
-      });
-    } else {
-      setSize(size.filter((s) => s !== value));
-      const updatedStock = { ...sizeStock };
-      delete updatedStock[value];
-      setSizeStock(updatedStock);
-    }
-  };
-
-
-const renderSizeOptions = () => {
-  if (categorySub === "신발") {
-    // 신발 카테고리일 경우 200~300, 5단위 생성
-    const shoeSizes = Array.from({ length: 21 }, (_, i) => 200 + i * 5);
-    return shoeSizes.map((sizeOption) => (
-      <label key={sizeOption}>
-        <input
-          type="checkbox"
-          value={sizeOption}
-          checked={size.includes(sizeOption.toString())}
-          onChange={handleSizeChange}
-        />
-        {sizeOption}
-        {size.includes(sizeOption.toString()) && (
-          <input
-            type="number"
-            value={sizeStock[sizeOption] || 0}
-            onChange={(e) => handleStockChange(e, sizeOption)}
-            placeholder="재고 수량"
-            min="0"
-          />
-        )}
-      </label>
-    ));
-  } else {
-    // 기본 카테고리 옵션
-    return ["S", "M", "L", "XL", "free"].map((sizeOption) => (
-      <label key={sizeOption}>
-        <input
-          type="checkbox"
-          value={sizeOption}
-          checked={size.includes(sizeOption)}
-          onChange={handleSizeChange}
-        />
-        {sizeOption}
-        {size.includes(sizeOption) && (
-          <input
-            type="number"
-            value={sizeStock[sizeOption] || 0}
-            onChange={(e) => handleStockChange(e, sizeOption)}
-            placeholder="재고 수량"
-            min="0"
-          />
-        )}
-      </label>
-    ));
-  }
-};
-
-  const handleStockChange = (e, size) => {
-    const { value } = e.target;
-    const numericStock = Number(value);
-    setSizeStock({
-      ...sizeStock,
-      [size]: numericStock,
-    });
   };
 
   const handleImageChange = async (e) => {
@@ -170,23 +91,18 @@ const renderSizeOptions = () => {
     e.preventDefault();
 
     // 필수 필드 확인
-    if (!name || !categoryMain || !categorySub || !price) {
+    if (!name || !categoryMain || !price) {
         alert('모든 필드를 입력해주세요.');
         return;
     }
 
-    const filteredSizeStock = {};
-    size.forEach((s) => {
-        filteredSizeStock[s] = sizeStock[s] || 0;
-    });
+   
 
     const formData = new FormData();
     formData.append('name', name);
     formData.append('categoryMain', categoryMain);
-    formData.append('categorySub', categorySub);
     formData.append('price', price);
     formData.append('description', description);
-    formData.append('sizeStock', JSON.stringify(filteredSizeStock));
 
     if (image) {
         formData.append('mainImage', image); // mainImage에 파일 객체
@@ -201,7 +117,7 @@ const renderSizeOptions = () => {
 
     try {
         const response = await axios.post(
-            'http://3.36.74.8:8865/api/products/productCreate',
+            'http://localhost:7778/api/products/productCreate',
             formData,
             {
                 headers: {
@@ -246,7 +162,7 @@ const renderSizeOptions = () => {
 
         {/* Category */}
         <div className="product-create-field">
-          <label className="product-create-label" htmlFor="categoryMain">상위 카테고리</label>
+          <label className="product-create-label" htmlFor="categoryMain">카테고리</label>
           <select
             className="product-create-input"
             id="categoryMain"
@@ -254,47 +170,15 @@ const renderSizeOptions = () => {
             onChange={handleCategoryMainChange}
             required
           >
-            <option value="">상위 카테고리를 선택하세요</option>
-            <optgroup label="일반의류">
-              <option value="일반의류">일반의류</option>
-              <option value="골프의류">골프의류</option>
+            <option value="">상품 박스를 선택하세요</option>
+            <optgroup label="박스종류">
+                <option value="5,000원 박스">5,000원 박스</option>
+                <option value="10,000원 박스">10,000원 박스</option>
             </optgroup>
           </select>
         </div>
 
-        <div className="product-create-field">
-          <label className="product-create-label" htmlFor="categorySub">하위 카테고리</label>
-          <select
-            className="product-create-input"
-            id="categorySub"
-            value={categorySub}
-            onChange={(e) => setCategorySub(e.target.value)}
-            required
-            disabled={!categoryMain}
-          >
-            <option value="">하위 카테고리를 선택하세요</option>
-            {categoryMain === '일반의류' && (
-              <>
-                <option value="남성의류">남성의류</option>
-                <option value="여성의류">여성의류</option>
-                <option value="지갑">지갑</option>
-                <option value="가방">가방</option>
-                <option value="신발">신발</option>
-                <option value="기타">기타</option>
-              </>
-            )}
-            {categoryMain === '골프의류' && (
-              <>
-                <option value="남성의류">남성의류</option>
-                <option value="여성의류">여성의류</option>
-                <option value="지갑">지갑</option>
-                <option value="가방">가방</option>
-                <option value="신발">신발</option>
-                <option value="기타">기타</option>
-              </>
-            )}
-          </select>
-        </div>
+        
 
         {/* Main Image */}
         <div className="product-create-field">

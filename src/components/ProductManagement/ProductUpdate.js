@@ -8,10 +8,7 @@ const ProductUpdate = () => {
     const [product, setProduct] = useState(null);
     const [updatedProduct, setUpdatedProduct] = useState({
         name: '',
-        category: {
-            main: '', // 상위 카테고리
-            sub: ''   // 하위 카테고리
-        },
+        category: '',
         price: 0,
         description: '',
         sizeStock: {} // 사이즈별 재고를 위한 객체
@@ -20,8 +17,8 @@ const ProductUpdate = () => {
     const navigate = useNavigate();
 
     const categories = {
-        "일반의류": ["남성의류", "여성의류", "지갑", "가방", "신발", "기타"],
-        "골프의류": ["남성골프", "여성골프", "골프가방", "골프신발", "골프기타"]
+        "5,000원 박스": [],
+        "10,000원 박스": []
     };
 
     useEffect(() => {
@@ -34,7 +31,7 @@ const ProductUpdate = () => {
                 }
 
                 const response = await axios.get(
-                    `http://3.36.74.8:8865/api/products/Product/${id}`,
+                    `http://localhost:7778/api/products/Product/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -47,7 +44,7 @@ const ProductUpdate = () => {
                     const { main, sub } = response.data.product.category;
                     setUpdatedProduct({
                         name: response.data.product.name,
-                        category: { main, sub },
+                        category: response.data.product.category || '', // 문자열로 설정
                         price: response.data.product.price,
                         description: response.data.product.description,
                         sizeStock: response.data.product.sizeStock || {},
@@ -64,24 +61,11 @@ const ProductUpdate = () => {
     }, [id]);
 
     const handleCategoryChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'category-main') {
-            setUpdatedProduct(prev => ({
-                ...prev,
-                category: {
-                    main: value,
-                    sub: '' // 상위 카테고리가 변경되면 하위 카테고리 초기화
-                }
-            }));
-        } else {
-            setUpdatedProduct(prev => ({
-                ...prev,
-                category: {
-                    ...prev.category,
-                    sub: value
-                }
-            }));
-        }
+        const value = e.target.value;
+        setUpdatedProduct(prev => ({
+            ...prev,
+            category: value
+        }));
     };
 
     const handleChange = (e) => {
@@ -115,7 +99,7 @@ const ProductUpdate = () => {
             }
 
             const response = await axios.put(
-                `http://3.36.74.8:8865/api/products/update/${id}`,
+                `http://localhost:7778/api/products/update/${id}`,
                 updatedProduct,
                 {
                     headers: {
@@ -159,86 +143,40 @@ const ProductUpdate = () => {
                     />
                 </div>
 
+                <div className="product-update-field">
+  <label className="product-update-label" htmlFor="price">가격</label>
+  <input
+    className="product-update-input"
+    type="number"
+    id="price"
+    name="price"
+    value={updatedProduct.price}
+    onChange={handleChange}
+    placeholder="상품 가격을 입력하세요"
+    required
+  />
+</div>
+
                 {/* Category */}
                 <div className="product-update-field">
                     <label className="product-update-label" htmlFor="category">상위 카테고리</label>
                     <select
                         className="product-update-input"
-                        id="category-main"
-                        name="category-main"
-                        value={updatedProduct.category.main}
+                        id="category"
+                        name="category"
+                        value={updatedProduct.category}
                         onChange={handleCategoryChange}
                         required
                     >
-                        <option value="">상위 카테고리를 선택하세요</option>
-                        {Object.keys(categories).map(category => (
-                            <option key={category} value={category}>
-                                {category}
-                            </option>
-                        ))}
+                        <option value="">박스 종류를 선택하세요</option>
+                        <option value="5,000원 박스">5,000원 박스</option>
+                        <option value="10,000원 박스">10,000원 박스</option>
                     </select>
                 </div>
 
-                {/* Subcategory */}
-                <div className="product-update-field">
-                    <label className="product-update-label" htmlFor="subCategory">하위 카테고리</label>
-                    <select
-                        className="product-update-input"
-                        id="category-sub"
-                        name="category-sub"
-                        value={updatedProduct.category.sub}
-                        onChange={handleCategoryChange}
-                        required
-                        disabled={!updatedProduct.category.main}
-                    >
-                        <option value="">하위 카테고리를 선택하세요</option>
-                        {updatedProduct.category.main &&
-                            categories[updatedProduct.category.main].map(subCategory => (
-                                <option key={subCategory} value={subCategory}>
-                                    {subCategory}
-                                </option>
-                            ))}
-                    </select>
-                </div>
 
-                {/* Size Stock */}
-                {/* <div className="product-update-field">
-                    <label className="product-update-label">사이즈별 재고</label>
-                    {updatedProduct.category.sub === "신발" ? (
-                        <div className="product-update-size-range">
-                            {Array.from({ length: 21 }, (_, i) => 200 + i * 5).map(size => (
-                                <div key={size} className="product-update-size-field">
-                                    <label className="product-update-size-label">{size} mm</label>
-                                    <input
-                                        className="product-update-input"
-                                        type="number"
-                                        name={`size_${size}`}
-                                        value={updatedProduct.sizeStock[size] || ''}
-                                        onChange={handleChange}
-                                        placeholder={`${size}mm 재고`}
-                                        min="0"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        ['S', 'M', 'L', 'XL', 'free'].map(size => (
-                            <div key={size} className="product-update-size-field">
-                                <label className="product-update-size-label">{size} 사이즈</label>
-                                <input
-                                    className="product-update-input"
-                                    type="number"
-                                    name={`size_${size}`}
-                                    value={updatedProduct.sizeStock[size] || ''}
-                                    onChange={handleChange}
-                                    placeholder={`${size} 사이즈의 재고 수량`}
-                                />
-                            </div>
-                        ))
-                    )}
-                </div> */}
 
-                {/* Description */}
+
                 <div className="product-update-field">
                     <label className="product-update-label" htmlFor="description">상품 설명</label>
                     <textarea

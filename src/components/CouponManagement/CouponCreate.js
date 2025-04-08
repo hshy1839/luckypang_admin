@@ -24,7 +24,7 @@ const CouponCreate = () => {
 
     try {
       const response = await axios.post(
-        'http://3.36.74.8:8865/api/coupon',
+        'http://localhost:7778/api/coupon',
         {
           name,
           code,

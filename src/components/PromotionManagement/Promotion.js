@@ -23,7 +23,7 @@ const Promotion = () => {
                 return;
             }
 
-            const response = await axios.get('http://3.36.74.8:8865/api/promotion/read', {
+            const response = await axios.get('http://localhost:7778/api/promotion/read', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -69,7 +69,7 @@ const Promotion = () => {
                 return;
             }
 
-            const response = await axios.delete(`http://3.36.74.8:8865/api/promotion/delete/${id}`, {
+            const response = await axios.delete(`http://localhost:7778/api/promotion/delete/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
