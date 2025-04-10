@@ -4,6 +4,9 @@ import Header from '../Header.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { faCheck, faTrash, faBan } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { exportToExcel } from '../../utils/exportToExcel';
 
 const Users = () => {
     const [users, setUsers] = useState([]);  // 검색 후 표시할 사용자 리스트
@@ -48,7 +51,46 @@ const Users = () => {
         fetchUsers();
     }, []);
 
+    const handleExcelExport = () => {
+        const exportData = users.map((user, index) => ({
+          번호: index + 1 + (currentPage - 1) * itemsPerPage,
+          아이디: user.username,
+          이름: user.name,
+          연락처: user.phoneNumber,
+          타입: user.user_type === 3 ? '일반유저' :
+                user.user_type === 2 ? '부관리자' :
+                user.user_type === 1 ? '관리자' : '알 수 없음',
+          가입일: new Date(user.created_at).toLocaleDateString(),
+          상태: user.is_active ? '가입 승인' : '대기',
+        }));
+      
+        exportToExcel(exportData, '사용자_목록');
+      };
+
+
   
+    const exportToExcel = () => {
+        const exportData = users.map((user, index) => ({
+            번호: index + 1 + (currentPage - 1) * itemsPerPage,
+            아이디: user.username,
+            이름: user.name,
+            연락처: user.phoneNumber,
+            타입: user.user_type === 3 ? '일반유저' :
+                  user.user_type === 2 ? '부관리자' :
+                  user.user_type === 1 ? '관리자' : '알 수 없음',
+            가입일: new Date(user.created_at).toLocaleDateString(),
+            상태: user.is_active ? '가입 승인' : '대기',
+        }));
+    
+        const worksheet = XLSX.utils.json_to_sheet(exportData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, '사용자 목록');
+    
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const file = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        saveAs(file, '사용자_목록.xlsx');
+    };
+
 
     const handleSearch = () => {
         // 검색 결과 필터링
@@ -305,6 +347,9 @@ const Users = () => {
                         </button>
                     </div>
                 </div>
+                <button onClick={handleExcelExport} className="excel-export-button">
+  엑셀로 내보내기
+</button>
             </div>
         </div>
     );

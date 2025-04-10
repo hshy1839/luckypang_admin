@@ -11,6 +11,8 @@ const ProductCreate = () => {
   const [imagePreview, setImagePreview] = useState(null); // 대표 이미지 미리보기
 const [imagePreviews, setImagePreviews] = useState([]); // 추가 이미지 미리보기
   const [price, setPrice] = useState('');
+  const [brand, setBrand] = useState('');
+
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);  // 추가 이미지 배열
   const navigate = useNavigate();
@@ -103,6 +105,8 @@ const [imagePreviews, setImagePreviews] = useState([]); // 추가 이미지 미�
     formData.append('categoryMain', categoryMain);
     formData.append('price', price);
     formData.append('description', description);
+    formData.append('brand', brand);
+
 
     if (image) {
         formData.append('mainImage', image); // mainImage에 파일 객체
@@ -159,6 +163,19 @@ const [imagePreviews, setImagePreviews] = useState([]); // 추가 이미지 미�
             required
           />
         </div>
+        
+
+        <div className="product-create-field">
+  <label className="product-create-label" htmlFor="brand">브랜드명</label>
+  <input
+    className="product-create-input"
+    type="text"
+    id="brand"
+    value={brand}
+    onChange={(e) => setBrand(e.target.value)}
+    placeholder="브랜드명을 입력하세요"
+  />
+</div>
 
         {/* Category */}
         <div className="product-create-field">
