@@ -7,6 +7,7 @@ const PromotionCreate = () => {
   const [name, setName] = useState('');
   const [promotionImage, setPromotionImage] = useState(null);
   const [promotionImagePreview, setPromotionImagePreview] = useState(null); // 프로모션 이미지 미리보기
+  const [link, setLink] = useState('');
   const navigate = useNavigate();
 
   const handlePromotionImageChange = (e) => {
@@ -22,13 +23,14 @@ const PromotionCreate = () => {
     e.preventDefault();
 
     // 필수 필드 확인
-    if (!name || !promotionImage) {
+    if (!name || !promotionImage || !link) {
       alert('모든 필드를 입력해주세요.');
       return;
     }
 
     const formData = new FormData();
     formData.append('name', name);
+    formData.append('link', link);
     formData.append('promotionImage', promotionImage);
 
 
@@ -72,6 +74,18 @@ const PromotionCreate = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="프로모션 이름을 입력하세요"
+            required
+          />
+        </div>
+        <div className="promotion-create-field">
+          <label className="promotion-create-label" htmlFor="link">프로모션 링크</label>
+          <input
+            className="promotion-create-input"
+            type="text"
+            id="link"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            placeholder="프로모션 링크를 입력하세요"
             required
           />
         </div>

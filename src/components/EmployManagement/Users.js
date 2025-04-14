@@ -252,7 +252,7 @@ const Users = () => {
                             onChange={(e) => setSearchCategory(e.target.value)} // 검색 기준 변경
                         >
                             <option value="all">전체</option>
-                            <option value="user">아이디</option>
+                            <option value="user">이메일</option>
                             <option value="name">이름</option>
                         </select>
                         <input
@@ -271,8 +271,8 @@ const Users = () => {
                         <thead>
                             <tr>
                                 <th>번호</th>
-                                <th>아이디</th>
-                                <th>이름</th>
+                                <th>이메일</th>
+                                <th>닉네임</th>
                                 <th>연락처</th>
                                 <th>타입</th>
                                 <th>가입일</th>
@@ -291,8 +291,8 @@ const Users = () => {
                                 users.map((user, index) => (
                                     <tr key={user._id}>
                                         <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                                        <td>{user.username}</td>
-                                        <td>{user.name}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.nickname}</td>
                                         <td>{user.phoneNumber}</td>
                                         <td>
                                             {user.user_type ==3 ? '일반유저' :
