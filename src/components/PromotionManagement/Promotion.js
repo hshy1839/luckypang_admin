@@ -55,6 +55,9 @@ const Promotion = () => {
         setFilteredPromotions(results);
     };
 
+    const handlePromotionClick = (id) => {
+        navigate(`/promotion/promotionDetail/${id}`);
+    };
     const handleCreatePromotionClick = () => {
         navigate('/promotion/create');
     };
@@ -132,7 +135,12 @@ const Promotion = () => {
                             {currentPromotions.map((promotion, index) => (
                                 <tr key={promotion._id}>
                                     <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                                    <td>{promotion.name || 'Unknown Promotion'}</td>
+                                    <td
+                                            onClick={() => handlePromotionClick(promotion._id)}
+                                            className='product-title'
+                                        >
+                                            {promotion.name || 'Unknown Promotion'}
+                                        </td>
                                     <td>
                                         {promotion.createdAt
                                             ? new Date(promotion.createdAt).toLocaleDateString()

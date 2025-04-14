@@ -22,8 +22,10 @@ import Setting from './components/Setting';
 import Coupon from './components/CouponManagement/Coupon';
 import CouponCreate from './components/CouponManagement/CouponCreate';
 import Promotion from './components/PromotionManagement/Promotion';
+import PromotionUpdate from './components/PromotionManagement/PromotionUpdate';
 import PromotionCreate from './components/PromotionManagement/PromotionCreate';
 import HeaderPhone from './components/HeaderPhone';
+import PromotionDetail from './components/PromotionManagement/PromotionDetail';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -75,6 +77,8 @@ function App() {
           <Route path="/coupon/create" element={<PrivateRoute><Header /><CouponCreate/></PrivateRoute>} />
           <Route path="/promotion" element={<PrivateRoute><Header /><Promotion/></PrivateRoute>} />
           <Route path="/promotion/create" element={<PrivateRoute><Header /><PromotionCreate/></PrivateRoute>} />
+          <Route path="/promotion/promotionDetail/:id" element={<PrivateRoute><Header /><PromotionDetail /></PrivateRoute>} />
+          <Route path="/promotion/promotionDetail/:id/update" element={<PrivateRoute><Header /><PromotionUpdate /></PrivateRoute>} />
           
         </Routes>
       )}
