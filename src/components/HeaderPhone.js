@@ -64,7 +64,7 @@ const HeaderPhone = () => {
             </div>
           </div>
 
-          <Link to="/employeeManagement/users" onClick={handleLinkClick}>
+          <Link to="/users" onClick={handleLinkClick}>
             <div className='headerphone-section2-item'>
               <FontAwesomeIcon icon={faUsers} className='headerphone-section2-item-icon' />
               <div className='headerphone-section2-item-text'>고객 관리</div>

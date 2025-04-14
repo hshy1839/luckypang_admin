@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../css/Users.css';
 import Header from '../Header.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
@@ -6,7 +7,7 @@ import { faCheck, faTrash, faBan } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { exportToExcel } from '../../utils/exportToExcel';
+import { exportToExcel } from '../../utils/exportToExcel.js';
 
 const Users = () => {
     const [users, setUsers] = useState([]);  // 검색 후 표시할 사용자 리스트
@@ -15,7 +16,7 @@ const Users = () => {
     const [searchCategory, setSearchCategory] = useState('all');  // 검색 기준 상태
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
         const itemsPerPage = 10; // 페이지당 표시할 항목 수
-
+ const navigate = useNavigate();
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -117,6 +118,9 @@ const Users = () => {
     const currentNotices = users.slice(indexOfFirstNotice, indexOfLastNotice);
     const totalPages = Math.ceil(users.length / itemsPerPage);
 
+    const handleUserClick = (id) => {
+        navigate(`/users/usersDetail/${id}`);
+    };
 
     const handlePreviousPage = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -292,7 +296,12 @@ const Users = () => {
                                     <tr key={user._id}>
                                         <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
                                         <td>{user.email}</td>
-                                        <td>{user.nickname}</td>
+                                        <td
+                                            onClick={() => handleUserClick(user._id)}
+                                            className='product-title'
+                                        >
+                                            {user.nickname || 'Unknown User'}
+                                        </td>
                                         <td>{user.phoneNumber}</td>
                                         <td>
                                             {user.user_type ==3 ? '일반유저' :

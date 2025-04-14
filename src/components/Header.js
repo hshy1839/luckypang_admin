@@ -61,7 +61,7 @@ const Header = () => {
             </div>
           </div>
 
-          <Link to="/employeeManagement/users" onClick={handleLinkClick}>
+          <Link to="/users" onClick={handleLinkClick}>
             <div className='header-section2-item'>
               <FontAwesomeIcon icon={faUsers} className='header-section2-item-icon' />
               <div className='header-section2-item-text'>고객 관리</div>

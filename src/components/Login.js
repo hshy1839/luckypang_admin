@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../css/Login.css';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (username === '' || password === '') {
+    if (email === '' || password === '') {
       setErrorMessage('아이디와 비밀번호를 모두 입력하세요.');
       return;
     }
@@ -21,7 +21,7 @@ const Login = () => {
       const response = await fetch('http://localhost:7778/api/users/loginAdmin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json(); // 서버 응답 데이터를 파싱
@@ -48,13 +48,13 @@ const Login = () => {
       <h2>로그인</h2>
       <form onSubmit={handleSubmit}>
         <div className='login-username-container' style={{ marginBottom: '10px' }}>
-          <label htmlFor="username">아이디</label>
+          <label htmlFor="email">이메일</label>
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="아이디를 입력하세요"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="이메일을 입력하세요"
             style={{ width: '100%', padding: '8px' }}
           />
         </div>

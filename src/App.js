@@ -4,9 +4,8 @@ import Header from './components/Header';
 import Main from './components/Main';
 import Loading from './components/Loading';
 import Order from './components/Order';
-import Vacation from './components/EmployManagement/Vacation';
-import Salary from './components/EmployManagement/Salary';
-import Users from './components/EmployManagement/Users';
+import Users from './components/UserManagement/Users';
+import UsersDetail from './components/UserManagement/UsersDetail';
 import Notice from './components/NoticeManagement/Notice';
 import Login from './components/Login';
 import NoticeCreate from './components/NoticeManagement/NoticeCreate';
@@ -58,9 +57,8 @@ function App() {
         <Routes>
           <Route path="/" element={<PrivateRoute><Header /><Main /></PrivateRoute>} />
           <Route path="/headerphone" element={<PrivateRoute><HeaderPhone /></PrivateRoute>} />
-          <Route path="/employeeManagement/vacation" element={<PrivateRoute><Header /><Vacation /></PrivateRoute>} />
-          <Route path="/employeeManagement/salary" element={<PrivateRoute><Header /><Salary /></PrivateRoute>} />
-          <Route path="/employeeManagement/users" element={<PrivateRoute><Users /></PrivateRoute>} />
+          <Route path="/users" element={<PrivateRoute><Users /></PrivateRoute>} />
+          <Route path="/users/usersDetail/:id" element={<PrivateRoute><UsersDetail /></PrivateRoute>} />
           <Route path="/notice" element={<PrivateRoute><Header /><Notice /></PrivateRoute>} />
           <Route path="/notice/noticeCreate" element={<PrivateRoute><Header /><NoticeCreate /></PrivateRoute>} />
           <Route path="/notice/noticeDetail/:id" element={<PrivateRoute><NoticeDetail /></PrivateRoute>} />
