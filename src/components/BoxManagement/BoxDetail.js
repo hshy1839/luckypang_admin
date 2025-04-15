@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import '../../css/ProductManagement/ProductDetail.css';
+import '../../css/BoxManagement/BoxDetail.css';
 
 const BoxDetail = () => {
   const [box, setBox] = useState(null);
@@ -88,11 +88,11 @@ const BoxDetail = () => {
   if (!box) return <div>로딩 중...</div>;
 
   return (
-    <div className="product-detail-container">
+    <div className="box-detail-container">
       <Header />
-      <h1 className="product-name">박스 정보</h1>
-      <div className="product-detail-content">
-        <table className="product-detail-table">
+      <h1 className="box-name">박스 정보</h1>
+      <div className="box-detail-content">
+        <table className="box-detail-table">
           <tbody>
             <tr><th>박스명</th><td>{box.name}</td></tr>
             <tr><th>가격</th><td>{box.price}</td></tr>
@@ -122,7 +122,20 @@ const BoxDetail = () => {
                 </div>
               </td>
             </tr>
-
+            <tr>
+  <th>등록 상품</th>
+  <td>
+    <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+      {box.products?.map((item, idx) => (
+        <li key={idx} style={{ marginBottom: '6px' }}>
+          <strong>{item.product?.name}</strong>
+          {item.product?.brand && ` / ${item.product.brand}`}
+          {' '}– 확률: {item.probability}%
+        </li>
+      ))}
+    </ul>
+  </td>
+</tr>
             <tr><th>등록일</th><td>{new Date(box.createdAt).toLocaleString()}</td></tr>
           </tbody>
         </table>
