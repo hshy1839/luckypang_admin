@@ -25,6 +25,9 @@ import PromotionUpdate from './components/PromotionManagement/PromotionUpdate';
 import PromotionCreate from './components/PromotionManagement/PromotionCreate';
 import HeaderPhone from './components/HeaderPhone';
 import PromotionDetail from './components/PromotionManagement/PromotionDetail';
+import Box from './components/BoxManagement/Box';
+import BoxCreate from './components/BoxManagement/BoxCreate';
+import BoxDetail from './components/BoxManagement/BoxDetail';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -78,6 +81,10 @@ function App() {
           <Route path="/promotion/promotionDetail/:id" element={<PrivateRoute><Header /><PromotionDetail /></PrivateRoute>} />
           <Route path="/promotion/promotionDetail/:id/update" element={<PrivateRoute><Header /><PromotionUpdate /></PrivateRoute>} />
           
+          <Route path="/box" element={<PrivateRoute><Header /><Box /></PrivateRoute>} />
+          <Route path="/box/create" element={<PrivateRoute><Header /><BoxCreate /></PrivateRoute>} />
+          <Route path="/box/boxDetail/:id" element={<PrivateRoute><Header /><BoxDetail /></PrivateRoute>} />
+       
         </Routes>
       )}
     </div>

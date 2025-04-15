@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../css/Users.css';
+import '../../css/UserManagement/Users.css';
 import Header from '../Header.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { faCheck, faTrash, faBan } from '@fortawesome/free-solid-svg-icons';

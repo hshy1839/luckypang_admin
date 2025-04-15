@@ -5,15 +5,21 @@ import { faGauge, faUsers, faCalendarAlt, faBullhorn, faCog, faSignOutAlt, faBar
 import '../css/Header.css';
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+    const [isProductOpen, setIsProductOpen] = useState(false);
+    const [isBoxOpen, setisBoxOpen] = useState(false);
   const navigate = useNavigate();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const toggleProductMenu = () => {
+    setIsProductOpen(!isProductOpen);
+  };
+  const toggleBoxMenu = () => {
+    setisBoxOpen(!isBoxOpen);
   };
   
   const handleLinkClick = () => {
-    setIsOpen(false);
+    setIsProductOpen(false);
+    setisBoxOpen(false);
+
   };
 
   const handleLogout = () => {
@@ -45,22 +51,34 @@ const Header = () => {
               <div className='header-section2-item-text'>Overview</div>
             </div>
           </Link>
-          <div className='header-section2-item-employee-container'>
-            <Link to="#" onClick={toggleMenu}>
-              <div className='header-section2-item-employee'>
-                <FontAwesomeIcon icon={faCalendarAlt} className='header-section2-item-employee-icon' />
-                <div className='header-section2-item-text'>상품 관리</div>
-              </div>
-            </Link>
-            <div className={`submenu-employee ${isOpen ? 'open' : ''}`}>
-              <Link to="/products" className='submenu-item-employee'>상품 목록</Link>
-              {/* <Link to="/order" className='submenu-item-employee'>주문 목록</Link> */}
-              {/* <Link to="/QnA/qna" className='submenu-item-employee'>1:1 문의</Link> */}
-              <Link to="/coupon" className='submenu-item-employee'>쿠폰 관리</Link>
-              <Link to="/promotion" className='submenu-item-employee'>광고 설정</Link>
-            </div>
-          </div>
-
+           <div className='headerphone-section2-item-employee-container'>
+                      <Link to="#" onClick={toggleProductMenu}>
+                        <div className='headerphone-section2-item-employee'>
+                          <FontAwesomeIcon icon={faCalendarAlt} className='headerphone-section2-item-employee-icon' />
+                          <div className='headerphone-section2-item-text'>상품 관리</div>
+                        </div>
+                      </Link>
+                      <div className={`submenu-employee ${isProductOpen ? 'open' : ''}`}>
+                        <Link to="/products" className='submenu-item-employee'>상품 목록</Link>
+                        {/* <Link to="/order" className='submenu-item-employee'>주문 목록</Link> */}
+                        {/* <Link to="/QnA/qna" className='submenu-item-employee'>1:1 문의</Link> */}
+                        <Link to="/coupon" className='submenu-item-employee'>쿠폰 관리</Link>
+                        <Link to="/promotion" className='submenu-item-employee'>광고 설정</Link>
+                      </div>
+                    </div>
+             <div className='header-section2-item-employee-container'>
+                      <Link to="#" onClick={toggleBoxMenu}>
+                        <div className='header-section2-item-employee'>
+                          <FontAwesomeIcon icon={faCalendarAlt} className='header-section2-item-employee-icon' />
+                          <div className='header-section2-item-text'>박스 관리</div>
+                        </div>
+                      </Link>
+                      <div className={`submenu-employee ${isBoxOpen ? 'open' : ''}`}>
+                        <Link to="/box" className='submenu-item-employee'>박스 목록</Link>
+                          <Link to="/coupon" className='submenu-item-employee'>쿠폰 관리</Link>
+                        <Link to="/promotion" className='submenu-item-employee'>광고 설정</Link>
+                      </div>
+                    </div>
           <Link to="/users" onClick={handleLinkClick}>
             <div className='header-section2-item'>
               <FontAwesomeIcon icon={faUsers} className='header-section2-item-icon' />

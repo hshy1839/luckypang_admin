@@ -1,0 +1,105 @@
+.box-management-container {
+    font-family: 'Pretendard', sans-serif;
+    padding: 30px;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+  }
+  
+  .box-management-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .box-management-inner h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .box-search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .box-search-box select,
+  .box-search-box input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .box-search-box button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .box-search-box button:hover {
+    background-color: #0056b3;
+  }
+  
+  .box-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  
+  .box-table th {
+    background-color: #271386;
+    color: white;
+    padding: 12px;
+    font-weight: 600;
+  }
+  
+  .box-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .box-table tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  .box-table .clickable {
+    color: #007bff;
+    font-weight: 500;
+  }
+  
+  .no-data {
+    padding: 20px;
+    text-align: center;
+    color: #888;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 6px;
+  }
+  
+  .pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .pagination button.active {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    border-color: #007bff;
+  }
+  
