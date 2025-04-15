@@ -1,5 +1,3 @@
-// 업그레이드된 ProductCreate.js
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,15 +9,16 @@ const ProductCreate = () => {
     name: '',
     brand: '',
     category: '',
-    probabilityCategory: '',
+    probability: '',
     consumerPrice: '',
     price: '',
     shippingFee: '',
     shippingInfo: '',
-    option: '',
     description: '',
     sourceLink: '',
     isSourceSoldOut: false,
+    isVisible: true,
+    statusDetail: '판매중',
   });
 
   const [mainImage, setMainImage] = useState(null);
@@ -69,6 +68,26 @@ const ProductCreate = () => {
     setAdditionalPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const moveImage = (fromIndex, toIndex) => {
+    const updatedImages = [...additionalImages];
+    const updatedPreviews = [...additionalPreviews];
+    const [movedImage] = updatedImages.splice(fromIndex, 1);
+    const [movedPreview] = updatedPreviews.splice(fromIndex, 1);
+    updatedImages.splice(toIndex, 0, movedImage);
+    updatedPreviews.splice(toIndex, 0, movedPreview);
+    setAdditionalImages(updatedImages);
+    setAdditionalPreviews(updatedPreviews);
+  };
+
+  const handleDragStart = (e, index) => {
+    e.dataTransfer.setData('dragIndex', index);
+  };
+
+  const handleDropPreview = (e, index) => {
+    const fromIndex = Number(e.dataTransfer.getData('dragIndex'));
+    if (fromIndex !== index) moveImage(fromIndex, index);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -103,33 +122,69 @@ const ProductCreate = () => {
     <div className="product-create-container">
       <h2>상품 등록</h2>
       <form onSubmit={handleSubmit} className="product-create-form">
-        {[
-          { label: '상품 이름', name: 'name' },
-          { label: '브랜드', name: 'brand' },
-          { label: '카테고리', name: 'category' },
-          { label: '확률 카테고리', name: 'probabilityCategory' },
-          { label: '소비자가', name: 'consumerPrice', type: 'number' },
-          { label: '실구매가', name: 'price', type: 'number' },
-          { label: '배송비', name: 'shippingFee', type: 'number' },
-          { label: '배송정보', name: 'shippingInfo' },
-          { label: '옵션', name: 'option' },
-          { label: '발주처 링크', name: 'sourceLink' },
-        ].map(({ label, name, type = 'text' }) => (
-          <div key={name} className="product-create-field">
-            <label>{label}</label>
-            <input
-              type={type}
-              name={name}
-              value={form[name]}
-              onChange={handleInputChange}
-              required={['name', 'category', 'price'].includes(name)}
-            />
+        {[{ label: '상품 이름', name: 'name' }, { label: '브랜드', name: 'brand' }, { label: '카테고리', name: 'category' }, { label: '소비자가', name: 'consumerPrice', type: 'number' }, { label: '실구매가', name: 'price', type: 'number' }, { label: '배송비', name: 'shippingFee', type: 'number' }, { label: '배송정보', name: 'shippingInfo' }].map(({ label, name, type = 'text' }) => {
+          if (name === 'category') {
+            return (
+              <div key={name} className="product-create-field">
+                <label>{label}</label>
+                <select name="category" value={form.category} onChange={handleInputChange} required>
+                  <option value="" disabled hidden>선택하세요</option>
+                  <option value="5,000원 박스">5,000원 박스</option>
+                  <option value="10,000원 박스">10,000원 박스</option>
+                </select>
+              </div>
+            );
+          }
+
+          return (
+            <div key={name} className="product-create-field">
+              <label>{label}</label>
+              <input type={type} name={name} value={form[name]} onChange={handleInputChange} required={['name', 'category', 'price'].includes(name)} />
+            </div>
+          );
+        })}
+
+        <div className="product-create-field">
+          <label>확률 카테고리</label>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <input type="number" name="probability" value={form.probability} onChange={handleInputChange} min="0" max="100" step="1" required style={{ width: '80px' }} />
+            <span style={{ marginLeft: '8px' }}>%</span>
           </div>
-        ))}
+        </div>
+
+        <div className="product-create-field">
+          <label>노출 여부</label>
+          <select name="isVisible" value={form.isVisible ? 'true' : 'false'} onChange={(e) => setForm((prev) => ({ ...prev, isVisible: e.target.value === 'true' }))}>
+            <option value="true">노출</option>
+            <option value="false">비노출</option>
+          </select>
+        </div>
+
+        <div className="product-create-field">
+          <label>상태 상세</label>
+          <select name="statusDetail" value={form.statusDetail} onChange={handleInputChange}>
+            <option value="판매중">판매중</option>
+            <option value="테스트">테스트</option>
+            <option value="품절">품절</option>
+            <option value="비노출">비노출</option>
+          </select>
+        </div>
+
+        <div className="product-create-field">
+          <label>발주처 링크</label>
+          <input type="text" name="sourceLink" value={form.sourceLink} onChange={handleInputChange} placeholder="http, https로 시작하는 도메인을 입력하세요" required />
+        </div>
 
         <div className="product-create-field">
           <label>발주처 품절 여부</label>
-          <input type="checkbox" name="isSourceSoldOut" checked={form.isSourceSoldOut} onChange={handleInputChange} />
+          <div style={{ display: 'flex', gap: '20px', marginTop: '8px' }}>
+            <label>
+              <input type="radio" name="isSourceSoldOut" value="true" checked={form.isSourceSoldOut === true} onChange={() => setForm((prev) => ({ ...prev, isSourceSoldOut: true }))} /> 예
+            </label>
+            <label>
+              <input type="radio" name="isSourceSoldOut" value="false" checked={form.isSourceSoldOut === false} onChange={() => setForm((prev) => ({ ...prev, isSourceSoldOut: false }))} /> 아니오
+            </label>
+          </div>
         </div>
 
         <div className="product-create-field">
@@ -143,7 +198,7 @@ const ProductCreate = () => {
           <input type="file" multiple onChange={handleAdditionalImageChange} accept="image/*" />
           <div className="image-preview-list">
             {additionalPreviews.map((url, i) => (
-              <div key={i} className="preview-item">
+              <div key={i} className="preview-item" draggable onDragStart={(e) => handleDragStart(e, i)} onDrop={(e) => handleDropPreview(e, i)} onDragOver={(e) => e.preventDefault()}>
                 <img src={url} alt="상세 이미지" />
                 <button type="button" onClick={() => removeAdditionalImage(i)}>삭제</button>
               </div>

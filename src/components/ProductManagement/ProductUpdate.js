@@ -1,199 +1,245 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-import Header from '../Header';
-import '../../css/ProductManagement/ProductUpdate.css';
+import heic2any from "heic2any";
+import '../../css/ProductManagement/ProductCreate.css';
 
 const ProductUpdate = () => {
-    const [product, setProduct] = useState(null);
-    const [updatedProduct, setUpdatedProduct] = useState({
-        name: '',
-        category: '',
-        price: 0,
-        description: '',
-        sizeStock: {} // 사이즈별 재고를 위한 객체
-    });
-    const { id } = useParams();
-    const navigate = useNavigate();
+  const [form, setForm] = useState({
+    name: '',
+    brand: '',
+    category: '',
+    probability: '',
+    consumerPrice: '',
+    price: '',
+    shippingFee: '',
+    shippingInfo: '',
+    description: '',
+    sourceLink: '',
+    isSourceSoldOut: false,
+    isVisible: true,
+    statusDetail: '판매중',
+  });
 
-    const categories = {
-        "5,000원 박스": [],
-        "10,000원 박스": []
-    };
+  const [mainImage, setMainImage] = useState(null);
+  const [mainImagePreview, setMainImagePreview] = useState(null);
 
-    useEffect(() => {
-        const fetchProductDetail = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    console.log('로그인 정보가 없습니다.');
-                    return;
-                }
+  const [initialAdditionalImages, setInitialAdditionalImages] = useState([]);
+  const [additionalImages, setAdditionalImages] = useState([]);
+  const [additionalPreviews, setAdditionalPreviews] = useState([]);
+  const [imageList, setImageList] = useState([]);
 
-                const response = await axios.get(
-                    `http://localhost:7778/api/products/Product/${id}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-                if (response.data && response.data.success) {
-                    setProduct(response.data.product);
-                    const { main, sub } = response.data.product.category;
-                    setUpdatedProduct({
-                        name: response.data.product.name,
-                        category: response.data.product.category || '', // 문자열로 설정
-                        price: response.data.product.price,
-                        description: response.data.product.description,
-                        sizeStock: response.data.product.sizeStock || {},
-                    });
-                } else {
-                    console.log('상품 상세 데이터 로드 실패');
-                }
-            } catch (error) {
-                console.error('상품 상세 정보를 가져오는데 실패했습니다.', error);
-            }
-        };
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`http://localhost:7778/api/products/Product/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-        fetchProductDetail();
-    }, [id]);
-
-    const handleCategoryChange = (e) => {
-        const value = e.target.value;
-        setUpdatedProduct(prev => ({
-            ...prev,
-            category: value
-        }));
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        if (name.includes('size')) {
-            const size = name.split('_')[1];
-            setUpdatedProduct(prev => ({
-                ...prev,
-                sizeStock: {
-                    ...prev.sizeStock,
-                    [size]: value
-                }
-            }));
-        } else {
-            setUpdatedProduct(prev => ({ ...prev, [name]: value }));
+        if (response.data?.success) {
+          const product = response.data.product;
+          setForm(product);
+          if (product.mainImage) {
+            setMainImagePreview(`http://localhost:7778${product.mainImage}`);
+          }
+          if (product.additionalImages) {
+            setInitialAdditionalImages(product.additionalImages);
+          }
         }
+      } catch (error) {
+        console.error('상품 조회 실패:', error);
+      }
     };
+    fetchProduct();
+  }, [id]);
 
-    const handleSave = async (e) => {
-        e.preventDefault();
-        const confirmation = window.confirm('수정사항을 저장하시겠습니까?');
-        if (!confirmation) {
-            return;
-        }
+  useEffect(() => {
+    const merged = [
+      ...initialAdditionalImages.map((url) => ({ url, isInitial: true })),
+      ...additionalPreviews.map((url, i) => ({ url, isInitial: false, index: i })),
+    ];
+    setImageList(merged);
+  }, [initialAdditionalImages, additionalPreviews]);
 
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                alert('로그인 정보가 없습니다.');
-                return;
-            }
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
 
-            const response = await axios.put(
-                `http://localhost:7778/api/products/update/${id}`,
-                updatedProduct,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+  const handleMainImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.type === "image/heic") {
+        const converted = await heic2any({ blob: file, toType: "image/jpeg" });
+        setMainImagePreview(URL.createObjectURL(converted));
+        setMainImage(converted);
+      } else {
+        setMainImagePreview(URL.createObjectURL(file));
+        setMainImage(file);
+      }
+    }
+  };
 
-            if (response.data && response.data.success) {
-                alert('상품이 수정되었습니다.');
-                navigate(`/products`);
-            } else {
-                alert('상품 수정에 실패했습니다.');
-            }
-        } catch (error) {
-            console.error('상품 수정 중 오류가 발생했습니다.', error);
-            alert('서버와의 연결에 문제가 발생했습니다. 다시 시도해주세요.');
-        }
-    };
+  const handleAdditionalImageChange = async (e) => {
+    const files = e.target.files;
+    const newImages = [];
+    const newPreviews = [];
 
-    if (!product) {
-        return <div>로딩 중...</div>;
+    for (const file of files) {
+      if (file.type === 'image/heic') {
+        const converted = await heic2any({ blob: file, toType: "image/jpeg" });
+        newImages.push(converted);
+        newPreviews.push(URL.createObjectURL(converted));
+      } else {
+        newImages.push(file);
+        newPreviews.push(URL.createObjectURL(file));
+      }
     }
 
-    return (
-        <div className="product-update-container">
-            <h2 className="product-update-title">상품 수정</h2>
-            <form className="product-update-form" onSubmit={handleSave}>
-                {/* Product Name */}
-                <div className="product-update-field">
-                    <label className="product-update-label" htmlFor="name">상품 이름</label>
-                    <input
-                        className="product-update-input"
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={updatedProduct.name}
-                        onChange={handleChange}
-                        placeholder="상품 이름을 입력하세요"
-                        required
-                    />
-                </div>
+    setAdditionalImages(prev => [...prev, ...newImages]);
+    setAdditionalPreviews(prev => [...prev, ...newPreviews]);
+  };
 
-                <div className="product-update-field">
-  <label className="product-update-label" htmlFor="price">가격</label>
-  <input
-    className="product-update-input"
-    type="number"
-    id="price"
-    name="price"
-    value={updatedProduct.price}
-    onChange={handleChange}
-    placeholder="상품 가격을 입력하세요"
-    required
-  />
-</div>
+  const removeInitialImage = (index) => {
+    setInitialAdditionalImages(prev => prev.filter((_, i) => i !== index));
+  };
 
-                {/* Category */}
-                <div className="product-update-field">
-                    <label className="product-update-label" htmlFor="category">상위 카테고리</label>
-                    <select
-                        className="product-update-input"
-                        id="category"
-                        name="category"
-                        value={updatedProduct.category}
-                        onChange={handleCategoryChange}
-                        required
-                    >
-                        <option value="">박스 종류를 선택하세요</option>
-                        <option value="5,000원 박스">5,000원 박스</option>
-                        <option value="10,000원 박스">10,000원 박스</option>
-                    </select>
-                </div>
+  const removeAdditionalImage = (index) => {
+    setAdditionalImages(prev => prev.filter((_, i) => i !== index));
+    setAdditionalPreviews(prev => prev.filter((_, i) => i !== index));
+  };
 
+  const handleDragStart = (e, index) => {
+    e.dataTransfer.setData('dragIndex', index);
+  };
 
+  const handleDropPreview = (e, index) => {
+    const fromIndex = Number(e.dataTransfer.getData('dragIndex'));
+    if (fromIndex === index) return;
 
+    const reordered = [...imageList];
+    const [moved] = reordered.splice(fromIndex, 1);
+    reordered.splice(index, 0, moved);
+    setImageList(reordered);
 
-                <div className="product-update-field">
-                    <label className="product-update-label" htmlFor="description">상품 설명</label>
-                    <textarea
-                        className="product-update-input"
-                        id="description"
-                        name="description"
-                        value={updatedProduct.description}
-                        onChange={handleChange}
-                        placeholder="상품 설명을 입력하세요"
-                        rows="4"
-                    />
-                </div>
+    // 상태 재구성
+    const newInitial = [];
+    const newPreviews = [];
+    const newFiles = [];
 
-                <button type="submit" className="product-update-button">수정 저장</button>
-            </form>
+    reordered.forEach((item) => {
+      if (item.isInitial) newInitial.push(item.url);
+      else {
+        newPreviews.push(item.url);
+        newFiles.push(additionalImages[item.index]);
+      }
+    });
+
+    setInitialAdditionalImages(newInitial);
+    setAdditionalPreviews(newPreviews);
+    setAdditionalImages(newFiles);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    Object.entries(form).forEach(([key, value]) => formData.append(key, value));
+    if (mainImage) formData.append('mainImage', mainImage);
+    else formData.append('retainMainImage', 'true');
+
+    additionalImages.forEach(img => formData.append('additionalImages', img));
+    if (initialAdditionalImages.length > 0) {
+      initialAdditionalImages.forEach(url =>
+        formData.append('initialAdditionalImages', url)
+      );
+      formData.append('retainAdditionalImages', 'true');
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.put(
+        `http://localhost:7778/api/products/update/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+          },
+        }
+      );
+
+      if (response.data.success) {
+        alert('상품이 수정되었습니다.');
+        navigate('/products');
+      } else {
+        alert('상품 수정 실패: ' + response.data.message);
+      }
+    } catch (error) {
+      console.error('수정 중 오류:', error);
+      alert('등록 중 오류 발생');
+    }
+  };
+
+  return (
+    <div className="product-create-container">
+      <h2>상품 수정</h2>
+      <form onSubmit={handleSubmit} className="product-create-form">
+
+        <div className="product-create-field">
+          <label>대표 이미지</label>
+          <input type="file" onChange={handleMainImageChange} accept="image/*" />
+          {mainImagePreview && <img src={mainImagePreview} alt="미리보기" className="image-preview" />}
         </div>
-    );
+
+        <div className="product-create-field">
+          <label>상세 이미지</label>
+          <input type="file" multiple onChange={handleAdditionalImageChange} accept="image/*" />
+          <div className="image-preview-list">
+            {imageList.map((item, i) => (
+              <div
+                key={i}
+                className="preview-item"
+                draggable
+                onDragStart={(e) => handleDragStart(e, i)}
+                onDrop={(e) => handleDropPreview(e, i)}
+                onDragOver={(e) => e.preventDefault()}
+              >
+                <img src={item.isInitial ? `http://localhost:7778${item.url}` : item.url} alt="상세 이미지" />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (item.isInitial) {
+                      const idx = initialAdditionalImages.indexOf(item.url);
+                      removeInitialImage(idx);
+                    } else {
+                      removeAdditionalImage(item.index);
+                    }
+                  }}
+                >
+                  삭제
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="product-create-field">
+          <label>상품 설명</label>
+          <textarea name="description" value={form.description} onChange={handleInputChange} required />
+        </div>
+
+        <button type="submit" className="product-create-button">수정</button>
+      </form>
+    </div>
+  );
 };
 
 export default ProductUpdate;
