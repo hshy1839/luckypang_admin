@@ -20,14 +20,16 @@ const BoxCreate = () => {
   const [mainImagePreview, setMainImagePreview] = useState(null);
   const [additionalImages, setAdditionalImages] = useState([]);
   const [additionalPreviews, setAdditionalPreviews] = useState([]);
+
+  const [productSearch, setProductSearch] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+    setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
   };
 
   const handleMainImageChange = async (e) => {
@@ -63,6 +65,36 @@ const BoxCreate = () => {
     setAdditionalPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const searchProductByName = async () => {
+    if (!productSearch.trim()) return;
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`http://localhost:7778/api/products/search?name=${productSearch}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.data.success) {
+        const products = response.data.products.map(p => ({
+          ...p,
+          probability: p.probability || 0
+        }));
+        setSearchResults(products);
+      }
+    } catch (err) {
+      console.error('검색 실패', err);
+    }
+  };
+
+  const addProductToBox = (product) => {
+    if (selectedProducts.some(p => p.product._id === product._id)) return;
+    setSelectedProducts(prev => [...prev, { product, probability: product.probability || 0 }]);
+  };
+
+  const removeSelectedProduct = (index) => {
+    const updated = [...selectedProducts];
+    updated.splice(index, 1);
+    setSelectedProducts(updated);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -70,9 +102,12 @@ const BoxCreate = () => {
     Object.entries(form).forEach(([key, value]) => {
       formData.append(key, value);
     });
-
     if (mainImage) formData.append('mainImage', mainImage);
     additionalImages.forEach((img) => formData.append('additionalImages', img));
+
+    selectedProducts.forEach(({ product, probability }) => {
+      formData.append('products[]', JSON.stringify({ product: product._id, probability }));
+    });
 
     try {
       const token = localStorage.getItem('token');
@@ -82,7 +117,6 @@ const BoxCreate = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-
       if (response.status === 200) {
         alert('박스가 성공적으로 등록되었습니다.');
         navigate('/box');
@@ -165,6 +199,29 @@ const BoxCreate = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="product-create-field">
+          <label>상품 검색</label>
+          <input value={productSearch} onChange={(e) => setProductSearch(e.target.value)} />
+          <button type="button" onClick={searchProductByName}>검색</button>
+          <ul>
+            {searchResults.map(p => (
+              <li key={p._id}>{p.name} <button type="button" onClick={() => addProductToBox(p)}>추가</button></li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="product-create-field">
+          <label>선택된 상품 및 확률</label>
+          <ul>
+            {selectedProducts.map((p, i) => (
+              <li key={p.product._id}>
+                {p.product.name} - {p.probability} %
+                <button type="button" onClick={() => removeSelectedProduct(i)}>삭제</button>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <button type="submit" className="product-create-button">등록</button>

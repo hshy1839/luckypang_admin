@@ -98,8 +98,16 @@ const BoxDetail = () => {
             <tr><th>가격</th><td>{box.price}</td></tr>
             <tr><th>공개 여부</th><td>{box.isPublic ? '공개' : '비공개'}</td></tr>
             <tr><th>상태 상세</th><td>{box.type}</td></tr>
-            <tr><th>박스 시작</th><td>{box.availableFrom}</td></tr>
-            <tr><th>박스 마감</th><td>{box.availableUntil}</td></tr>
+            <tr><th>박스 시작</th><td>{new Date(box.availableFrom).toLocaleDateString('ko-KR', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            })}</td></tr>
+            <tr><th>박스 마감</th><td>{new Date(box.availableUntil).toLocaleDateString('ko-KR', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            })}</td></tr>
             <tr>
               <th>대표 이미지</th>
               <td>{box.mainImage && <img src={`http://localhost:7778${box.mainImage}`} alt="대표 이미지" style={{ width: '200px' }} />}</td>
@@ -114,7 +122,7 @@ const BoxDetail = () => {
                 </div>
               </td>
             </tr>
-            
+
             <tr><th>등록일</th><td>{new Date(box.createdAt).toLocaleString()}</td></tr>
           </tbody>
         </table>
