@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import heic2any from "heic2any";
-import '../../css/ProductManagement/ProductCreate.css';
+import '../../css/ProductManagement/ProductUpdate.css';
 
 const ProductUpdate = () => {
   const [form, setForm] = useState({
@@ -23,7 +23,6 @@ const ProductUpdate = () => {
 
   const [mainImage, setMainImage] = useState(null);
   const [mainImagePreview, setMainImagePreview] = useState(null);
-
   const [initialAdditionalImages, setInitialAdditionalImages] = useState([]);
   const [additionalImages, setAdditionalImages] = useState([]);
   const [additionalPreviews, setAdditionalPreviews] = useState([]);
@@ -129,7 +128,6 @@ const ProductUpdate = () => {
     reordered.splice(index, 0, moved);
     setImageList(reordered);
 
-    // 상태 재구성
     const newInitial = [];
     const newPreviews = [];
     const newFiles = [];
@@ -189,17 +187,95 @@ const ProductUpdate = () => {
   };
 
   return (
-    <div className="product-create-container">
+    <div className="product-update-container">
       <h2>상품 수정</h2>
-      <form onSubmit={handleSubmit} className="product-create-form">
+      <form onSubmit={handleSubmit} className="product-update-form">
 
-        <div className="product-create-field">
+        {[
+          { label: '상품 이름', name: 'name' },
+          { label: '브랜드', name: 'brand' },
+          { label: '소비자가', name: 'consumerPrice', type: 'number' },
+          { label: '실구매가', name: 'price', type: 'number' },
+          { label: '배송비', name: 'shippingFee', type: 'number' },
+          { label: '배송정보', name: 'shippingInfo' },
+        ].map(({ label, name, type = 'text' }) => (
+          <div key={name} className="product-update-field">
+            <label>{label}</label>
+            <input
+              type={type}
+              name={name}
+              value={form[name]}
+              onChange={handleInputChange}
+              required={['name', 'price'].includes(name)}
+            />
+          </div>
+        ))}
+
+        <div className="product-update-field">
+          <label>카테고리</label>
+          <select name="category" value={form.category} onChange={handleInputChange} required>
+            <option value="" disabled hidden>선택하세요</option>
+            <option value="5,000원 박스">5,000원 박스</option>
+            <option value="10,000원 박스">10,000원 박스</option>
+          </select>
+        </div>
+
+        <div className="product-update-field">
+          <label>확률 카테고리 (%)</label>
+          <input
+            type="number"
+            name="probability"
+            min="0"
+            max="100"
+            step="1"
+            value={form.probability}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="product-update-field">
+          <label>노출 여부</label>
+          <select name="isVisible" value={form.isVisible ? 'true' : 'false'} onChange={(e) => setForm((prev) => ({ ...prev, isVisible: e.target.value === 'true' }))}>
+            <option value="true">노출</option>
+            <option value="false">비노출</option>
+          </select>
+        </div>
+
+        <div className="product-update-field">
+          <label>상태 상세</label>
+          <select name="statusDetail" value={form.statusDetail} onChange={handleInputChange}>
+            <option value="판매중">판매중</option>
+            <option value="테스트">테스트</option>
+            <option value="품절">품절</option>
+            <option value="비노출">비노출</option>
+          </select>
+        </div>
+
+        <div className="product-update-field">
+          <label>발주처 링크</label>
+          <input type="text" name="sourceLink" value={form.sourceLink} onChange={handleInputChange} required />
+        </div>
+
+        <div className="product-update-field">
+          <label>발주처 품절 여부</label>
+          <div style={{ display: 'flex', gap: '20px' }}>
+            <label>
+              <input type="radio" name="isSourceSoldOut" value="true" checked={form.isSourceSoldOut === true} onChange={() => setForm((prev) => ({ ...prev, isSourceSoldOut: true }))} /> 예
+            </label>
+            <label>
+              <input type="radio" name="isSourceSoldOut" value="false" checked={form.isSourceSoldOut === false} onChange={() => setForm((prev) => ({ ...prev, isSourceSoldOut: false }))} /> 아니오
+            </label>
+          </div>
+        </div>
+
+        <div className="product-update-field">
           <label>대표 이미지</label>
           <input type="file" onChange={handleMainImageChange} accept="image/*" />
           {mainImagePreview && <img src={mainImagePreview} alt="미리보기" className="image-preview" />}
         </div>
 
-        <div className="product-create-field">
+        <div className="product-update-field">
           <label>상세 이미지</label>
           <input type="file" multiple onChange={handleAdditionalImageChange} accept="image/*" />
           <div className="image-preview-list">
@@ -231,12 +307,12 @@ const ProductUpdate = () => {
           </div>
         </div>
 
-        <div className="product-create-field">
+        <div className="product-update-field">
           <label>상품 설명</label>
           <textarea name="description" value={form.description} onChange={handleInputChange} required />
         </div>
 
-        <button type="submit" className="product-create-button">수정</button>
+        <button type="submit" className="product-update-button">수정</button>
       </form>
     </div>
   );

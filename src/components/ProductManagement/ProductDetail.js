@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../Header';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 import '../../css/ProductManagement/ProductDetail.css';
 
 const ProductDetail = () => {
@@ -58,52 +60,85 @@ const ProductDetail = () => {
     }
   };
 
+  const handleExportToExcel = () => {
+    if (!product) return;
+
+    const data = [
+      {
+        상품번호: product.productNumber,
+        상품명: product.name,
+        브랜드: product.brand,
+        카테고리: product.category,
+        '노출 여부': product.isVisible ? '노출' : '비노출',
+        '상태 상세': product.statusDetail,
+        확률: product.probability,
+        소비자가: product.consumerPrice,
+        실구매가: product.price,
+        배송비: product.shippingFee,
+        총결제금액: product.totalPrice,
+        배송정보: product.shippingInfo,
+        상품설명: product.description,
+        '발주처 링크': product.sourceLink,
+        '발주처 품절 여부': product.isSourceSoldOut ? '품절' : '정상',
+        등록일: new Date(product.createdAt).toLocaleString(),
+      }
+    ];
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'ProductDetail');
+
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const file = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(file, `상품_${product.name}_상세정보.xlsx`);
+  };
+
   if (!product) return <div>로딩 중...</div>;
 
   return (
     <div className="product-detail-container">
       <Header />
-      <h1>상품 정보</h1>
+      <h1 className="product-name">상품 정보</h1>
       <div className="product-detail-content">
-        <div className="product-info">
-          <p><strong>상품번호:</strong> {product.productNumber}</p>
-          <p><strong>상품명:</strong> {product.name}</p>
-          <p><strong>브랜드:</strong> {product.brand || '-'}</p>
-          <p><strong>카테고리:</strong> {product.category}</p>
-          <p><strong>노출 여부:</strong> {product.isVisible ? '노출' : '비노출'}</p>
-          <p><strong>상태 상세:</strong> {product.statusDetail}</p>
-          <p><strong>확률:</strong> {product.probability}</p>
+        <table className="product-detail-table">
+          <tbody>
+            <tr><th>상품번호</th><td>{product.productNumber}</td></tr>
+            <tr><th>상품명</th><td>{product.name}</td></tr>
+            <tr><th>브랜드</th><td>{product.brand || '-'}</td></tr>
+            <tr><th>카테고리</th><td>{product.category}</td></tr>
+            <tr><th>노출 여부</th><td>{product.isVisible ? '노출' : '비노출'}</td></tr>
+            <tr><th>상태 상세</th><td>{product.statusDetail}</td></tr>
+            <tr><th>확률</th><td>{product.probability} %</td></tr>
+            <tr>
+              <th>대표 이미지</th>
+              <td>{product.mainImage && <img src={`http://localhost:7778${product.mainImage}`} alt="대표 이미지" style={{ width: '200px' }} />}</td>
+            </tr>
+            <tr>
+              <th>상세 이미지</th>
+              <td>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                  {product.additionalImages?.map((url, idx) => (
+                    <img key={idx} src={`http://localhost:7778${url}`} alt={`상세 ${idx}`} style={{ width: '150px' }} />
+                  ))}
+                </div>
+              </td>
+            </tr>
+            <tr><th>소비자가</th><td>{product.consumerPrice?.toLocaleString()} 원</td></tr>
+            <tr><th>실구매가</th><td>{product.price?.toLocaleString()} 원</td></tr>
+            <tr><th>배송비</th><td>{product.shippingFee?.toLocaleString()} 원</td></tr>
+            <tr><th>총 결제금액</th><td>{product.totalPrice?.toLocaleString() || '자동 계산 예정'} 원</td></tr>
+            <tr><th>배송 정보</th><td>{product.shippingInfo}</td></tr>
+            <tr><th>상품 설명</th><td>{product.description}</td></tr>
+            <tr><th>발주처 링크</th><td><a href={product.sourceLink} target="_blank" rel="noopener noreferrer">{product.sourceLink}</a></td></tr>
+            <tr><th>발주처 품절 여부</th><td>{product.isSourceSoldOut ? '품절' : '정상'}</td></tr>
+            <tr><th>등록일</th><td>{new Date(product.createdAt).toLocaleString()}</td></tr>
+          </tbody>
+        </table>
 
-          <div>
-            <strong>대표 이미지:</strong><br />
-            {product.mainImage && <img src={`http://localhost:7778${product.mainImage}`} alt="대표 이미지" style={{ width: '200px' }} />}
-          </div>
-
-          <div>
-            <strong>상세 이미지:</strong>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              {product.additionalImages?.map((url, idx) => (
-                <img key={idx} src={`http://localhost:7778${url}`} alt={`상세 ${idx}`} style={{ width: '150px' }} />
-              ))}
-            </div>
-          </div>
-
-          <p><strong>소비자가:</strong> {product.consumerPrice?.toLocaleString()} 원</p>
-          <p><strong>실구매가:</strong> {product.price?.toLocaleString()} 원</p>
-          <p><strong>배송비:</strong> {product.shippingFee?.toLocaleString()} 원</p>
-          <p><strong>총 결제금액:</strong> {product.totalPrice?.toLocaleString() || '자동 계산 예정'} 원</p>
-
-          <p><strong>배송 정보:</strong> {product.shippingInfo}</p>
-          <p><strong>상품 설명:</strong> {product.description}</p>
-          <p><strong>발주처 링크:</strong> <a href={product.sourceLink} target="_blank" rel="noopener noreferrer">{product.sourceLink}</a></p>
-
-          <p><strong>발주처 품절 여부:</strong> {product.isSourceSoldOut ? '품절' : '정상'}</p>
-          <p><strong>등록일:</strong> {new Date(product.createdAt).toLocaleString()}</p>
-
-          <div className="button-container">
-            <button className="edit-button" onClick={handleEdit}>수정</button>
-            <button className="delete-button" onClick={handleDelete}>삭제</button>
-          </div>
+        <div className="button-container">
+          <button className="edit-button" onClick={handleEdit}>수정</button>
+          <button className="delete-button" onClick={handleDelete}>삭제</button>
+          <button className="export-button" onClick={handleExportToExcel}>엑셀로 저장</button>
         </div>
       </div>
     </div>

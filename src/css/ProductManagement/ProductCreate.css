@@ -1,158 +1,130 @@
 .product-create-container {
-    max-width: 600px;
-    margin: 0 auto;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.product-create-container h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.product-create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.product-create-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-create-field label {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.product-create-field input,
+.product-create-field select,
+.product-create-field textarea {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border 0.2s;
+}
+
+.product-create-field input:focus,
+.product-create-field select:focus,
+.product-create-field textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.product-create-field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.image-preview {
+  margin-top: 10px;
+  max-width: 200px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.image-preview-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.preview-item {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-item button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: rgba(220, 53, 69, 0.9);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.preview-item button:hover {
+  background-color: rgba(200, 35, 51, 0.95);
+}
+
+.product-create-button {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.product-create-button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .product-create-container {
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
-  .product-create-title {
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .product-create-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .product-create-field {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .product-create-label {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
-  }
-    
-  .product-create-input,
-  .product-create-textarea {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  .product-create-input {
-    resize: vertical;
-  }
-  
-  .product-create-input:focus,
-  .product-create-textarea:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-  
-  .product-create-sizes label {
-    margin-right: 10px;
-    font-size: 14px;
-  }
-  
-  
-  .product-create-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .product-create-button:hover {
-    background-color: #0056b3;
-  }
-  .product-create-preview-images {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 5%;
-    margin-bottom: 10%;
-  }
-  .product-create-image-item {
-    position: relative; /* 삭제 버튼을 절대 위치로 설정하기 위해 필요 */
-    width: 200px;  /* 각 이미지 항목의 너비 설정 */
-    height: 200px;  /* 이미지 항목의 높이 설정 */
-    padding: 10px;
-    margin-bottom: 0%;
-    border: 1px solid rgb(180, 180, 180);
-    background-color: white;
-  }
-  
-  .product-create-image-item img {
-    width: 100%;  /* 이미지의 너비를 항목에 맞춤 */
-    height: 100%;  /* 이미지의 높이를 항목에 맞춤 */
-    object-fit: contain;  /* 이미지 비율을 유지하면서 크기 맞추기 */
-  }
-  
-  /* 삭제 버튼 스타일 */
-  .delete-image-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 20px;
-    height: 20px;
-    border-radius: 20%;
-    background-color: red;
-    border: 2px solid red;
-    color: white;
-    display: flex;
+
+  .image-preview-list {
     justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
   }
-  
-  .delete-image-button:hover {
-    background-color: red;
-    color: white;
-  }
-  
-  @media (max-width:900px) {
-   
-    .product-create-preview-images {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 5%;
-      margin-bottom: 10%;
-    }
-    .product-create-image-item {
-      position: relative; /* 삭제 버튼을 절대 위치로 설정하기 위해 필요 */
-      width: 100%;  /* 각 이미지 항목의 너비 설정 */
-      height: 100%;  /* 이미지 항목의 높이 설정 */
-      padding: 10px;
-      margin-bottom: 0%;
-      border: 1px solid rgb(180, 180, 180);
-      background-color: white;
-    }
-    
-    .product-create-image-item img {
-      width: 100%;  /* 이미지의 너비를 항목에 맞춤 */
-      height: 100%;  /* 이미지의 높이를 항목에 맞춤 */
-      object-fit: contain;  /* 이미지 비율을 유지하면서 크기 맞추기 */
-    }
-    .product-create-sizes  {
-      display: flex;
-      flex-direction: column;
-    }
-    .product-create-sizes label {
-      font-size: 18px;
-    }
-    .product-create-sizes input {
-      margin-left: 20px;
-      font-size: 18px;
-    }
-    
-  }
+}
