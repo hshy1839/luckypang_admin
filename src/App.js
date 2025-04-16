@@ -29,6 +29,7 @@ import Box from './components/BoxManagement/Box';
 import BoxCreate from './components/BoxManagement/BoxCreate';
 import BoxDetail from './components/BoxManagement/BoxDetail';
 import BoxUpdate from './components/BoxManagement/BoxUpdate';
+import Points from './components/PointManagement/Points';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -61,12 +62,15 @@ function App() {
         <Routes>
           <Route path="/" element={<PrivateRoute><Header /><Main /></PrivateRoute>} />
           <Route path="/headerphone" element={<PrivateRoute><HeaderPhone /></PrivateRoute>} />
+         {/* 유저관리 */}
           <Route path="/users" element={<PrivateRoute><Users /></PrivateRoute>} />
           <Route path="/users/usersDetail/:id" element={<PrivateRoute><UsersDetail /></PrivateRoute>} />
+        {/* 공지관리 */}
           <Route path="/notice" element={<PrivateRoute><Header /><Notice /></PrivateRoute>} />
           <Route path="/notice/noticeCreate" element={<PrivateRoute><Header /><NoticeCreate /></PrivateRoute>} />
           <Route path="/notice/noticeDetail/:id" element={<PrivateRoute><NoticeDetail /></PrivateRoute>} />
           <Route path="/login" element={<Login />} />
+       {/* 상품관리 */}
           <Route path="/products" element={<PrivateRoute><Header /><Product /></PrivateRoute>} />
           <Route path="/products/productCreate" element={<PrivateRoute><Header /><ProductCreate /></PrivateRoute>} />
           <Route path="/products/productDetail/:id" element={<PrivateRoute><Header /><ProductDetail /></PrivateRoute>} />
@@ -77,16 +81,19 @@ function App() {
           {/* <Route path="/QnA/qna/qnaDetail/:id" element={<PrivateRoute><Header /><QnaDetail/></PrivateRoute>} /> */}
           <Route path="/coupon" element={<PrivateRoute><Header /><Coupon/></PrivateRoute>} />
           <Route path="/coupon/create" element={<PrivateRoute><Header /><CouponCreate/></PrivateRoute>} />
+          {/* 광고 */}
           <Route path="/promotion" element={<PrivateRoute><Header /><Promotion/></PrivateRoute>} />
           <Route path="/promotion/create" element={<PrivateRoute><Header /><PromotionCreate/></PrivateRoute>} />
           <Route path="/promotion/promotionDetail/:id" element={<PrivateRoute><Header /><PromotionDetail /></PrivateRoute>} />
           <Route path="/promotion/promotionDetail/:id/update" element={<PrivateRoute><Header /><PromotionUpdate /></PrivateRoute>} />
-          
+          {/* 박스 */}
           <Route path="/box" element={<PrivateRoute><Header /><Box /></PrivateRoute>} />
           <Route path="/box/create" element={<PrivateRoute><Header /><BoxCreate /></PrivateRoute>} />
           <Route path="/box/boxDetail/:id" element={<PrivateRoute><Header /><BoxDetail /></PrivateRoute>} />
           <Route path="/box/boxUpdate/:id" element={<PrivateRoute><Header /><BoxUpdate /></PrivateRoute>} />
-       
+          {/* 포인트 관리 */}
+          <Route path="/points" element={<PrivateRoute><Header /><Points /></PrivateRoute>} />
+
         </Routes>
       )}
     </div>

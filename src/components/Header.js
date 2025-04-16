@@ -7,6 +7,7 @@ import '../css/Header.css';
 const Header = () => {
     const [isProductOpen, setIsProductOpen] = useState(false);
     const [isBoxOpen, setisBoxOpen] = useState(false);
+    const [isPointOpen, setisPointOpen] = useState(false);
   const navigate = useNavigate();
 
   const toggleProductMenu = () => {
@@ -15,7 +16,9 @@ const Header = () => {
   const toggleBoxMenu = () => {
     setisBoxOpen(!isBoxOpen);
   };
-  
+  const togglePointMenu = () => {
+    setisPointOpen(!isPointOpen);
+  };
   const handleLinkClick = () => {
     setIsProductOpen(false);
     setisBoxOpen(false);
@@ -85,6 +88,19 @@ const Header = () => {
               <div className='header-section2-item-text'>고객 관리</div>
             </div>
           </Link>
+          <div className='header-section2-item-employee-container'>
+                      <Link to="#" onClick={togglePointMenu}>
+                        <div className='header-section2-item-employee'>
+                          <FontAwesomeIcon icon={faCalendarAlt} className='header-section2-item-employee-icon' />
+                          <div className='header-section2-item-text'>포인트 관리</div>
+                        </div>
+                      </Link>
+                      <div className={`submenu-employee ${isPointOpen ? 'open' : ''}`}>
+                        <Link to="/points" className='submenu-item-employee'>포인트 관리</Link>
+                          <Link to="/coupon" className='submenu-item-employee'>포인트 추가</Link>
+                        <Link to="/promotion" className='submenu-item-employee'>포인트 내역</Link>
+                      </div>
+                    </div>
           <Link to="/notice" onClick={handleLinkClick}>
             <div className='header-section2-item'>
               <FontAwesomeIcon icon={faBullhorn} className='header-section2-item-icon' />
