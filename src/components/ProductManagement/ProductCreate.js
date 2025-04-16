@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import heic2any from "heic2any";
@@ -25,6 +25,7 @@ const ProductCreate = () => {
   const [mainImagePreview, setMainImagePreview] = useState(null);
   const [additionalImages, setAdditionalImages] = useState([]);
   const [additionalPreviews, setAdditionalPreviews] = useState([]);
+  const [boxOptions, setBoxOptions] = useState([]);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -48,6 +49,27 @@ const ProductCreate = () => {
       }
     }
   };
+
+  useEffect(() => {
+    const fetchBoxList = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get('http://localhost:7778/api/box', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        if (res.data.success && Array.isArray(res.data.boxes)) {
+          setBoxOptions(res.data.boxes.map(box => box.name));
+        }
+      } catch (err) {
+        console.error('박스 목록 불러오기 실패:', err);
+      }
+    };
+  
+    fetchBoxList();
+  }, []);
 
   const handleAdditionalImageChange = async (e) => {
     const files = e.target.files;
@@ -127,11 +149,17 @@ const ProductCreate = () => {
             return (
               <div key={name} className="product-create-field">
                 <label>{label}</label>
-                <select name="category" value={form.category} onChange={handleInputChange} required>
-                  <option value="" disabled hidden>선택하세요</option>
-                  <option value="5,000원 박스">5,000원 박스</option>
-                  <option value="10,000원 박스">10,000원 박스</option>
-                </select>
+                <div key="category" className="product-create-field">
+  <select name="category" value={form.category} onChange={handleInputChange} required>
+    <option value="" disabled hidden>선택하세요</option>
+    {boxOptions.map((boxName) => (
+      <option key={boxName} value={boxName}>
+        {boxName}
+      </option>
+    ))}
+  </select>
+</div>
+
               </div>
             );
           }

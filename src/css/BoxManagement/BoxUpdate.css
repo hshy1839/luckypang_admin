@@ -1,0 +1,70 @@
+.product-update-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-update-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .product-update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .product-update-field {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product-update-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .product-update-input,
+  .product-update-textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .product-update-input:focus,
+  .product-update-textarea:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .product-update-sizes label {
+    margin-right: 10px;
+    font-size: 14px;
+  }
+  
+  .product-update-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .product-update-button:hover {
+    background-color: #0056b3;
+  }
+  

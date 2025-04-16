@@ -1,5 +1,7 @@
 .users-management-container {
   font-family: 'Pretendard', 'sans-serif';
+  width: 80%;
+  margin-left: 20%;
   padding: 20px;
   background-color: #f7f9fb;
   min-height: 100vh;

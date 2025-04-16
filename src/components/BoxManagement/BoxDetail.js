@@ -36,7 +36,7 @@ const BoxDetail = () => {
   }, [id]);
 
   const handleEdit = () => {
-    navigate(`/box/boxDetail/${id}/update`);
+    navigate(`/box/boxUpdate/${id}`);
   };
 
   const handleDelete = async () => {
@@ -71,6 +71,7 @@ const BoxDetail = () => {
         '상태 상세': box.type,
         박스시작: box.availableFrom,
         박스마감: box.availableUntil,
+        박스설명: box.description,
         한정수량: box.purchaseLimit,
         등록일: new Date(box.createdAt).toLocaleString(),
       }
@@ -98,6 +99,7 @@ const BoxDetail = () => {
             <tr><th>가격</th><td>{box.price}</td></tr>
             <tr><th>공개 여부</th><td>{box.isPublic ? '공개' : '비공개'}</td></tr>
             <tr><th>상태 상세</th><td>{box.type}</td></tr>
+            <tr><th>박스 설명</th><td>{box.description}</td></tr>
             <tr><th>박스 시작</th><td>{new Date(box.availableFrom).toLocaleDateString('ko-KR', {
               year: 'numeric',
               month: '2-digit',
