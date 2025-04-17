@@ -78,8 +78,7 @@ const Header = () => {
                       </Link>
                       <div className={`submenu-employee ${isBoxOpen ? 'open' : ''}`}>
                         <Link to="/box" className='submenu-item-employee'>박스 목록</Link>
-                          <Link to="/coupon" className='submenu-item-employee'>쿠폰 관리</Link>
-                        <Link to="/promotion" className='submenu-item-employee'>광고 설정</Link>
+                          <Link to="/boxorder" className='submenu-item-employee'>주문 내역</Link>
                       </div>
                     </div>
           <Link to="/users" onClick={handleLinkClick}>

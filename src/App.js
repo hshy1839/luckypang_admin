@@ -30,6 +30,8 @@ import BoxCreate from './components/BoxManagement/BoxCreate';
 import BoxDetail from './components/BoxManagement/BoxDetail';
 import BoxUpdate from './components/BoxManagement/BoxUpdate';
 import Points from './components/PointManagement/Points';
+import BoxOrder from './components/BoxOrderManagement/BoxOrder';
+import BoxOrderDetail from './components/BoxOrderManagement/BoxOrderDetail';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -93,7 +95,10 @@ function App() {
           <Route path="/box/boxUpdate/:id" element={<PrivateRoute><Header /><BoxUpdate /></PrivateRoute>} />
           {/* 포인트 관리 */}
           <Route path="/points" element={<PrivateRoute><Header /><Points /></PrivateRoute>} />
-
+          {/* 박스 주문 내역 */}
+          <Route path="/boxorder" element={<PrivateRoute><Header /><BoxOrder /></PrivateRoute>} />
+          <Route path="/boxorder/detail/:id" element={<PrivateRoute><Header /><BoxOrderDetail /></PrivateRoute>} />
+          
         </Routes>
       )}
     </div>
