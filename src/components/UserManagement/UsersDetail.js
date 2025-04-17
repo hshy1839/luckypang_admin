@@ -172,7 +172,7 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
           </div>
         </div>
 
-        <h2>포인트 내역</h2>
+        <h2>유저 포인트 내역</h2>
         <table className="user-detail-table">
           <thead>
             <tr>
