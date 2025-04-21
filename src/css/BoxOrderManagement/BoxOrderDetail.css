@@ -1,17 +1,20 @@
-.order-detail-container {
-    padding: 40px;
-    background-color: #f9f9f9;
-    min-height: 100vh;
+.box-order-detail-container {
+    font-family: 'Noto Sans KR', sans-serif;
+    max-width: 1500px;
     margin-left: 20%;
+    padding: 32px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
   
-  .order-detail-container h2 {
+  .box-order-detail-container h2 {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 24px;
   }
   
-  .order-detail-table {
+  .box-order-detail-table {
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
@@ -19,30 +22,30 @@
     font-size: 14px;
   }
   
-  .order-detail-table th,
-  .order-detail-table td {
+  .box-order-detail-table th,
+  .box-order-detail-table td {
     padding: 12px 16px;
     border: 1px solid #ddd;
     text-align: left;
   }
   
-  .order-detail-table th {
+  .box-order-detail-table th {
     background-color: #f0f0f0;
     width: 180px;
     font-weight: 600;
   }
   
-  .order-detail-table td {
+  .box-order-detail-table td {
     background-color: #fff;
   }
   
-  .order-detail-actions {
+  .box-order-detail-actions {
     margin-top: 24px;
     display: flex;
     justify-content: flex-end;
   }
   
-  .order-detail-actions button {
+  .box-order-detail-actions button {
     background-color: #333;
     color: white;
     padding: 10px 20px;
@@ -53,7 +56,7 @@
     transition: background-color 0.2s ease;
   }
   
-  .order-detail-actions button:hover {
+  .box-order-detail-actions button:hover {
     background-color: #555;
   }
   

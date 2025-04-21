@@ -65,14 +65,17 @@
   }
   
   .box-order-table td button {
-    padding: 5px 10px;
-    margin: 2px;
+    padding: 0px 10px;
+    margin: 1px;
     border: none;
     border-radius: 4px;
     background-color: #007bff;
     color: white;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 12px;
+  }
+  .box-order-btn-container {
+    display: flex;
   }
   
   .box-order-table td button:hover {

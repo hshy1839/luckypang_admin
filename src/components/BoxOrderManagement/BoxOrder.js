@@ -128,10 +128,12 @@ const BoxOrder = () => {
               <td>{order.status}</td>
               <td>{formatDate(order.createdAt)}</td>
               <td>
+                <div className='box-order-btn-container'>
                 <button onClick={() => navigate(`/boxorder/detail/${order._id}`)}>상세</button>
                 {order.status === 'paid' && (
                   <button onClick={() => handleRefund(order._id)}>환불</button>
                 )}
+                </div>
               </td>
             </tr>
           ))}

@@ -32,11 +32,11 @@ const BoxOrderDetail = () => {
   if (!order) return <div>로딩 중...</div>;
 
   return (
-    <div className="order-detail-container">
+    <div className="box-order-detail-container">
       <Header />
       <h2>주문 상세 정보</h2>
 
-      <table className="order-detail-table">
+      <table className="box-order-detail-table">
         <tbody>
           <tr><th>주문번호</th><td>{order._id}</td></tr>
           <tr><th>유저</th><td>{order.user?.nickname}</td></tr>
@@ -56,7 +56,7 @@ const BoxOrderDetail = () => {
         </tbody>
       </table>
 
-      <div className="order-detail-actions">
+      <div className="box-order-detail-actions">
         <button onClick={() => navigate('/boxorder')}>목록으로</button>
       </div>
     </div>

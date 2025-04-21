@@ -19,6 +19,7 @@ const ProductUpdate = () => {
     isSourceSoldOut: false,
     isVisible: true,
     statusDetail: '판매중',
+    refundProbability: '',
   });
 
   const [mainImage, setMainImage] = useState(null);
@@ -242,6 +243,23 @@ const ProductUpdate = () => {
           </select>
         </div>
 
+        <div className="product-create-field">
+  <label>포인트 환급률</label>
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <input
+      type="number"
+      name="refundProbability"
+      value={form.refundProbability}
+      onChange={handleInputChange}
+      min="0"
+      max="100"
+      step="1"
+      required
+      style={{ width: '80px' }}
+    />
+    <span style={{ marginLeft: '8px' }}>%</span>
+  </div>
+</div>
         <div className="product-update-field">
           <label>상태 상세</label>
           <select name="statusDetail" value={form.statusDetail} onChange={handleInputChange}>
