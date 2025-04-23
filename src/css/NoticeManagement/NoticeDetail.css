@@ -1,148 +1,111 @@
-/* 기존 공지사항 디테일 CSS */
+/* NoticeDetail.css */
 .notice-detail-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 80%;
+    font-family: 'Noto Sans KR', sans-serif;
+    max-width: 960px;
     margin-left: 20%;
-    height: 100%;
-    justify-content: flex-start;
-    padding-top: 20px;
-}
-
-.notice-detail-container-container {
+    padding: 32px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .notice-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .notice-detail-table {
     width: 100%;
-    max-width: 800px;
-    padding: 20px;
-    background-color: white;
-    border: 1px solid rgb(219, 221, 226);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-    border-radius: 8px;
-}
-
-.notice-detail-container-container h1 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-}
-
-.notice-detail-container-container p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 10px;
-}
-
-.notice-content {
-    margin-top: 20px;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-}
-
-.button-container {
+    border-collapse: collapse;
+    margin-bottom: 32px;
+  }
+  
+  .notice-detail-table th,
+  .notice-detail-table td {
+    border: 1px solid #ddd;
+    padding: 14px 16px;
+    text-align: left;
+    vertical-align: top;
+  }
+  
+  .notice-detail-table th {
+    background-color: #f5f6f8;
+    color: #333;
+    font-weight: 600;
+    width: 180px;
+  }
+  
+  .notice-detail-table td {
+    color: #555;
+    font-size: 15px;
+    background-color: #fff;
+  }
+  
+  .notice-detail-table img {
+    border-radius: 6px;
+    border: 1px solid #eee;
+    background: #fafafa;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .notice-button-container {
     display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-}
-
-.edit-button, .delete-button {
+    justify-content: center;
+    gap: 16px;
+  }
+  
+  .notice-edit-button,
+  .notice-delete-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .notice-edit-button {
     background-color: #007bff;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.edit-button:hover, .delete-button:hover {
-    background-color: #0056b3;
-}
-
-.delete-button {
+  }
+  
+  .notice-delete-button {
     background-color: #dc3545;
-}
-
-.delete-button:hover {
-    background-color: #c82333;
-}
-
-/* 수정 폼 스타일 */
-.edit-input,
-.edit-textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-}
-
-.edit-input {
-    height: 40px;
-}
-
-.edit-textarea {
-    height: 150px;
-    resize: vertical;
-}
-
-.save-button {
-    background-color: #28a745;
     color: white;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.save-button:hover {
-    background-color: #218838;
-}
-@media (max-width: 900px) {
+  }
+  
+  .notice-edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .notice-delete-button:hover {
+    background-color: #c82333;
+  }
+  
+  @media (max-width: 900px) {
     .notice-detail-container {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        margin-left: 0;
-        padding-top: 10px;
+      padding: 20px;
+      border-radius: 0;
+      margin-left: 0;
     }
-
-    .notice-detail-container-container {
-        width: 90%;
-        padding: 15px;
-        margin-top: 5px;
+  
+    .notice-detail-table th,
+    .notice-detail-table td {
+      padding: 10px;
+      font-size: 14px;
     }
-
-    .notice-detail-container-container h1 {
-        font-size: 2rem; /* 작은 화면에 맞게 폰트 크기 조정 */
-        margin-bottom: 20%;
+  
+    .notice-title {
+      font-size: 20px;
     }
-
-    .notice-detail-container-container p {
-        font-size: 1rem; /* 작은 화면에 맞게 폰트 크기 조정 */
-        text-align: left;
-        color: black;
+  
+    .notice-edit-button,
+    .notice-delete-button {
+      font-size: 14px;
+      padding: 10px 16px;
     }
-
-    .edit-input,
-    .edit-textarea {
-        font-size: 0.9rem; /* 입력 필드 폰트 크기 조정 */
-    }
-
-    .edit-button, .delete-button, .save-button {
-        padding: 8px 16px; /* 버튼 크기 조정 */
-        font-size: 0.9rem; /* 버튼 폰트 크기 조정 */
-    }
-
-    .button-container {
-        flex-direction: row; /* 버튼을 수직으로 정렬 */
-        gap: 0px; /* 버튼 간격 추가 */
-        margin-top: 0px;
-    }
-    .delete-button {
-        margin-top: 0px;
-    }
-}
+  }

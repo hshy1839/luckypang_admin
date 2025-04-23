@@ -10,6 +10,7 @@ import Notice from './components/NoticeManagement/Notice';
 import Login from './components/Login';
 import NoticeCreate from './components/NoticeManagement/NoticeCreate';
 import NoticeDetail from './components/NoticeManagement/NoticeDetail';
+import NoticeUpdate from './components/NoticeManagement/NoticeUpdate';
 import Product from './components/ProductManagement/Product';
 import { jwtDecode } from 'jwt-decode';
 import ProductCreate from './components/ProductManagement/ProductCreate';
@@ -71,6 +72,8 @@ function App() {
           <Route path="/notice" element={<PrivateRoute><Header /><Notice /></PrivateRoute>} />
           <Route path="/notice/noticeCreate" element={<PrivateRoute><Header /><NoticeCreate /></PrivateRoute>} />
           <Route path="/notice/noticeDetail/:id" element={<PrivateRoute><NoticeDetail /></PrivateRoute>} />
+          <Route path="/notice/noticeUpdate/:id" element={<PrivateRoute><NoticeUpdate /></PrivateRoute>} />
+       
           <Route path="/login" element={<Login />} />
        {/* 상품관리 */}
           <Route path="/products" element={<PrivateRoute><Header /><Product /></PrivateRoute>} />
