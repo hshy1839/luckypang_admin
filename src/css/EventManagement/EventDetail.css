@@ -1,0 +1,111 @@
+/* NoticeDetail.css */
+.event-detail-container {
+    font-family: 'Noto Sans KR', sans-serif;
+    max-width: 960px;
+    margin-left: 20%;
+    padding: 32px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .event-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .event-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+  }
+  
+  .event-detail-table th,
+  .event-detail-table td {
+    border: 1px solid #ddd;
+    padding: 14px 16px;
+    text-align: left;
+    vertical-align: top;
+  }
+  
+  .event-detail-table th {
+    background-color: #f5f6f8;
+    color: #333;
+    font-weight: 600;
+    width: 180px;
+  }
+  
+  .event-detail-table td {
+    color: #555;
+    font-size: 15px;
+    background-color: #fff;
+  }
+  
+  .event-detail-table img {
+    border-radius: 6px;
+    border: 1px solid #eee;
+    background: #fafafa;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .event-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+  
+  .event-edit-button,
+  .event-delete-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .event-edit-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .event-delete-button {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .event-edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .event-delete-button:hover {
+    background-color: #c82333;
+  }
+  
+  @media (max-width: 900px) {
+    .event-detail-container {
+      padding: 20px;
+      border-radius: 0;
+      margin-left: 0;
+    }
+  
+    .event-detail-table th,
+    .event-detail-table td {
+      padding: 10px;
+      font-size: 14px;
+    }
+  
+    .event-title {
+      font-size: 20px;
+    }
+  
+    .event-edit-button,
+    .event-delete-button {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  }

@@ -106,6 +106,12 @@ const Header = () => {
               <div className='header-section2-item-text'>공지사항</div>
             </div>
           </Link>
+          <Link to="/event" onClick={handleLinkClick}>
+            <div className='header-section2-item'>
+              <FontAwesomeIcon icon={faBullhorn} className='header-section2-item-icon' />
+              <div className='header-section2-item-text'>이벤트</div>
+            </div>
+          </Link>
           
         </div>
 

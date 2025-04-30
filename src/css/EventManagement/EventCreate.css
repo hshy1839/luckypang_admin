@@ -1,0 +1,59 @@
+.event-create-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-create-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.event-create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-create-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-create-label {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.event-create-input {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.event-create-button {
+  background-color: #ff5c43;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.event-create-button:hover {
+  background-color: #e65038;
+}
+
+.event-create-image-preview {
+  margin-top: 12px;
+  max-width: 100%;
+  border-radius: 8px;
+}

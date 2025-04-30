@@ -33,6 +33,10 @@ import BoxUpdate from './components/BoxManagement/BoxUpdate';
 import Points from './components/PointManagement/Points';
 import BoxOrder from './components/BoxOrderManagement/BoxOrder';
 import BoxOrderDetail from './components/BoxOrderManagement/BoxOrderDetail';
+import Event from './components/EventManagement/Event';
+import EventCreate from './components/EventManagement/EventCreate';
+import EventDetail from './components/EventManagement/EventDetail';
+import EventUpdate from './components/EventManagement/EventUpdate';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -73,7 +77,14 @@ function App() {
           <Route path="/notice/noticeCreate" element={<PrivateRoute><Header /><NoticeCreate /></PrivateRoute>} />
           <Route path="/notice/noticeDetail/:id" element={<PrivateRoute><NoticeDetail /></PrivateRoute>} />
           <Route path="/notice/noticeUpdate/:id" element={<PrivateRoute><NoticeUpdate /></PrivateRoute>} />
-       
+       {/*이벤트 관리 */}
+       <Route path="/event" element={<PrivateRoute><Header /><Event /></PrivateRoute>} />
+          <Route path="/event/eventCreate" element={<PrivateRoute><Header /><EventCreate /></PrivateRoute>} />
+          <Route path="/event/eventDetail/:id" element={<PrivateRoute><EventDetail /></PrivateRoute>} />
+          <Route path="/event/eventUpdate/:id" element={<PrivateRoute><EventUpdate /></PrivateRoute>} />
+
+
+
           <Route path="/login" element={<Login />} />
        {/* 상품관리 */}
           <Route path="/products" element={<PrivateRoute><Header /><Product /></PrivateRoute>} />
