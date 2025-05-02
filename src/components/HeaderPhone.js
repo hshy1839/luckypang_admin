@@ -65,7 +65,7 @@ const HeaderPhone = () => {
             <div className={`submenu-employee ${isProductOpen ? 'open' : ''}`}>
               <Link to="/products" className='submenu-item-employee'>상품 목록</Link>
               {/* <Link to="/order" className='submenu-item-employee'>주문 목록</Link> */}
-              {/* <Link to="/QnA/qna" className='submenu-item-employee'>1:1 문의</Link> */}
+              <Link to="/QnA/qna" className='submenu-item-employee'>1:1 문의</Link>
               <Link to="/coupon" className='submenu-item-employee'>쿠폰 관리</Link>
               <Link to="/promotion" className='submenu-item-employee'>광고 설정</Link>
             </div>

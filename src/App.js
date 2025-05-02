@@ -92,9 +92,9 @@ function App() {
           <Route path="/products/productDetail/:id" element={<PrivateRoute><Header /><ProductDetail /></PrivateRoute>} />
           <Route path="/products/productDetail/:id/update" element={<PrivateRoute><Header /><ProductUpdate /></PrivateRoute>} />
           {/* <Route path="/order" element={<PrivateRoute><Header /><Order /></PrivateRoute>} /> */}
-          {/* <Route path="/QnA/qna" element={<PrivateRoute><Header /><Qna /></PrivateRoute>} /> */}
+          <Route path="/QnA/qna" element={<PrivateRoute><Header /><Qna /></PrivateRoute>} />
           <Route path="/setting" element={<PrivateRoute><Header /><Setting /></PrivateRoute>} />
-          {/* <Route path="/QnA/qna/qnaDetail/:id" element={<PrivateRoute><Header /><QnaDetail/></PrivateRoute>} /> */}
+          <Route path="/QnA/qna/qnaDetail/:id" element={<PrivateRoute><Header /><QnaDetail/></PrivateRoute>} />
           <Route path="/coupon" element={<PrivateRoute><Header /><Coupon/></PrivateRoute>} />
           <Route path="/coupon/create" element={<PrivateRoute><Header /><CouponCreate/></PrivateRoute>} />
           {/* 광고 */}
