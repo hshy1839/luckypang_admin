@@ -67,6 +67,7 @@ const Header = () => {
                         <Link to="/QnA/qna" className='submenu-item-employee'>1:1 문의</Link>
                         <Link to="/coupon" className='submenu-item-employee'>쿠폰 관리</Link>
                         <Link to="/promotion" className='submenu-item-employee'>광고 설정</Link>
+                        <Link to="/unboxing" className='submenu-item-employee'>언박싱 내역</Link>
                       </div>
                     </div>
              <div className='header-section2-item-employee-container'>

@@ -37,6 +37,7 @@ import Event from './components/EventManagement/Event';
 import EventCreate from './components/EventManagement/EventCreate';
 import EventDetail from './components/EventManagement/EventDetail';
 import EventUpdate from './components/EventManagement/EventUpdate';
+import Unboxing from './components/UnboxingManagement/Unboxing';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -112,6 +113,8 @@ function App() {
           {/* 박스 주문 내역 */}
           <Route path="/boxorder" element={<PrivateRoute><Header /><BoxOrder /></PrivateRoute>} />
           <Route path="/boxorder/detail/:id" element={<PrivateRoute><Header /><BoxOrderDetail /></PrivateRoute>} />
+          {/*언박싱 내역 */}
+          <Route path="/unboxing" element={<PrivateRoute><Header /><Unboxing /></PrivateRoute>} />
           
         </Routes>
       )}
