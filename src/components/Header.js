@@ -7,6 +7,7 @@ import '../css/Header.css';
 const Header = () => {
     const [isProductOpen, setIsProductOpen] = useState(false);
     const [isBoxOpen, setisBoxOpen] = useState(false);
+    const [isTermOpen, setisTermOpen] = useState(false);
     const [isPointOpen, setisPointOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -18,6 +19,9 @@ const Header = () => {
   };
   const togglePointMenu = () => {
     setisPointOpen(!isPointOpen);
+  };
+  const toggleTermMenu = () => {
+    setisTermOpen(!isTermOpen);
   };
   const handleLinkClick = () => {
     setIsProductOpen(false);
@@ -113,6 +117,20 @@ const Header = () => {
               <div className='header-section2-item-text'>이벤트</div>
             </div>
           </Link>
+          <div className='headerphone-section2-item-employee-container'>
+                      <Link to="#" onClick={toggleTermMenu}>
+                        <div className='headerphone-section2-item-employee'>
+                          <FontAwesomeIcon icon={faCalendarAlt} className='headerphone-section2-item-employee-icon' />
+                          <div className='headerphone-section2-item-text'>약관 관리</div>
+                        </div>
+                      </Link>
+                      <div className={`submenu-employee ${isTermOpen ? 'open' : ''}`}>
+                        <Link to="/terms/withdrawal" className='submenu-item-employee'>탈퇴 약관</Link>
+                        <Link to="/terms/serviceTerm" className='submenu-item-employee'>서비스 이용약관</Link>
+                        <Link to="/terms/privacyTerm" className='submenu-item-employee'>개인정보 처리방침</Link>
+                      </div>
+                    </div>
+          
           
         </div>
 

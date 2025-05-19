@@ -38,6 +38,12 @@ import EventCreate from './components/EventManagement/EventCreate';
 import EventDetail from './components/EventManagement/EventDetail';
 import EventUpdate from './components/EventManagement/EventUpdate';
 import Unboxing from './components/UnboxingManagement/Unboxing';
+import Withdrawal from './components/TermsManagement/WithdrawalTerms/Withdrawal';
+import WithdrawalEdit from './components/TermsManagement/WithdrawalTerms/WithdrawalEdit';
+import ServiceTerm from './components/TermsManagement/ServiceTerms/ServiceTerm';
+import ServiceTermEdit from './components/TermsManagement/ServiceTerms/ServiceTermEdit';
+import PrivacyTerm from './components/TermsManagement/PrivacyTerms/PrivacyTerm';
+import PrivacyTermEdit from './components/TermsManagement/PrivacyTerms/PrivacyTermEdit';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -115,7 +121,13 @@ function App() {
           <Route path="/boxorder/detail/:id" element={<PrivateRoute><Header /><BoxOrderDetail /></PrivateRoute>} />
           {/*언박싱 내역 */}
           <Route path="/unboxing" element={<PrivateRoute><Header /><Unboxing /></PrivateRoute>} />
-          
+          {/* 약관 */}
+          <Route path="/terms/withdrawal" element={<PrivateRoute><Header /><Withdrawal /></PrivateRoute>} />
+          <Route path="/terms/withdrawal/edit" element={<PrivateRoute><Header /><WithdrawalEdit /></PrivateRoute>} />
+          <Route path="/terms/serviceTerm" element={<PrivateRoute><Header /><ServiceTerm /></PrivateRoute>} />
+          <Route path="/terms/serviceTerm/edit" element={<PrivateRoute><Header /><ServiceTermEdit /></PrivateRoute>} />
+          <Route path="/terms/privacyTerm" element={<PrivateRoute><Header /><PrivacyTerm /></PrivateRoute>} />
+          <Route path="/terms/privacyTerm/edit" element={<PrivateRoute><Header /><PrivacyTermEdit /></PrivateRoute>} />
         </Routes>
       )}
     </div>

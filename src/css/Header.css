@@ -10,8 +10,8 @@ a {
   display: flex;
   flex-direction: column;
   width: 20%;
-  height: 200%;
-  overflow-y: hidden;
+  height: 100vh;
+  overflow-y: auto;
   z-index: 100;
   color: black;
   background-color: #271386;
