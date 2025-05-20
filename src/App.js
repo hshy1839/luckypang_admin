@@ -44,6 +44,10 @@ import ServiceTerm from './components/TermsManagement/ServiceTerms/ServiceTerm';
 import ServiceTermEdit from './components/TermsManagement/ServiceTerms/ServiceTermEdit';
 import PrivacyTerm from './components/TermsManagement/PrivacyTerms/PrivacyTerm';
 import PrivacyTermEdit from './components/TermsManagement/PrivacyTerms/PrivacyTermEdit';
+import PurchaseTerm from './components/TermsManagement/PurchaseTerms/PurchaseTerm';
+import PurchaseTermEdit from './components/TermsManagement/PurchaseTerms/PurchaseTermEdit';
+import RefundTerm from './components/TermsManagement/RefundTerms/RefundTerm';
+import RefundTermEdit from './components/TermsManagement/RefundTerms/RefundTermEdit';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -128,6 +132,10 @@ function App() {
           <Route path="/terms/serviceTerm/edit" element={<PrivateRoute><Header /><ServiceTermEdit /></PrivateRoute>} />
           <Route path="/terms/privacyTerm" element={<PrivateRoute><Header /><PrivacyTerm /></PrivateRoute>} />
           <Route path="/terms/privacyTerm/edit" element={<PrivateRoute><Header /><PrivacyTermEdit /></PrivateRoute>} />
+          <Route path="/terms/purchaseTerm" element={<PrivateRoute><Header /><PurchaseTerm /></PrivateRoute>} />
+          <Route path="/terms/purchaseTerm/edit" element={<PrivateRoute><Header /><PurchaseTermEdit /></PrivateRoute>} />
+          <Route path="/terms/refundTerm" element={<PrivateRoute><Header /><RefundTerm /></PrivateRoute>} />
+          <Route path="/terms/refundTerm/edit" element={<PrivateRoute><Header /><RefundTermEdit /></PrivateRoute>} />
         </Routes>
       )}
     </div>

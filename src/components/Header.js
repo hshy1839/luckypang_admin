@@ -128,6 +128,8 @@ const Header = () => {
                         <Link to="/terms/withdrawal" className='submenu-item-employee'>탈퇴 약관</Link>
                         <Link to="/terms/serviceTerm" className='submenu-item-employee'>서비스 이용약관</Link>
                         <Link to="/terms/privacyTerm" className='submenu-item-employee'>개인정보 처리방침</Link>
+                        <Link to="/terms/purchaseTerm" className='submenu-item-employee'>구매확인</Link>
+                        <Link to="/terms/refundTerm" className='submenu-item-employee'>교환환불 정책</Link>
                       </div>
                     </div>
           

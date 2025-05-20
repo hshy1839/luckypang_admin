@@ -9,6 +9,12 @@ const BoxOrderDetail = () => {
   const [order, setOrder] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [trackingNumber, setTrackingNumber] = useState(order?.trackingNumber || '');
+  useEffect(() => {
+    if (order?.trackingNumber) {
+      setTrackingNumber(order.trackingNumber);
+    }
+  }, [order]);
 
   useEffect(() => {
     const fetchOrderDetail = async () => {
@@ -30,6 +36,27 @@ const BoxOrderDetail = () => {
   }, [id]);
 
   if (!order) return <div>로딩 중...</div>;
+
+  const handleSaveTracking = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.patch(
+        `http://localhost:7778/api/order/${id}/tracking`,
+        { trackingNumber },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+  
+      if (res.data.success) {
+        alert('운송장 번호가 저장되었습니다.');
+        window.location.reload();
+      } else {
+        alert(res.data.message || '저장 실패');
+      }
+    } catch (err) {
+      console.error('운송장 저장 오류:', err);
+      alert('운송장 저장 중 오류 발생');
+    }
+  };
 
   return (
     <div className="box-order-detail-container">
@@ -53,6 +80,21 @@ const BoxOrderDetail = () => {
           <tr><th>가격</th><td>{order.box?.price?.toLocaleString()} 원</td></tr>
           <tr><th>박스 기간</th><td>{new Date(order.box?.availableFrom).toLocaleDateString()} ~ {new Date(order.box?.availableUntil).toLocaleDateString()}</td></tr>
           <tr><th>박스 설명</th><td>{order.box?.description}</td></tr>
+          {order.status === 'shipped' && (
+  <tr>
+    <th>운송장 번호</th>
+    <td>
+      <input
+        type="text"
+        value={trackingNumber}
+        onChange={(e) => setTrackingNumber(e.target.value)}
+        placeholder="운송장 번호 입력"
+        style={{ width: '200px', marginRight: '12px' }}
+      />
+      <button onClick={handleSaveTracking}>확인</button>
+    </td>
+  </tr>
+)}
         </tbody>
       </table>
 

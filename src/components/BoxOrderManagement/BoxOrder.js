@@ -114,7 +114,7 @@ const BoxOrder = () => {
             <th>결제금액</th>
             <th>상태</th>
             <th>주문일</th>
-            <th>액션</th>
+            <th>상세보기</th>
           </tr>
         </thead>
         <tbody>
@@ -127,6 +127,8 @@ const BoxOrder = () => {
               <td>{order.paymentAmount + (order.pointUsed || 0)} 원</td>
               <td>{order.status}</td>
               <td>{formatDate(order.createdAt)}</td>
+          
+
               <td>
                 <div className='box-order-btn-container'>
                 <button onClick={() => navigate(`/boxorder/detail/${order._id}`)}>상세</button>
