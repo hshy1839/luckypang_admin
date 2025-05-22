@@ -10,6 +10,8 @@ const BoxOrderDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [trackingNumber, setTrackingNumber] = useState(order?.trackingNumber || '');
+  const [trackingCompany, setTrackingCompany] = useState(order?.trackingCompany || '');
+
   useEffect(() => {
     if (order?.trackingNumber) {
       setTrackingNumber(order.trackingNumber);
@@ -42,12 +44,12 @@ const BoxOrderDetail = () => {
       const token = localStorage.getItem('token');
       const res = await axios.patch(
         `http://localhost:7778/api/order/${id}/tracking`,
-        { trackingNumber },
+        { trackingNumber, trackingCompany },
         { headers: { Authorization: `Bearer ${token}` } }
       );
   
       if (res.data.success) {
-        alert('운송장 번호가 저장되었습니다.');
+        alert('운송장 정보가 저장되었습니다.');
         window.location.reload();
       } else {
         alert(res.data.message || '저장 실패');
@@ -81,20 +83,35 @@ const BoxOrderDetail = () => {
           <tr><th>박스 기간</th><td>{new Date(order.box?.availableFrom).toLocaleDateString()} ~ {new Date(order.box?.availableUntil).toLocaleDateString()}</td></tr>
           <tr><th>박스 설명</th><td>{order.box?.description}</td></tr>
           {order.status === 'shipped' && (
-  <tr>
-    <th>운송장 번호</th>
-    <td>
-      <input
-        type="text"
-        value={trackingNumber}
-        onChange={(e) => setTrackingNumber(e.target.value)}
-        placeholder="운송장 번호 입력"
-        style={{ width: '200px', marginRight: '12px' }}
-      />
-      <button onClick={handleSaveTracking}>확인</button>
-    </td>
-  </tr>
+  <>
+    <tr>
+      <th>택배사</th>
+      <td>
+        <input
+          type="text"
+          value={trackingCompany}
+          onChange={(e) => setTrackingCompany(e.target.value)}
+          placeholder="예: CJ대한통운"
+          style={{ width: '200px', marginRight: '12px' }}
+        />
+      </td>
+    </tr>
+    <tr>
+      <th>운송장 번호</th>
+      <td>
+        <input
+          type="text"
+          value={trackingNumber}
+          onChange={(e) => setTrackingNumber(e.target.value)}
+          placeholder="운송장 번호 입력"
+          style={{ width: '200px', marginRight: '12px' }}
+        />
+        <button onClick={handleSaveTracking}>확인</button>
+      </td>
+    </tr>
+  </>
 )}
+
         </tbody>
       </table>
 
