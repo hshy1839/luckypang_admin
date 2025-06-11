@@ -19,7 +19,7 @@ const PromotionDetail = () => {
                 }
 
                 const response = await axios.get(
-                    `http://localhost:7778/api/promotion/read/${id}`,
+                    `http://13.124.224.246:7778/api/promotion/read/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ const PromotionDetail = () => {
             }
 
             const response = await axios.delete(
-                `http://localhost:7778/api/promotion/delete/${id}`, // URL 수정
+                `http://13.124.224.246:7778/api/promotion/delete/${id}`, // URL 수정
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

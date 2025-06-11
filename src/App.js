@@ -48,6 +48,10 @@ import PurchaseTerm from './components/TermsManagement/PurchaseTerms/PurchaseTer
 import PurchaseTermEdit from './components/TermsManagement/PurchaseTerms/PurchaseTermEdit';
 import RefundTerm from './components/TermsManagement/RefundTerms/RefundTerm';
 import RefundTermEdit from './components/TermsManagement/RefundTerms/RefundTermEdit';
+import Faq from './components/FAQ/Faq';
+import FaqCreate from './components/FAQ/FaqCreate';
+import FaqDetail from './components/FAQ/FaqDetail';
+import FaqUpdate from './components/FAQ/FaqUpdate';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -136,6 +140,11 @@ function App() {
           <Route path="/terms/purchaseTerm/edit" element={<PrivateRoute><Header /><PurchaseTermEdit /></PrivateRoute>} />
           <Route path="/terms/refundTerm" element={<PrivateRoute><Header /><RefundTerm /></PrivateRoute>} />
           <Route path="/terms/refundTerm/edit" element={<PrivateRoute><Header /><RefundTermEdit /></PrivateRoute>} />
+          {/* FAQ 관리 */}
+          <Route path="/faq" element={<PrivateRoute><Header /><Faq /></PrivateRoute>} />
+          <Route path="/faq/create" element={<PrivateRoute><Header /><FaqCreate /></PrivateRoute>} />
+          <Route path="/faq/detail/:id" element={<PrivateRoute><Header /><FaqDetail /></PrivateRoute>} />
+          <Route path="/faq/update/:id" element={<PrivateRoute><Header /><FaqUpdate /></PrivateRoute>} />
         </Routes>
       )}
     </div>

@@ -26,7 +26,7 @@ const Notice = () => {
                     return;
                 }
 
-                const response = await axios.get('http://localhost:7778/api/notice', {
+                const response = await axios.get('http://13.124.224.246:7778/api/notice', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

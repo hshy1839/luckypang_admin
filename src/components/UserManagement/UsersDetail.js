@@ -28,7 +28,7 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await axios.get(`http://localhost:7778/api/users/userinfo/${id}`, {
+        const response = await axios.get(`http://13.124.224.246:7778/api/users/userinfo/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -45,7 +45,7 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await axios.get(`http://localhost:7778/api/points/${id}`, {
+        const response = await axios.get(`http://13.124.224.246:7778/api/points/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -80,7 +80,7 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
         targetUserId: id  // 👈 추가
       };
   
-      const res = await axios.post(`http://localhost:7778/api/points/${id}`, payload, {
+      const res = await axios.post(`http://13.124.224.246:7778/api/points/${id}`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
   
@@ -106,7 +106,7 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await axios.delete(`http://localhost:7778/api/users/userinfo/${id}`, {
+      const response = await axios.delete(`http://13.124.224.246:7778/api/users/userinfo/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

@@ -20,7 +20,7 @@ const Coupon = () => {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await axios.get('http://localhost:7778/api/coupons', {
+            const response = await axios.get('http://13.124.224.246:7778/api/coupons', {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -70,7 +70,7 @@ const Coupon = () => {
             if (!token) return;
 
             const response = await axios.put(
-                `http://localhost:7778/api/coupon/${id}`,
+                `http://13.124.224.246:7778/api/coupon/${id}`,
                 { isActive },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -91,7 +91,7 @@ const Coupon = () => {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await axios.delete(`http://localhost:7778/api/coupon/${id}`, {
+            const response = await axios.delete(`http://13.124.224.246:7778/api/coupon/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 

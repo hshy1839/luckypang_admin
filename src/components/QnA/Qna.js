@@ -24,7 +24,7 @@ const Qna = () => {
                     return;
                 }
 
-                const response = await axios.get('http://localhost:7778/api/qnaQuestion/getinfoAll', {
+                const response = await axios.get('http://13.124.224.246:7778/api/qnaQuestion/getinfoAll', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

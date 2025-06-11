@@ -132,7 +132,12 @@ const Header = () => {
                         <Link to="/terms/refundTerm" className='submenu-item-employee'>교환환불 정책</Link>
                       </div>
                     </div>
-          
+                    <Link to="/faq" onClick={handleLinkClick}>
+            <div className='header-section2-item'>
+              <FontAwesomeIcon icon={faBullhorn} className='header-section2-item-icon' />
+              <div className='header-section2-item-text'>FAQ</div>
+            </div>
+          </Link>
           
         </div>
 

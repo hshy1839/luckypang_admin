@@ -21,7 +21,7 @@ const Box = () => {
                 return;
             }
 
-            const response = await axios.get('http:///localhost:7778/api/box', {
+            const response = await axios.get('http:///13.124.224.246:7778/api/box', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -58,7 +58,7 @@ const Box = () => {
                     return;
                 }
 
-                const response = await axios.get('http:///localhost:7778/api/box', {
+                const response = await axios.get('http:///13.124.224.246:7778/api/box', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

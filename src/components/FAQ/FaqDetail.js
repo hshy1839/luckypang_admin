@@ -4,43 +4,43 @@ import axios from 'axios';
 import Header from '../Header';
 import '../../css/NoticeManagement/NoticeDetail.css';
 
-const NoticeDetail = () => {
+const FaqDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [notice, setNotice] = useState(null);
+  const [faq, setFaq] = useState(null);
 
   useEffect(() => {
-    const fetchNotice = async () => {
+    const fetchFaq = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://13.124.224.246:7778/api/notice/${id}`, {
+        const response = await axios.get(`http://localhost:7778/api/faq/detail/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.data && response.data.success) {
-          setNotice(response.data.notice);
+          setFaq(response.data.faq);
         }
       } catch (err) {
-        console.error('공지사항 조회 실패:', err);
+        console.error('FAQ 조회 실패:', err);
       }
     };
 
-    fetchNotice();
+    fetchFaq();
   }, [id]);
 
   const handleEdit = () => {
-    navigate(`/notice/noticeUpdate/${id}`);
+    navigate(`/faq/update/${id}`);
   };
 
   const handleDelete = async () => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`http://13.124.224.246:7778/api/notice/${id}`, {
+      const response = await axios.delete(`http://localhost:7778/api/faq/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
         alert('삭제되었습니다.');
-        navigate('/notice');
+        navigate('/faq');
       } else {
         alert('삭제에 실패했습니다.');
       }
@@ -50,41 +50,30 @@ const NoticeDetail = () => {
     }
   };
 
-  if (!notice) return <div>로딩 중...</div>;
+  if (!faq) return <div>로딩 중...</div>;
 
   return (
     <div className="notice-detail-container">
       <Header />
-      <h1 className="notice-title">공지사항 상세</h1>
+      <h1 className="notice-title">FAQ 상세</h1>
       <div className="notice-detail-content">
         <table className="notice-detail-table">
           <tbody>
             <tr>
-              <th>제목</th>
-              <td>{notice.title}</td>
+              <th>카테고리</th>
+              <td>{faq.category}</td>
             </tr>
             <tr>
-              <th>내용</th>
-              <td>{notice.content}</td>
+              <th>질문</th>
+              <td>{faq.question}</td>
+            </tr>
+            <tr>
+              <th>답변</th>
+              <td>{faq.answer}</td>
             </tr>
             <tr>
               <th>작성일</th>
-              <td>{new Date(notice.created_at).toLocaleString()}</td>
-            </tr>
-            <tr>
-              <th>이미지</th>
-              <td>
-                <div className="notice-images">
-                  {notice.noticeImage?.map((img, i) => (
-                    <img
-                      key={i}
-                      src={`http://13.124.224.246:7778${img}`}
-                      alt={`공지 이미지 ${i + 1}`}
-                      className="notice-image"
-                    />
-                  ))}
-                </div>
-              </td>
+              <td>{new Date(faq.created_at).toLocaleString()}</td>
             </tr>
           </tbody>
         </table>
@@ -98,4 +87,4 @@ const NoticeDetail = () => {
   );
 };
 
-export default NoticeDetail;
+export default FaqDetail;

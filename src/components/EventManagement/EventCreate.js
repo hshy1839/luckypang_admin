@@ -36,7 +36,7 @@ const EventCreate = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:7778/api/event',
+        'http://13.124.224.246:7778/api/event',
         formData,
         {
           headers: {
