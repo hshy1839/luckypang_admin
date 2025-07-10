@@ -1,10 +1,9 @@
-// UnboxingManagement.js (관리자 언박싱 내역 관리 페이지)
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../../css/BoxOrderManagement/BoxOrder.css';
 import Header from '../Header';
 import * as XLSX from 'xlsx';
+import '../../css/BoxOrderManagement/BoxOrder.css';
 
 const UnboxingManagement = () => {
   const [unboxings, setUnboxings] = useState([]);
@@ -12,7 +11,6 @@ const UnboxingManagement = () => {
   const [filtered, setFiltered] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUnboxings();
@@ -34,7 +32,11 @@ const UnboxingManagement = () => {
   };
 
   const handleSearch = () => {
-    if (!searchTerm) return setFiltered(unboxings);
+    if (!searchTerm) {
+      setFiltered(unboxings);
+      setCurrentPage(1);
+      return;
+    }
     const lower = searchTerm.toLowerCase();
     const result = unboxings.filter(order =>
       order.user?.nickname?.toLowerCase().includes(lower) ||
@@ -62,66 +64,97 @@ const UnboxingManagement = () => {
     XLSX.writeFile(workbook, 'unboxings.xlsx');
   };
 
-  const formatDate = date => new Date(date).toLocaleString('ko-KR');
+  const formatDate = date => date ? new Date(date).toLocaleString('ko-KR') : '-';
+
+  // --- 페이지네이션 블록 로직 ---
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
   const current = filtered.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const pagesPerBlock = 10;
+  const currentBlock = Math.floor((currentPage - 1) / pagesPerBlock);
+  const startPage = currentBlock * pagesPerBlock + 1;
+  const endPage = Math.min(startPage + pagesPerBlock - 1, totalPages);
+
+  const handleBlockPrev = () => {
+    if (startPage > 1) setCurrentPage(startPage - pagesPerBlock);
+  };
+  const handleBlockNext = () => {
+    if (endPage < totalPages) setCurrentPage(endPage + 1);
+  };
 
   return (
-    <div className="box-order-container">
+    <div className="boxorder-container">
       <Header />
-      <div className="box-order-top">
-        <h2>언박싱 내역 관리</h2>
-        <div className="search-filter">
+      <div className="boxorder-content">
+        <h1>언박싱 내역 관리</h1>
+        <div className="boxorder-search-box">
           <input
             type="text"
             placeholder="유저명, 박스명, 상품명 검색"
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleSearch()}
           />
-          <button onClick={handleSearch}>검색</button>
-          <button onClick={exportToExcel}>엑셀 다운로드</button>
+          <button className="search-button" onClick={handleSearch}>검색</button>
+          
         </div>
-      </div>
-
-      <table className="box-order-table">
-        <thead>
-          <tr>
-            <th>박스ID</th>
-            <th>유저</th>
-            <th>박스명</th>
-            <th>상품명</th>
-            <th>결제수단</th>
-            <th>결제금액</th>
-            <th>언박싱일</th>
-          </tr>
-        </thead>
-        <tbody>
-          {current.map(order => (
-            <tr key={order._id}>
-              <td>{order._id.slice(-6).toUpperCase()}</td>
-              <td>{order.user?.nickname || 'Unknown'}</td>
-              <td>{order.box?.name || '-'}</td>
-              <td>{order.unboxedProduct?.product?.name || '-'}</td>
-              <td>{order.paymentType}</td>
-              <td>{order.paymentAmount + (order.pointUsed || 0)} 원</td>
-              <td>{formatDate(order.unboxedProduct?.decidedAt)}</td>
+        <table className="boxorder-table">
+          <thead>
+            <tr>
+              <th>박스ID</th>
+              <th>유저</th>
+              <th>박스명</th>
+              <th>상품명</th>
+              <th>결제수단</th>
+              <th>결제금액</th>
+              <th>언박싱일</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div className="pagination">
-        {[...Array(totalPages)].map((_, i) => (
+          </thead>
+          <tbody>
+            {current.length > 0 ? current.map(order => (
+              <tr key={order._id}>
+                <td>{order._id.slice(-6).toUpperCase()}</td>
+                <td>{order.user?.nickname || '-'}</td>
+                <td>{order.box?.name || '-'}</td>
+                <td>{order.unboxedProduct?.product?.name || '-'}</td>
+                <td>{order.paymentType}</td>
+                <td>{order.paymentAmount + (order.pointUsed || 0)} 원</td>
+                <td>{formatDate(order.unboxedProduct?.decidedAt)}</td>
+              </tr>
+            )) : (
+              <tr>
+                <td colSpan={7} className="no-results">데이터가 없습니다.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <div className="point-pagination">
           <button
-            key={i}
-            className={currentPage === i + 1 ? 'active' : ''}
-            onClick={() => setCurrentPage(i + 1)}
-          >
-            {i + 1}
-          </button>
-        ))}
+            className="point-pagination-btn"
+            onClick={handleBlockPrev}
+            disabled={startPage === 1}
+          >이전</button>
+          {[...Array(endPage - startPage + 1)].map((_, idx) => {
+            const pageNum = startPage + idx;
+            return (
+              <button
+                key={pageNum}
+                onClick={() => setCurrentPage(pageNum)}
+                className={`point-pagination-btn${currentPage === pageNum ? ' active' : ''}`}
+              >
+                {pageNum}
+              </button>
+            );
+          })}
+          <button
+            className="point-pagination-btn"
+            onClick={handleBlockNext}
+            disabled={endPage === totalPages}
+          >다음</button>
+        <button className="excel-export-button" onClick={exportToExcel}>엑셀 다운로드</button>
+
+        </div>
       </div>
     </div>
   );

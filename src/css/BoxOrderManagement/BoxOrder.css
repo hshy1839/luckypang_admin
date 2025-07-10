@@ -1,97 +1,166 @@
-.box-order-container {
-    padding: 40px;
-    background-color: #f9f9f9;
-    min-height: 100vh;
+.boxorder-container {
+    padding: 30px;
     margin-left: 20%;
-  }
-  
-  .box-order-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fa;
+}
+.boxorder-content {
+    background: white;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-top: 32px;
     margin-bottom: 24px;
-  }
-  
-  .box-order-top h2 {
+}
+.boxorder-content h1 {
+    margin-bottom: 20px;
     font-size: 24px;
     font-weight: 600;
-  }
-  
-  .search-filter {
+}
+.boxorder-search-box {
     display: flex;
-    gap: 12px;
-  }
-  
-  .search-filter input {
-    padding: 8px 12px;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.boxorder-search-box input {
+    flex: 5;
+    padding: 10px 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    font-size: 14px;
-    width: 200px;
-  }
-  
-  .search-filter button {
-    padding: 8px 14px;
-    background-color: #333;
+    font-size: 16px;
+    height: 48px;
+}
+.boxorder-search-box .search-button,
+.boxorder-search-box .excel-export-button {
+    flex: 1;
+    min-width: 60px;
+    background-color: #4e73df;
     color: white;
-    border: none;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .search-filter button:hover {
-    background-color: #555;
-  }
-  
-  .box-order-table {
+    font-size: 16px;
+    border: none;
+    height: 48px;
+    transition: background 0.2s;
+}
+.boxorder-search-box .excel-export-button {
+    background: #22b14c;
+}
+.boxorder-search-box .excel-export-button:hover {
+    background: #19a842;
+}
+.boxorder-search-box .search-button:hover {
+    background-color: #2e59d9;
+}
+.boxorder-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
-    border: 1px solid #ddd;
-    font-size: 14px;
-  }
-  
-  .box-order-table th,
-  .box-order-table td {
-    padding: 12px 14px;
-    border: 1px solid #ddd;
-    text-align: center;
-  }
-  
-  .box-order-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
-  .box-order-table td button {
-    padding: 0px 10px;
-    margin: 1px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    font-size: 12px;
-  }
-  .box-order-btn-container {
-    display: flex;
-  }
-  
-  .box-order-table td button:hover {
-    background-color: #0056b3;
-  }
-  
-  .box-order-table td button + button {
-    background-color: #dc3545;
-  }
-  
-  .box-order-table td button + button:hover {
-    background-color: #c82333;
-  }
-  
-  .pagination {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     margin-top: 24px;
+}
+.boxorder-table th,
+.boxorder-table td {
+    border: 1px solid #dee2e6;
+    padding: 14px 0;
     text-align: center;
-  }
-  
+    font-size: 15px;
+}
+.boxorder-table th {
+    background-color: #f1f3f5;
+    color: #333;
+    font-weight: 600;
+    font-size: 16px;
+}
+.boxorder-table td {
+    background-color: #fff;
+    color: #222;
+    font-size: 15px;
+}
+.boxorder-btns button {
+    margin: 0 3px;
+    padding: 7px 16px;
+    border-radius: 5px;
+    background: none;
+    color: blue;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.17s;
+}
+.boxorder-btns .refund-btn {
+    background: none;
+    color: red;
+}
+
+.boxorder-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 28px 0 0 0;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.boxorder-pagination-btn {
+    display: inline-block;
+    padding: 7px 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    min-width: 38px;
+    transition: background 0.15s, color 0.15s, border 0.15s;
+}
+.boxorder-pagination-btn.active,
+.boxorder-pagination-btn:focus {
+    background-color: #4e73df;
+    color: #fff;
+    border-color: #4e73df;
+    outline: none;
+}
+.boxorder-pagination-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background: #f5f6fa;
+    color: #b5b5b5;
+    border-color: #eee;
+}
+@media (max-width: 900px) {
+    .boxorder-container {
+        margin-left: 0%;
+        padding: 10px;
+    }
+    .boxorder-content {
+        padding: 12px;
+    }
+    .boxorder-search-box {
+        flex-direction: column;
+    }
+    .boxorder-search-box input,
+    .boxorder-search-box button,
+    .boxorder-search-box .excel-export-button {
+        width: 100%;
+        margin-bottom: 8px;
+        height: 40px;
+    }
+    .boxorder-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        margin-top: 14px;
+    }
+    .boxorder-table th,
+    .boxorder-table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+    .boxorder-pagination {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+}

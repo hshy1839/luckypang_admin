@@ -8,12 +8,17 @@ import { faCheck, faBan, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Coupon = () => {
     const [coupons, setCoupons] = useState([]);
-    const [filteredCoupons, setFilteredCoupons] = useState([]); // 검색된 쿠폰 저장
+    const [filteredCoupons, setFilteredCoupons] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchCoupons();
+        // eslint-disable-next-line
+    }, []);
 
     const fetchCoupons = async () => {
         try {
@@ -29,29 +34,25 @@ const Coupon = () => {
                     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                 );
                 setCoupons(sortedCoupons);
-                setFilteredCoupons(sortedCoupons); // 처음에는 모든 쿠폰을 표시
+                setFilteredCoupons(sortedCoupons);
             }
         } catch (error) {
             console.error('쿠폰 정보를 가져오는데 실패했습니다.', error);
         }
     };
 
-    
-    useEffect(() => {
-        fetchCoupons();
-    }, []);
-
     const handleSearch = () => {
         if (!searchTerm) {
-            setFilteredCoupons(coupons); // 검색어가 없으면 전체 쿠폰 표시
+            setFilteredCoupons(coupons);
+            setCurrentPage(1);
             return;
         }
-
         const results = coupons.filter(coupon =>
             coupon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             coupon.code.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredCoupons(results);
+        setCurrentPage(1);
     };
 
     const handleCreateCouponClick = () => {
@@ -62,19 +63,16 @@ const Coupon = () => {
         const confirmMessage = isActive
             ? '쿠폰을 활성화하시겠습니까?'
             : '쿠폰을 비활성화하시겠습니까?';
-
         if (!window.confirm(confirmMessage)) return;
 
         try {
             const token = localStorage.getItem('token');
             if (!token) return;
-
             const response = await axios.put(
                 `http://13.124.224.246:7778/api/coupon/${id}`,
                 { isActive },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-
             if (response.data.success) {
                 alert(`쿠폰이 ${isActive ? '활성화' : '비활성화'}되었습니다.`);
                 fetchCoupons();
@@ -94,7 +92,6 @@ const Coupon = () => {
             const response = await axios.delete(`http://13.124.224.246:7778/api/coupon/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
-
             if (response.data.success) {
                 alert('쿠폰이 삭제되었습니다.');
                 fetchCoupons();
@@ -104,56 +101,57 @@ const Coupon = () => {
         }
     };
 
+    // 페이지네이션 블록
     const indexOfLastCoupon = currentPage * itemsPerPage;
     const indexOfFirstCoupon = indexOfLastCoupon - itemsPerPage;
     const currentCoupons = filteredCoupons.slice(indexOfFirstCoupon, indexOfLastCoupon);
     const totalPages = Math.ceil(filteredCoupons.length / itemsPerPage);
 
-    const handlePreviousPage = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
+    // 블록형 페이지네이션 (10개씩)
+    const pagesPerBlock = 10;
+    const currentBlock = Math.floor((currentPage - 1) / pagesPerBlock);
+    const startPage = currentBlock * pagesPerBlock + 1;
+    const endPage = Math.min(startPage + pagesPerBlock - 1, totalPages);
+
+    const handleBlockPrev = () => {
+        if (startPage > 1) setCurrentPage(startPage - pagesPerBlock);
+    };
+    const handleBlockNext = () => {
+        if (endPage < totalPages) setCurrentPage(endPage + 1);
     };
 
-    const handleNextPage = () => {
-        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-    };
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-    
     return (
-        <div className="coupon-management-container">
+        <div className="coupon-container">
             <Header />
-            <div className="coupon-management-container-container">
-                <div className="coupon-top-container-container">
-                    <h1>쿠폰 관리</h1>
-                    <div className="coupon-search-box">
-                        <input
-                            type="text"
-                            placeholder="쿠폰 이름 검색..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        <button className="search-button" onClick={handleSearch}>
-                            검색
-                        </button>
-                    </div>
-
-                    <table className="coupon-table">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>쿠폰 이름</th>
-                                <th>코드</th>
-                                <th>할인율</th>
-                                <th>유효 기간</th>
-                                <th>활성 카테고리</th>
-                                <th>상태</th>
-                                <th>액션</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentCoupons.map((coupon, index) => (
+            <div className="coupon-content">
+                <h1>쿠폰 관리</h1>
+                <div className="coupon-search-box">
+                    <input
+                        type="text"
+                        placeholder="쿠폰 이름/코드 검색..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button className="search-button" onClick={handleSearch}>
+                        검색
+                    </button>
+                </div>
+                <table className="coupon-table">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>쿠폰 이름</th>
+                            <th>코드</th>
+                            <th>할인율</th>
+                            <th>유효 기간</th>
+                            <th>활성 카테고리</th>
+                            <th>상태</th>
+                            <th>액션</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentCoupons.length > 0 ? (
+                            currentCoupons.map((coupon, index) => (
                                 <tr key={coupon._id}>
                                     <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
                                     <td>{coupon.name || 'Unknown Coupon'}</td>
@@ -173,7 +171,11 @@ const Coupon = () => {
                                             ? coupon.applicableCategories.join(', ')
                                             : '모든 카테고리'}
                                     </td>
-                                    <td>{coupon.isActive ? '활성화' : '비활성화'}</td>
+                                    <td>
+                                        <span className={coupon.isActive ? "active-coupon" : "inactive-coupon"}>
+                                            {coupon.isActive ? '활성화' : '비활성화'}
+                                        </span>
+                                    </td>
                                     <td>
                                         <div className="action-buttons">
                                             <FontAwesomeIcon
@@ -197,33 +199,47 @@ const Coupon = () => {
                                         </div>
                                     </td>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-                <div className="pagination">
-                        <button className="prev-page-btn" onClick={handlePreviousPage} disabled={currentPage === 1}>
-                            이전
-                        </button>
-                        {[...Array(totalPages)].map((_, i) => (
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="8" className="no-results">
+                                    데이터가 없습니다.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+                <div className="point-pagination">
+                    <button
+                        className="point-pagination-btn"
+                        onClick={handleBlockPrev}
+                        disabled={startPage === 1}
+                    >
+                        이전
+                    </button>
+                    {[...Array(endPage - startPage + 1)].map((_, idx) => {
+                        const pageNum = startPage + idx;
+                        return (
                             <button
-                                key={i}
-                                onClick={() => handlePageChange(i + 1)}
-                                className={currentPage === i + 1 ? 'active' : ''}
-                                id='page-number-btn'
+                                key={pageNum}
+                                onClick={() => setCurrentPage(pageNum)}
+                                className={`point-pagination-btn${currentPage === pageNum ? ' active' : ''}`}
                             >
-                                {i + 1}
+                                {pageNum}
                             </button>
-                        ))}
-                        <button className='next-page-btn' onClick={handleNextPage} disabled={currentPage === totalPages}>
-                            다음
-                        </button>
-                    </div>
-                <div className="write-btn-container">
-                    <button className="write-btn" onClick={handleCreateCouponClick}>
-                        쿠폰 등록
+                        );
+                    })}
+                    <button
+                        className="point-pagination-btn"
+                        onClick={handleBlockNext}
+                        disabled={endPage === totalPages}
+                    >
+                        다음
                     </button>
                 </div>
+                <button className="excel-export-button" style={{marginTop: 40}} onClick={handleCreateCouponClick}>
+                    쿠폰 등록
+                </button>
             </div>
         </div>
     );

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import '../../css/NoticeManagement/Notice.css';
+import '../../css/QnaManagement/Qna.css';
 import Header from '../Header.js';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Qna = () => {
-    const [qnaQuestions, setQnaQuestions] = useState([]); // QnA 데이터
-    const [allQnaQuestions, setAllQnaQuestions] = useState([]); // 원본 데이터
-    const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태
-    const [searchCategory, setSearchCategory] = useState('all'); // 검색 기준 상태
-
-    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-    const itemsPerPage = 10; // 페이지당 표시할 항목 수
+    const [qnaQuestions, setQnaQuestions] = useState([]);
+    const [allQnaQuestions, setAllQnaQuestions] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchCategory, setSearchCategory] = useState('all');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
     const navigate = useNavigate();
 
@@ -19,39 +18,28 @@ const Qna = () => {
         const fetchQnaQuestions = async () => {
             try {
                 const token = localStorage.getItem('token');
-                if (!token) {
-                    console.log('로그인 정보가 없습니다.');
-                    return;
-                }
+                if (!token) return;
 
                 const response = await axios.get('http://13.124.224.246:7778/api/qnaQuestion/getinfoAll', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                    headers: { Authorization: `Bearer ${token}` },
                 });
 
                 if (response.data && response.data.success) {
-                    const questions = response.data.questions;
-                    if (questions && questions.length > 0) {
-                        questions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // 날짜 내림차순 정렬
-                        setQnaQuestions(questions);
-                        setAllQnaQuestions(questions);
-                    } else {
-                        console.error('질문 데이터가 없습니다.');
-                    }
-                } else {
-                    console.log('질문 데이터 로드 실패');
+                    const questions = response.data.questions || [];
+                    questions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    setQnaQuestions(questions);
+                    setAllQnaQuestions(questions);
                 }
             } catch (error) {
                 console.error('질문 데이터를 가져오는데 실패했습니다.', error);
             }
         };
-
         fetchQnaQuestions();
     }, []);
 
     useEffect(() => {
         handleSearch();
+        // eslint-disable-next-line
     }, [searchTerm, searchCategory]);
 
     const handleSearch = () => {
@@ -70,137 +58,132 @@ const Qna = () => {
         });
 
         setQnaQuestions(filteredQuestions);
-        setCurrentPage(1); // 검색 시 첫 페이지로 이동
+        setCurrentPage(1);
     };
-
 
     const handleQnaClick = (id) => {
         navigate(`/QnA/qna/qnaDetail/${id}`, { state: { id } });
     };
 
-    // 페이지네이션 관련 변수
+    // 페이지네이션 블록
     const indexOfLastQuestion = currentPage * itemsPerPage;
     const indexOfFirstQuestion = indexOfLastQuestion - itemsPerPage;
     const currentQuestions = qnaQuestions.slice(indexOfFirstQuestion, indexOfLastQuestion);
     const totalPages = Math.ceil(qnaQuestions.length / itemsPerPage);
 
-    const handlePreviousPage = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
-    };
+    // 블록형 페이지네이션 (10개씩)
+    const pagesPerBlock = 10;
+    const currentBlock = Math.floor((currentPage - 1) / pagesPerBlock);
+    const startPage = currentBlock * pagesPerBlock + 1;
+    const endPage = Math.min(startPage + pagesPerBlock - 1, totalPages);
 
-    const handleNextPage = () => {
-        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    const handleBlockPrev = () => {
+        if (startPage > 1) setCurrentPage(startPage - pagesPerBlock);
     };
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+    const handleBlockNext = () => {
+        if (endPage < totalPages) setCurrentPage(endPage + 1);
     };
 
     return (
-        <div className="notice-management-container">
+        <div className="qna-container">
             <Header />
-            <div className="notice-management-container-container">
-                <div className="notice-top-container-container">
-                    <h1>1:1 문의</h1>
+            <div className="qna-content">
+                <h1>1:1 문의</h1>
 
-                    {/* 검색 박스 */}
-                    <div className="notice-search-box">
-                        <select
-                            className="search-category"
-                            value={searchCategory}
-                            onChange={(e) => setSearchCategory(e.target.value)}
-                        >
-                            <option value="all">전체</option>
-                            <option value="title">제목</option>
-                            <option value="author">작성자</option>
-                        </select>
-                        <input
-                            type="text"
-                            placeholder="검색..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        <button className="search-button" onClick={handleSearch}>
-                            검색
-                        </button>
-                    </div>
-
-                    {/* QnA 정보 테이블 */}
-                    <table className="notice-table">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>카테고리</th>
-                                <th>작성자</th>
-                                <th>작성 날짜</th>
-                                <th>답변 상태</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentQuestions.length === 0 ? (
-                                <tr>
-                                    <td colSpan="10" className="no-results">
-                                        존재하지 않습니다.
-                                    </td>
-                                </tr>
-                            ) : (
-                                currentQuestions.map((question, index) => {
-                                    const isAnswered = question.answers && question.answers.length > 0;
-
-                                    return (
-                                        <tr key={question._id}>
-                                            <td>{allQnaQuestions.length - (indexOfFirstQuestion + index)}</td>
-                                            <td>
-                                                <a
-                                                    className="notice-title"
-                                                    onClick={() => handleQnaClick(question._id)}
-                                                >
-                                                    {question.title}
-                                                </a>
-                                            </td>
-                                            <td>{question.category || '-'}</td> {/* ✅ 카테고리 표시 */}
-                                            <td>{question.userId?.nickname || '알 수 없음'}</td>
-                                            <td>{new Date(question.createdAt).toLocaleDateString()}</td>
-                                            <td className={isAnswered ? 'answered' : 'unanswered'}>
-                                                {isAnswered ? '답변 완료' : '답변 전'}
-                                            </td>
-                                        </tr>
-                                    );
-                                })
-                            )}
-                        </tbody>
-                    </table>
-
-                    {/* 페이지네이션 */}
-                    <div className="pagination">
-                        <button
-                            className="prev-page-btn"
-                            onClick={handlePreviousPage}
-                            disabled={currentPage === 1}
-                        >
-                            이전
-                        </button>
-                        {[...Array(totalPages)].map((_, i) => (
-                            <button
-                                key={i}
-                                onClick={() => handlePageChange(i + 1)}
-                                className={currentPage === i + 1 ? 'active' : ''}
-                                id="page-number-btn"
-                            >
-                                {i + 1}
-                            </button>
-                        ))}
-                        <button
-                            className="next-page-btn"
-                            onClick={handleNextPage}
-                            disabled={currentPage === totalPages}
-                        >
-                            다음
-                        </button>
-                    </div>
+                <div className="qna-search-box">
+                    <select
+                        className="search-category"
+                        value={searchCategory}
+                        onChange={(e) => setSearchCategory(e.target.value)}
+                    >
+                        <option value="all">전체</option>
+                        <option value="title">제목</option>
+                        <option value="author">작성자</option>
+                    </select>
+                    <input
+                        type="text"
+                        placeholder="검색..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button className="search-button" onClick={handleSearch}>
+                        검색
+                    </button>
                 </div>
 
+                <table className="qna-table">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>카테고리</th>
+                            <th>작성자</th>
+                            <th>작성 날짜</th>
+                            <th>답변 상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentQuestions.length === 0 ? (
+                            <tr>
+                                <td colSpan="6" className="no-results">
+                                    존재하지 않습니다.
+                                </td>
+                            </tr>
+                        ) : (
+                            currentQuestions.map((question, index) => {
+                                const isAnswered = question.answers && question.answers.length > 0;
+                                return (
+                                    <tr key={question._id}>
+                                        <td>{allQnaQuestions.length - (indexOfFirstQuestion + index)}</td>
+                                        <td>
+                                            <span
+                                                className="qna-title"
+                                                onClick={() => handleQnaClick(question._id)}
+                                            >
+                                                {question.title}
+                                            </span>
+                                        </td>
+                                        <td>{question.category || '-'}</td>
+                                        <td>{question.userId?.nickname || '알 수 없음'}</td>
+                                        <td>{new Date(question.createdAt).toLocaleDateString()}</td>
+                                        <td className={isAnswered ? 'answered' : 'unanswered'}>
+                                            {isAnswered ? '답변 완료' : '답변 전'}
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                        )}
+                    </tbody>
+                </table>
+
+                <div className="point-pagination">
+                    <button
+                        className="point-pagination-btn"
+                        onClick={handleBlockPrev}
+                        disabled={startPage === 1}
+                    >
+                        이전
+                    </button>
+                    {[...Array(endPage - startPage + 1)].map((_, idx) => {
+                        const pageNum = startPage + idx;
+                        return (
+                            <button
+                                key={pageNum}
+                                onClick={() => setCurrentPage(pageNum)}
+                                className={`point-pagination-btn${currentPage === pageNum ? ' active' : ''}`}
+                            >
+                                {pageNum}
+                            </button>
+                        );
+                    })}
+                    <button
+                        className="point-pagination-btn"
+                        onClick={handleBlockNext}
+                        disabled={endPage === totalPages}
+                    >
+                        다음
+                    </button>
+                </div>
             </div>
         </div>
     );

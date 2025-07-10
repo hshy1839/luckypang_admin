@@ -1,10 +1,10 @@
-.event-container {
+.faq-container {
     padding: 30px;
     margin-left: 20%;
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #f8f9fa;
 }
-.event-content {
+.faq-content {
     background: white;
     padding: 32px;
     border-radius: 14px;
@@ -12,24 +12,24 @@
     margin-top: 32px;
     margin-bottom: 24px;
 }
-.event-content h1 {
+.faq-content h1 {
     margin-bottom: 20px;
     font-size: 24px;
     font-weight: 600;
 }
-.event-search-box {
+.faq-search-box {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
 }
-.event-search-box input {
+.faq-search-box input {
     flex: 5;
     padding: 10px 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
 }
-.event-search-box button, .search-button {
+.faq-search-box button, .search-button {
     flex: 1;
     min-width: 60px;
     padding: 0 0;
@@ -42,10 +42,10 @@
     transition: background 0.2s;
     height: 48px;
 }
-.event-search-box button:hover, .search-button:hover {
+.faq-search-box button:hover, .search-button:hover {
     background-color: #2e59d9;
 }
-.event-table {
+.faq-table {
     width: 100%;
     border-collapse: collapse;
     background: white;
@@ -54,28 +54,28 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     margin-top: 24px;
 }
-.event-table th,
-.event-table td {
+.faq-table th,
+.faq-table td {
     border: 1px solid #dee2e6;
     padding: 14px 0;
     text-align: center;
     font-size: 15px;
 }
-.event-table th {
+.faq-table th {
     background-color: #f1f3f5;
     color: #333;
     font-weight: 600;
     font-size: 16px;
 }
-.event-table td {
+.faq-table td {
     background-color: #fff;
     color: #222;
     font-size: 15px;
 }
-.event-title:hover {
+.faq-title:hover {
     color: orange !important;
 }
-.event-pagination {
+.faq-pagination {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,7 +83,7 @@
     gap: 6px;
     flex-wrap: wrap;
 }
-.event-pagination-btn {
+.faq-pagination-btn {
     display: inline-block;
     padding: 7px 16px;
     border: 1px solid #ccc;
@@ -95,14 +95,14 @@
     min-width: 38px;
     transition: background 0.15s, color 0.15s, border 0.15s;
 }
-.event-pagination-btn.active,
-.event-pagination-btn:focus {
+.faq-pagination-btn.active,
+.faq-pagination-btn:focus {
     background-color: #4e73df;
     color: #fff;
     border-color: #4e73df;
     outline: none;
 }
-.event-pagination-btn:disabled {
+.faq-pagination-btn:disabled {
     cursor: not-allowed;
     opacity: 0.5;
     background: #f5f6fa;
@@ -129,34 +129,34 @@
     background: #19a842;
 }
 @media (max-width: 900px) {
-    .event-container {
+    .faq-container {
         margin-left: 0%;
         padding: 10px;
     }
-    .event-content {
+    .faq-content {
         padding: 12px;
     }
-    .event-search-box {
+    .faq-search-box {
         flex-direction: column;
     }
-    .event-search-box input,
-    .event-search-box button {
+    .faq-search-box input,
+    .faq-search-box button {
         width: 100%;
         margin-bottom: 8px;
         height: 40px;
     }
-    .event-table {
+    .faq-table {
         display: block;
         overflow-x: auto;
         white-space: nowrap;
         margin-top: 14px;
     }
-    .event-table th,
-    .event-table td {
+    .faq-table th,
+    .faq-table td {
         padding: 8px;
         font-size: 13px;
     }
-    .event-pagination {
+    .faq-pagination {
         flex-direction: column;
         align-items: center;
         gap: 8px;

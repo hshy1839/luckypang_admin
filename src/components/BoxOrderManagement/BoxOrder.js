@@ -1,4 +1,3 @@
-// BoxOrder.js (관리자 주문 내역서 관리 - 전체 기능 포함)
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -34,10 +33,15 @@ const BoxOrder = () => {
   };
 
   const handleSearch = () => {
-    if (!searchTerm) return setFilteredOrders(orders);
+    if (!searchTerm) {
+      setFilteredOrders(orders);
+      setCurrentPage(1);
+      return;
+    }
+    const lower = searchTerm.toLowerCase();
     const filtered = orders.filter(order =>
-      order.user?.nickname?.includes(searchTerm) ||
-      order.box?.name?.includes(searchTerm)
+      order.user?.nickname?.toLowerCase().includes(lower) ||
+      order.box?.name?.toLowerCase().includes(lower)
     );
     setFilteredOrders(filtered);
     setCurrentPage(1);
@@ -60,7 +64,6 @@ const BoxOrder = () => {
         alert(res.data.message || '환불 실패');
       }
     } catch (err) {
-      console.error('환불 처리 오류:', err);
       alert('환불 처리 중 오류 발생');
     }
   };
@@ -82,76 +85,113 @@ const BoxOrder = () => {
     XLSX.writeFile(workbook, 'box_orders.xlsx');
   };
 
+  // 블록형 페이지네이션
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
   const currentOrders = filteredOrders.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+  const pagesPerBlock = 10;
+  const currentBlock = Math.floor((currentPage - 1) / pagesPerBlock);
+  const startPage = currentBlock * pagesPerBlock + 1;
+  const endPage = Math.min(startPage + pagesPerBlock - 1, totalPages);
+
+  const handleBlockPrev = () => {
+    if (startPage > 1) setCurrentPage(startPage - pagesPerBlock);
+  };
+  const handleBlockNext = () => {
+    if (endPage < totalPages) setCurrentPage(endPage + 1);
+  };
 
   return (
-    <div className="box-order-container">
+    <div className="boxorder-container">
       <Header />
-      <div className="box-order-top">
-        <h2>박스 주문 내역 관리</h2>
-        <div className="search-filter">
+      <div className="boxorder-content">
+        <h1>박스 주문 내역 관리</h1>
+        <div className="boxorder-search-box">
           <input
             type="text"
-            placeholder="유저명 또는 박스명 검색"
+            placeholder="유저명, 박스명 검색"
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleSearch()}
           />
-          <button onClick={handleSearch}>검색</button>
-          <button onClick={exportToExcel}>엑셀 다운로드</button>
-        </div>
-      </div>
-
-      <table className="box-order-table">
-        <thead>
-          <tr>
-            <th>주문번호</th>
-            <th>유저</th>
-            <th>박스명</th>
-            <th>결제수단</th>
-            <th>결제금액</th>
-            <th>상태</th>
-            <th>주문일</th>
-            <th>상세보기</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentOrders.map((order, idx) => (
-            <tr key={order._id}>
-              <td>{order._id.slice(-6).toUpperCase()}</td>
-              <td>{order.user?.nickname || 'Unknown'}</td>
-              <td>{order.box?.name}</td>
-              <td>{order.paymentType}</td>
-              <td>{order.paymentAmount + (order.pointUsed || 0)} 원</td>
-              <td>{order.status}</td>
-              <td>{formatDate(order.createdAt)}</td>
-          
-
-              <td>
-                <div className='box-order-btn-container'>
-                <button onClick={() => navigate(`/boxorder/detail/${order._id}`)}>상세</button>
-                {order.status === 'paid' && (
-                  <button onClick={() => handleRefund(order._id)}>환불</button>
-                )}
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div className="pagination">
-        {[...Array(totalPages)].map((_, i) => (
-          <button
-            key={i}
-            className={currentPage === i + 1 ? 'active' : ''}
-            onClick={() => setCurrentPage(i + 1)}
-          >
-            {i + 1}
+          <button className="search-button" onClick={handleSearch}>
+            검색
           </button>
-        ))}
+         
+        </div>
+
+        <table className="boxorder-table">
+          <thead>
+            <tr>
+              <th>주문번호</th>
+              <th>유저</th>
+              <th>박스명</th>
+              <th>결제수단</th>
+              <th>결제금액</th>
+              <th>상태</th>
+              <th>주문일</th>
+              <th>상세</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentOrders.map((order) => (
+              <tr key={order._id}>
+                <td>{order._id.slice(-6).toUpperCase()}</td>
+                <td>{order.user?.nickname || 'Unknown'}</td>
+                <td>{order.box?.name}</td>
+                <td>{order.paymentType}</td>
+                <td>{order.paymentAmount + (order.pointUsed || 0)} 원</td>
+                <td>{order.status}</td>
+                <td>{formatDate(order.createdAt)}</td>
+                <td>
+                    <div className="boxorder-btns">
+                    <button onClick={() => navigate(`/boxorder/detail/${order._id}`)}>상세</button>
+                    </div>
+                </td>
+               
+              </tr>
+            ))}
+            {currentOrders.length === 0 && (
+              <tr>
+                <td colSpan="8" className="no-results">데이터가 없습니다.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+
+        <div className="point-pagination">
+          <button
+            className="point-pagination-btn"
+            onClick={handleBlockPrev}
+            disabled={startPage === 1}
+          >
+            이전
+          </button>
+          {[...Array(endPage - startPage + 1)].map((_, idx) => {
+            const pageNum = startPage + idx;
+            return (
+              <button
+                key={pageNum}
+                onClick={() => setCurrentPage(pageNum)}
+                className={`point-pagination-btn${currentPage === pageNum ? ' active' : ''}`}
+              >
+                {pageNum}
+              </button>
+            );
+          })}
+          <button
+            className="point-pagination-btn"
+            onClick={handleBlockNext}
+            disabled={endPage === totalPages}
+          >
+            다음
+          </button>
+           <button className="excel-export-button" onClick={exportToExcel}>
+            엑셀 다운로드
+          </button>
+        </div>
+        
       </div>
     </div>
   );

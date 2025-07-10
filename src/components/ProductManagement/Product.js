@@ -13,92 +13,69 @@ const Product = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        fetchProducts();
+        // eslint-disable-next-line
+    }, []);
+
     const fetchProducts = async () => {
         try {
             const token = localStorage.getItem('token');
-            if (!token) {
-                console.log('로그인 정보가 없습니다.');
-                return;
-            }
+            if (!token) return;
 
-            const response = await axios.get('http:///13.124.224.246:7778/api/products/allProduct', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+            const response = await axios.get('http://13.124.224.246:7778/api/products/allProduct', {
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             if (response.data.success && Array.isArray(response.data.products)) {
-                // 최근에 만든 상품이 맨 위에 오도록 날짜순으로 정렬
-                const sortedProducts = response.data.products.sort((a, b) => {
-                    // createdAt 필드가 있다고 가정하고, 최신 상품이 먼저 오도록 정렬
-                    return new Date(b.createdAt) - new Date(a.createdAt);
-                });
-
+                const sortedProducts = response.data.products.sort((a, b) => (
+                    new Date(b.createdAt) - new Date(a.createdAt)
+                ));
                 setProducts(sortedProducts);
-            } else {
             }
         } catch (error) {
             console.error('상품 정보를 가져오는데 실패했습니다.', error);
         }
     };
 
-
-    useEffect(() => {
-        fetchProducts();
-    }, []);
-
     const handleSearch = async () => {
-        if (searchTerm === '') {
-            fetchProducts();  // 검색어가 없으면 전체 제품을 다시 불러옵니다.
-        } else {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    console.log('로그인 정보가 없습니다.');
-                    return;
-                }
+        if (!searchTerm) {
+            fetchProducts();
+            return;
+        }
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
 
-                const response = await axios.get('http:///13.124.224.246:7778/api/products/allProduct', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+            const response = await axios.get('http://13.124.224.246:7778/api/products/allProduct', {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.data.success && Array.isArray(response.data.products)) {
+                let filteredProducts = response.data.products;
+                filteredProducts = filteredProducts.filter((product) => {
+                    if (searchCategory === 'all') {
+                        return (
+                            product.name.includes(searchTerm) ||
+                            (product.category.includes(searchTerm) || product.category.sub?.includes(searchTerm))
+                        );
+                    } else if (searchCategory === 'name') {
+                        return product.name.includes(searchTerm);
+                    } else if (searchCategory === 'category') {
+                        return (
+                            product.category.includes(searchTerm) || product.category.sub?.includes(searchTerm)
+                        );
+                    }
+                    return true;
                 });
-
-                if (response.data.success && Array.isArray(response.data.products)) {
-                    let filteredProducts = response.data.products;
-
-                    // 검색 조건에 맞게 필터링
-                    filteredProducts = filteredProducts.filter((product) => {
-                        if (searchCategory === 'all') {
-                            return (
-                                product.name.includes(searchTerm) ||
-                                (product.category.includes(searchTerm) || product.category.sub.includes(searchTerm))
-                            );
-                        } else if (searchCategory === 'name') {
-                            return product.name.includes(searchTerm);
-                        } else if (searchCategory === 'category') {
-                            return (
-                                product.category.includes(searchTerm) || product.category.sub.includes(searchTerm)
-                            );
-                        }
-                        return true;
-                    });
-
-                    setProducts(filteredProducts); // 필터된 제품을 상태에 반영
-                } else {
-                    console.error('올바르지 않은 데이터 형식:', response.data);
-                }
-            } catch (error) {
-                console.error('상품 정보를 가져오는데 실패했습니다.', error);
+                setProducts(filteredProducts);
             }
+        } catch (error) {
+            console.error('상품 정보를 가져오는데 실패했습니다.', error);
         }
     };
 
-
-    const getCategoryDisplay = (category) => {
-        if (!category) return 'Unknown Category';
-        return `${category}`;
-    };
+    const getCategoryDisplay = (category) => category || 'Unknown Category';
 
     const handleProductClick = (id) => {
         navigate(`/products/productDetail/${id}`);
@@ -109,28 +86,17 @@ const Product = () => {
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
     const totalPages = Math.ceil(products.length / itemsPerPage);
 
-    const handlePreviousPage = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
-    };
+    // 👉 블록형 페이지네이션
+    const pagesPerBlock = 10;
+    const currentBlock = Math.floor((currentPage - 1) / pagesPerBlock);
+    const startPage = currentBlock * pagesPerBlock + 1;
+    const endPage = Math.min(startPage + pagesPerBlock - 1, totalPages);
 
-    const handleNextPage = () => {
-        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    const handleBlockPrev = () => {
+        if (startPage > 1) setCurrentPage(startPage - pagesPerBlock);
     };
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-
-    const calculateTotalStock = (product) => {
-        let totalStock = 0;
-        if (product.sizeStock) {
-            Object.values(product.sizeStock).forEach(stock => {
-                if (stock > 0) {
-                    totalStock += stock;
-                }
-            });
-        }
-        return totalStock;
+    const handleBlockNext = () => {
+        if (endPage < totalPages) setCurrentPage(endPage + 1);
     };
 
     const handleWriteClick = () => {
@@ -139,116 +105,104 @@ const Product = () => {
 
     const formatPrice = (price) => {
         return new Intl.NumberFormat('ko-KR', {
-            style: 'decimal', // 'currency'로 변경하고 currency: 'KRW' 추가 가능
-            maximumFractionDigits: 0, // 소수점 이하 자릿수
+            style: 'decimal',
+            maximumFractionDigits: 0,
         }).format(price);
     };
-    
 
     return (
-        <div className="product-management-container">
+        <div className="products-container">
             <Header />
-            <div className="product-management-container-container">
-                <div className="product-top-container-container">
-                    <h1>상품 관리</h1>
-                    <div className="product-search-box">
-                        <select
-                            className="search-category"
-                            value={searchCategory}
-                            onChange={(e) => setSearchCategory(e.target.value)}
-                        >
-                            <option value="all">전체</option>
-                            <option value="name">상품 이름</option>
-                            <option value="category">박스종류</option>
-                        </select>
-                        <input
-                            type="text"
-                            placeholder="검색..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        <button className="search-button" onClick={handleSearch}>
-                            검색
-                        </button>
-                    </div>
+            <div className="products-content">
+                <h1>상품 관리</h1>
 
-                    <table className="product-table">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>상품 이름</th>
-                                <th>박스종류</th>
-                                {/* <th>사이즈</th> */}
-                                {/* <th>총 재고</th> */}
-                                <th>가격</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentProducts.length > 0 ? (
-                                currentProducts.map((product, index) => (
-                                    <tr key={product._id}>
-                                        <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                                        <td
-                                            onClick={() => handleProductClick(product._id)}
-                                            className='product-title'
-                                        >
-                                            {product.name || 'Unknown Product'}
-                                        </td>
-                                        <td>{getCategoryDisplay(product.category)}</td>
-
-                                        {/* <td>
-                                            {product.sizeStock ? (
-                                                <div className="size-stock">
-                                                    {Object.keys(product.sizeStock).map((size) => (
-                                                        product.sizeStock[size] > 0 && (
-                                                            <div key={size} className="size-item">
-                                                                {size}
-                                                            </div>
-                                                        )
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                'Unknown Size'
-                                            )}
-                                        </td>
-                                        <td>{calculateTotalStock(product)}</td> */}
-                                        <td>{formatPrice(product.price || 0)} 원</td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="7" className="no-results">
-                                        데이터가 없습니다.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-
-                    <div className="pagination">
-                        <button className='prev-page-btn' onClick={handlePreviousPage} disabled={currentPage === 1}>
-                            이전
-                        </button>
-                        {[...Array(totalPages)].map((_, i) => (
-                            <button
-                                key={i}
-                                onClick={() => handlePageChange(i + 1)}
-                                className={currentPage === i + 1 ? 'active' : ''}
-                                id='page-number-btn'
-                            >
-                                {i + 1}
-                            </button>
-                        ))}
-                        <button className="next-page-btn" onClick={handleNextPage} disabled={currentPage === totalPages}>
-                            다음
-                        </button>
-                    </div>
-                </div>
-                <div className="write-btn-container">
-                    <button className="write-btn" onClick={handleWriteClick}>
-                        상품등록
+                <div className="products-search-box">
+                    <select
+                        className="search-category"
+                        value={searchCategory}
+                        onChange={(e) => setSearchCategory(e.target.value)}
+                    >
+                        <option value="all">전체</option>
+                        <option value="name">상품 이름</option>
+                        <option value="category">박스종류</option>
+                    </select>
+                    <input
+                        type="text"
+                        placeholder="검색..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button className="search-button" onClick={handleSearch}>
+                        검색
                     </button>
                 </div>
+
+                <table className="products-table">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>상품 이름</th>
+                            <th>박스종류</th>
+                            <th>가격</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentProducts.length > 0 ? (
+                            currentProducts.map((product, index) => (
+                                <tr key={product._id}>
+                                    <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
+                                    <td
+                                        onClick={() => handleProductClick(product._id)}
+                                        className='product-title'
+                                    >
+                                        {product.name || 'Unknown Product'}
+                                    </td>
+                                    <td>{getCategoryDisplay(product.category)}</td>
+                                    <td>{formatPrice(product.price || 0)} 원</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="4" className="no-results">
+                                    데이터가 없습니다.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+
+                <div className="point-pagination">
+                    <button
+                        className="point-pagination-btn"
+                        onClick={handleBlockPrev}
+                        disabled={startPage === 1}
+                    >
+                        이전
+                    </button>
+                    {[...Array(endPage - startPage + 1)].map((_, idx) => {
+                        const pageNum = startPage + idx;
+                        return (
+                            <button
+                                key={pageNum}
+                                onClick={() => setCurrentPage(pageNum)}
+                                className={`point-pagination-btn${currentPage === pageNum ? ' active' : ''}`}
+                            >
+                                {pageNum}
+                            </button>
+                        );
+                    })}
+                    <button
+                        className="point-pagination-btn"
+                        onClick={handleBlockNext}
+                        disabled={endPage === totalPages}
+                    >
+                        다음
+                    </button>
+                </div>
+
+                <button className="excel-export-button" style={{marginTop: 40}} onClick={handleWriteClick}>
+                    상품등록
+                </button>
             </div>
         </div>
     );

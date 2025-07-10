@@ -1,229 +1,167 @@
-/* notice.css */
-
-.notice-management-container {
-  display: flex;
-  overflow-x: hidden;
-  width: 80%;
-  margin-left: 20%;
-  height: 140vh;
-  justify-content: center;
-}
-.notice-management-container-container {
-  justify-items: center;
-  max-width: 100%;
-  padding-left: 5%;
-  padding-right: 5%;
-  background-color: white;
-  border: 1px solid rgb(219, 221, 226);
-}  
 .notice-container {
-  width: 95%;
-  height: 100%;
+    padding: 30px;
+    margin-left: 20%;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fa;
 }
-h1 {
-  font-size: 40px;
-  color: #333;
-  text-align: left;
-  margin-bottom: 20px;
+.notice-content {
+    background: white;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-top: 32px;
+    margin-bottom: 24px;
 }
-
-/* 검색 박스 스타일 */
+.notice-content h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+}
 .notice-search-box {
-  margin-top: 10%;
-  text-align: left;
-  display: flex;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
 }
-
 .notice-search-box input {
-  width: 30%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    flex: 5;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
 }
-
-.notice-search-box input:focus {
-  border-color: #007bff;
+.notice-search-box button, .search-button {
+    flex: 1;
+    min-width: 60px;
+    padding: 0 0;
+    background-color: #4e73df;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    transition: background 0.2s;
+    height: 48px;
 }
-.search-category {
-  width: 10%;
-  padding: 10px;
-  font-size: 15px;
-  margin-right: 2%;
+.notice-search-box button:hover, .search-button:hover {
+    background-color: #2e59d9;
 }
-.search-button {
-  width: 10%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-left: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: 0.5s ease background-color;
-}
-.search-button:hover {
-  background-color: rgb(191, 189, 189);
-}
-
-/* 테이블 스타일 */
 .notice-table {
-  width: 1000px;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-.notice-table th:nth-child(1),
-.notice-table td:nth-child(1) {
-    width: 5% ; /* 번호 칸의 너비를 줄이기 */
-}
-.notice-table th:nth-child(3),
-.notice-table td:nth-child(3) {
-    width: 5% ; /* 번호 칸의 너비를 줄이기 */
-}.notice-table th:nth-child(4),
-.notice-table td:nth-child(4) {
-    width: 5% ; /* 번호 칸의 너비를 줄이기 */
-}
-.notice-table td {
-  background-color: #fff;
-  text-align: center; /* 가로 정렬 */
-  vertical-align: middle; /* 세로 정렬 */
-  word-wrap: break-word; /* 텍스트가 너무 길면 줄바꿈 */
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-top: 24px;
 }
 .notice-table th,
 .notice-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  text-align: center;
+    border: 1px solid #dee2e6;
+    padding: 14px 0;
+    text-align: center;
 }
-
 .notice-table th {
-  background-color: #271386;
-  font-weight: bold;
-  font-size: 1rem;
-  color: white;
-  width: 10%;
+    background-color: #f1f3f5;
+    color: #333;
+    font-weight: 600;
+    font-size: 16px;
 }
-
 .notice-table td {
-  background-color: #fff;
-  font-size: 1rem;
-}
-/* 버튼 스타일 */
-.actions-btns {
-  display: flex;
-  gap: 10px;
-  width: 60px;
-  height: 30%;
-}
-
-.approve-btn, .reject-btn, .delete-btn {  
-  font-size: 20px;  
-  cursor: pointer;
-  padding: 0px;
-}
-.approve-btn {
-  color: green;
-}
-.reject-btn {
-  color: orange;
-}
-.delete-btn {
-  color: red;
-}
-
-.pagination {
-  margin-top: 5%;
-  width: 80%;
-  justify-self: center;
-  display: flex;
-  cursor: pointer;
-}
-.pagination span {
-}
-
-.notice-title {
-  color: blue;
-  cursor: pointer;
-
+    background-color: #fff;
+    color: #222;
+    font-size: 15px;
 }
 .notice-title:hover {
-  color: orange;
-  
+    color: orange !important;
 }
-.write-btn {
-  
-  margin-top: 10%;
-  margin-bottom: 10%;
-  width: 30%;
-  height: 100%;
-  cursor: pointer;
-  background-color: #000;
-  color: white;
-  border: none;
+.notice-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 28px 0 0 0;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.notice-pagination-btn {
+    display: inline-block;
+    padding: 7px 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    min-width: 38px;
+    transition: background 0.15s, color 0.15s, border 0.15s;
+}
+.notice-pagination-btn.active,
+.notice-pagination-btn:focus {
+    background-color: #4e73df;
+    color: #fff;
+    border-color: #4e73df;
+    outline: none;
+}
+.notice-pagination-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background: #f5f6fa;
+    color: #b5b5b5;
+    border-color: #eee;
+}
+.excel-export-button {
+    width: 100%;
+    margin: 0 auto;
+    background: #22b14c;
+    color: #fff;
+    border: none;
+    padding: 16px 0;
+    border-radius: 8px;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    margin-top: 32px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.16s;
+}
+.excel-export-button:hover {
+    background: #19a842;
 }
 @media (max-width: 900px) {
-  .notice-management-container {
-    width: 100%;
-    height: 120vh;
-    margin-left: 0;
-  }
-  .notice-management-container,
-  .notice-management-container-container {
-      width: 100%;  /* 기본 너비를 100%로 설정 */
-      max-width: 1200px;  /* 최대 너비 설정 */
-      margin: 0 auto;  /* 가운데 정렬 */
-  }
-
-  .notice-management-container-container {
-    padding-left: 2%;
-    padding-right: 2%;
-    width: 100%;
-  }
-
-  .notice-container {
-    width: 100%;
-  }
-  .notice-top-container-container {
-    width: 100%;
-  }
-
-  h1 {
-    font-size: 30px; /* 작은 화면에 맞게 폰트 크기 조정 */
-    margin-bottom: 10px; /* 간격 조정 */
-  }
-
-  .notice-search-box {
-    flex-direction: column; /* 검색 요소를 수직으로 정렬 */
-    margin-top: 5%;
-  }
-
-  .notice-search-box input,
-  .search-category,
-  .search-button {
-    width: 95%; /* 전체 너비 사용 */
-    margin-top: 10px; /* 요소 간 간격 추가 */
-  }
-
-  .notice-table {
-    width: 100%; /* 테이블 전체 너비 사용 */
-  }
-
-  .notice-table th, .notice-table td {
-    padding: 8px; /* 패딩 감소 */
-    font-size: 0.6rem; /* 폰트 크기 감소 */
-    text-align: center; /* 가운데 정렬 유지 */
-  }
-
-  .actions-btns {
-    flex-direction: column; /* 액션 버튼을 수직으로 정렬 */
-    gap: 5px; /* 버튼 간 간격 감소 */
-  }
-
-  .approve-btn, .reject-btn, .delete-btn {
-    font-size: 16px; /* 버튼 폰트 크기 감소 */
-  }
-
- 
+    .notice-container {
+        margin-left: 0%;
+        padding: 10px;
+    }
+    .notice-content {
+        padding: 12px;
+    }
+    .notice-search-box {
+        flex-direction: column;
+    }
+    .notice-search-box input,
+    .notice-search-box button {
+        width: 100%;
+        margin-bottom: 8px;
+        height: 40px;
+    }
+    .notice-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        margin-top: 14px;
+    }
+    .notice-table th,
+    .notice-table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+    .notice-pagination {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    .excel-export-button {
+        font-size: 1rem;
+        padding: 12px 0;
+    }
 }

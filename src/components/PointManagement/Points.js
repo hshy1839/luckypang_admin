@@ -11,21 +11,6 @@ const Points = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-
-  const handleExcelExport = () => {
-    const exportData = filteredPoints.map((point, index) => ({
-      번호: index + 1,
-      닉네임: point.user?.nickname || '알 수 없음',
-      유형: point.type,
-      금액: point.amount,
-      총액: point.totalAmount || '-',
-      설명: point.description || '-',
-      생성일: new Date(point.createdAt).toLocaleString(),
-    }));
-  
-    exportToExcel(exportData, '전체_포인트_내역');
-  };
-  
   useEffect(() => {
     const fetchPoints = async () => {
       try {
@@ -61,10 +46,38 @@ const Points = () => {
     setCurrentPage(1);
   };
 
+  const handleExcelExport = () => {
+    const exportData = filteredPoints.map((point, index) => ({
+      번호: index + 1,
+      닉네임: point.user?.nickname || '알 수 없음',
+      유형: point.type,
+      금액: point.amount,
+      총액: point.totalAmount || '-',
+      설명: point.description || '-',
+      생성일: new Date(point.createdAt).toLocaleString(),
+    }));
+
+    exportToExcel(exportData, '전체_포인트_내역');
+  };
+
+  // 페이지네이션 계산
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
   const currentPoints = filteredPoints.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(filteredPoints.length / itemsPerPage);
+
+  // 블록형 페이지네이션
+  const pagesPerBlock = 10;
+  const currentBlock = Math.floor((currentPage - 1) / pagesPerBlock);
+  const startPage = currentBlock * pagesPerBlock + 1;
+  const endPage = Math.min(startPage + pagesPerBlock - 1, totalPages);
+
+  const handleBlockPrev = () => {
+    if (startPage > 1) setCurrentPage(startPage - pagesPerBlock);
+  };
+  const handleBlockNext = () => {
+    if (endPage < totalPages) setCurrentPage(endPage + 1);
+  };
 
   return (
     <div className="points-container">
@@ -113,26 +126,38 @@ const Points = () => {
           </tbody>
         </table>
 
-        <div className="pagination">
-          <button onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+        <div className="point-pagination">
+          <button
+            onClick={handleBlockPrev}
+            disabled={startPage === 1}
+            className="point-pagination-btn"
+          >
             이전
           </button>
-          {[...Array(totalPages)].map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentPage(i + 1)}
-              className={currentPage === i + 1 ? 'active' : ''}
-            >
-              {i + 1}
-            </button>
-          ))}
-          <button onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>
+          {[...Array(endPage - startPage + 1)].map((_, idx) => {
+            const pageNum = startPage + idx;
+            return (
+              <button
+                key={pageNum}
+                onClick={() => setCurrentPage(pageNum)}
+                className={`point-pagination-btn${currentPage === pageNum ? ' active' : ''}`}
+              >
+                {pageNum}
+              </button>
+            );
+          })}
+          <button
+            onClick={handleBlockNext}
+            disabled={endPage === totalPages}
+            className="point-pagination-btn"
+          >
             다음
           </button>
         </div>
+
         <button onClick={handleExcelExport} className="excel-export-button">
-  엑셀로 내보내기
-</button>
+          엑셀로 내보내기
+        </button>
       </div>
     </div>
   );

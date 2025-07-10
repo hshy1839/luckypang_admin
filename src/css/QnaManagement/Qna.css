@@ -1,51 +1,72 @@
-.event-container {
+.qna-container {
     padding: 30px;
     margin-left: 20%;
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #f8f9fa;
 }
-.event-content {
+
+.qna-content {
     background: white;
     padding: 32px;
     border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     margin-top: 32px;
     margin-bottom: 24px;
 }
-.event-content h1 {
+
+.qna-content h1 {
     margin-bottom: 20px;
     font-size: 24px;
     font-weight: 600;
 }
-.event-search-box {
+
+.qna-search-box {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
 }
-.event-search-box input {
+
+.qna-search-box .search-category {
+    height: 48px;
+    padding: 0 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    background: #fff;
+    appearance: none;
+    outline: none;
+    flex: 1;
+    min-width: 60px;
+    box-sizing: border-box;
+}
+
+.qna-search-box input {
     flex: 5;
-    padding: 10px 14px;
+    height: 48px;
+    padding: 0 14px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
 }
-.event-search-box button, .search-button {
+
+.qna-search-box .search-button {
     flex: 1;
-    min-width: 60px;
-    padding: 0 0;
+    height: 48px;
     background-color: #4e73df;
     color: white;
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
     border: none;
+    min-width: 60px;
     transition: background 0.2s;
-    height: 48px;
 }
-.event-search-box button:hover, .search-button:hover {
+
+.qna-search-box .search-button:hover {
     background-color: #2e59d9;
 }
-.event-table {
+
+.qna-table {
     width: 100%;
     border-collapse: collapse;
     background: white;
@@ -54,28 +75,49 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     margin-top: 24px;
 }
-.event-table th,
-.event-table td {
+
+.qna-table th,
+.qna-table td {
     border: 1px solid #dee2e6;
     padding: 14px 0;
     text-align: center;
     font-size: 15px;
 }
-.event-table th {
+
+.qna-table th {
     background-color: #f1f3f5;
     color: #333;
     font-weight: 600;
     font-size: 16px;
 }
-.event-table td {
+
+.qna-table td {
     background-color: #fff;
     color: #222;
     font-size: 15px;
 }
-.event-title:hover {
-    color: orange !important;
+
+.qna-title {
+    color: #3469f5;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+    text-decoration: underline;
 }
-.event-pagination {
+.qna-title:hover {
+    color: orange;
+}
+
+.answered {
+    color: #1cbb78;
+    font-weight: bold;
+}
+.unanswered {
+    color: #ea3941;
+    font-weight: bold;
+}
+
+.qna-pagination {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,7 +125,7 @@
     gap: 6px;
     flex-wrap: wrap;
 }
-.event-pagination-btn {
+.qna-pagination-btn {
     display: inline-block;
     padding: 7px 16px;
     border: 1px solid #ccc;
@@ -95,74 +137,53 @@
     min-width: 38px;
     transition: background 0.15s, color 0.15s, border 0.15s;
 }
-.event-pagination-btn.active,
-.event-pagination-btn:focus {
+.qna-pagination-btn.active,
+.qna-pagination-btn:focus {
     background-color: #4e73df;
     color: #fff;
     border-color: #4e73df;
     outline: none;
 }
-.event-pagination-btn:disabled {
+.qna-pagination-btn:disabled {
     cursor: not-allowed;
     opacity: 0.5;
     background: #f5f6fa;
     color: #b5b5b5;
     border-color: #eee;
 }
-.excel-export-button {
-    width: 100%;
-    margin: 0 auto;
-    background: #22b14c;
-    color: #fff;
-    border: none;
-    padding: 16px 0;
-    border-radius: 8px;
-    font-size: 1.15rem;
-    font-weight: 500;
-    margin-bottom: 12px;
-    margin-top: 32px;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    transition: background 0.16s;
-}
-.excel-export-button:hover {
-    background: #19a842;
-}
+
 @media (max-width: 900px) {
-    .event-container {
+    .qna-container {
         margin-left: 0%;
         padding: 10px;
     }
-    .event-content {
+    .qna-content {
         padding: 12px;
     }
-    .event-search-box {
+    .qna-search-box {
         flex-direction: column;
     }
-    .event-search-box input,
-    .event-search-box button {
+    .qna-search-box input,
+    .qna-search-box .search-button,
+    .qna-search-box .search-category {
         width: 100%;
         margin-bottom: 8px;
         height: 40px;
     }
-    .event-table {
+    .qna-table {
         display: block;
         overflow-x: auto;
         white-space: nowrap;
         margin-top: 14px;
     }
-    .event-table th,
-    .event-table td {
+    .qna-table th,
+    .qna-table td {
         padding: 8px;
         font-size: 13px;
     }
-    .event-pagination {
+    .qna-pagination {
         flex-direction: column;
         align-items: center;
         gap: 8px;
-    }
-    .excel-export-button {
-        font-size: 1rem;
-        padding: 12px 0;
     }
 }

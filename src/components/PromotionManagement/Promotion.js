@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import '../../css/PromotionManagement/Promotion.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faBan, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Promotion = () => {
     const [promotions, setPromotions] = useState([]);
@@ -15,49 +15,48 @@ const Promotion = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        fetchPromotions();
+    }, []);
+
     const fetchPromotions = async () => {
         try {
             const token = localStorage.getItem('token');
-            if (!token) {
-                console.log('로그인 정보가 없습니다.');
-                return;
-            }
+            if (!token) return;
 
             const response = await axios.get('http://13.124.224.246:7778/api/promotion/read', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             if (response.data.success && Array.isArray(response.data.promotions)) {
-                const sortedPromotions = response.data.promotions.sort((a, b) => {
-                    return new Date(b.createdAt) - new Date(a.createdAt);
-                });
-
+                const sortedPromotions = response.data.promotions.sort(
+                    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                );
                 setPromotions(sortedPromotions);
-                setFilteredPromotions(sortedPromotions); // 초기 상태에서 모든 프로모션 표시
-            } else {
-                console.error('프로모션 데이터를 받아오는 데 실패했습니다.');
+                setFilteredPromotions(sortedPromotions);
             }
         } catch (error) {
             console.error('프로모션 정보를 가져오는데 실패했습니다.', error);
         }
     };
 
-    useEffect(() => {
-        fetchPromotions();
-    }, []);
-
     const handleSearch = () => {
+        if (!searchTerm) {
+            setFilteredPromotions(promotions);
+            setCurrentPage(1);
+            return;
+        }
         const results = promotions.filter(promotion =>
             promotion.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredPromotions(results);
+        setCurrentPage(1);
     };
 
     const handlePromotionClick = (id) => {
         navigate(`/promotion/promotionDetail/${id}`);
     };
+
     const handleCreatePromotionClick = () => {
         navigate('/promotion/create');
     };
@@ -67,15 +66,10 @@ const Promotion = () => {
 
         try {
             const token = localStorage.getItem('token');
-            if (!token) {
-                console.log('로그인 정보가 없습니다.');
-                return;
-            }
+            if (!token) return;
 
             const response = await axios.delete(`http://13.124.224.246:7778/api/promotion/delete/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             if (response.data.success) {
@@ -87,60 +81,61 @@ const Promotion = () => {
         }
     };
 
+    // 페이지네이션 블록
     const indexOfLastPromotion = currentPage * itemsPerPage;
     const indexOfFirstPromotion = indexOfLastPromotion - itemsPerPage;
     const currentPromotions = filteredPromotions.slice(indexOfFirstPromotion, indexOfLastPromotion);
     const totalPages = Math.ceil(filteredPromotions.length / itemsPerPage);
 
-    const handlePreviousPage = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
-    };
+    // 블록형 페이지네이션 (10개씩)
+    const pagesPerBlock = 10;
+    const currentBlock = Math.floor((currentPage - 1) / pagesPerBlock);
+    const startPage = currentBlock * pagesPerBlock + 1;
+    const endPage = Math.min(startPage + pagesPerBlock - 1, totalPages);
 
-    const handleNextPage = () => {
-        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    const handleBlockPrev = () => {
+        if (startPage > 1) setCurrentPage(startPage - pagesPerBlock);
     };
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+    const handleBlockNext = () => {
+        if (endPage < totalPages) setCurrentPage(endPage + 1);
     };
 
     return (
-        <div className="promotion-management-container">
+        <div className="promotion-container">
             <Header />
-            <div className="promotion-management-container-container">
-                <div className="promotion-top-container-container">
-                    <h1>프로모션 관리</h1>
-                    <div className="promotion-search-box">
-                        <input
-                            type="text"
-                            placeholder="검색..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        <button className="search-button" onClick={handleSearch}>
-                            검색
-                        </button>
-                    </div>
-
-                    <table className="promotion-table">
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>프로모션 이름</th>
-                                <th>생성 날짜</th>
-                                <th>액션</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentPromotions.map((promotion, index) => (
+            <div className="promotion-content">
+                <h1>프로모션 관리</h1>
+                <div className="promotion-search-box">
+                    <input
+                        type="text"
+                        placeholder="프로모션 이름 검색..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button className="search-button" onClick={handleSearch}>
+                        검색
+                    </button>
+                </div>
+                <table className="promotion-table">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>프로모션 이름</th>
+                            <th>생성 날짜</th>
+                            <th>액션</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentPromotions.length > 0 ? (
+                            currentPromotions.map((promotion, index) => (
                                 <tr key={promotion._id}>
                                     <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
                                     <td
-                                            onClick={() => handlePromotionClick(promotion._id)}
-                                            className='product-title'
-                                        >
-                                            {promotion.name || 'Unknown Promotion'}
-                                        </td>
+                                        onClick={() => handlePromotionClick(promotion._id)}
+                                        className='promotion-title'
+                                    >
+                                        {promotion.name || 'Unknown Promotion'}
+                                    </td>
                                     <td>
                                         {promotion.createdAt
                                             ? new Date(promotion.createdAt).toLocaleDateString()
@@ -157,33 +152,47 @@ const Promotion = () => {
                                         </div>
                                     </td>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div className="pagination">
-                        <button className="prev-page-btn" onClick={handlePreviousPage} disabled={currentPage === 1}>
-                            이전
-                        </button>
-                        {[...Array(totalPages)].map((_, i) => (
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="4" className="no-results">
+                                    데이터가 없습니다.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+                <div className="point-pagination">
+                    <button
+                        className="point-pagination-btn"
+                        onClick={handleBlockPrev}
+                        disabled={startPage === 1}
+                    >
+                        이전
+                    </button>
+                    {[...Array(endPage - startPage + 1)].map((_, idx) => {
+                        const pageNum = startPage + idx;
+                        return (
                             <button
-                                key={i}
-                                onClick={() => handlePageChange(i + 1)}
-                                className={currentPage === i + 1 ? 'active' : ''}
-                                id='page-number-btn'
+                                key={pageNum}
+                                onClick={() => setCurrentPage(pageNum)}
+                                className={`point-pagination-btn${currentPage === pageNum ? ' active' : ''}`}
                             >
-                                {i + 1}
+                                {pageNum}
                             </button>
-                        ))}
-                        <button className='next-page-btn' onClick={handleNextPage} disabled={currentPage === totalPages}>
-                            다음
-                        </button>
-                    </div>
-                    <div className="write-btn-container">
-                        <button className="write-btn" onClick={handleCreatePromotionClick}>
-                            프로모션 등록
-                        </button>
-                    </div>
+                        );
+                    })}
+                    <button
+                        className="point-pagination-btn"
+                        onClick={handleBlockNext}
+                        disabled={endPage === totalPages}
+                    >
+                        다음
+                    </button>
                 </div>
+                <button className="excel-export-button" style={{marginTop: 40}} onClick={handleCreatePromotionClick}>
+                    프로모션 등록
+                </button>
             </div>
         </div>
     );

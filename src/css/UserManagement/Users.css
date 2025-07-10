@@ -1,155 +1,197 @@
-.users-management-container {
-  font-family: 'Pretendard', 'sans-serif';
-  width: 75%;
-  margin-left: 20%;
-  padding: 20px;
-  background-color: #f7f9fb;
-  min-height: 100vh;
+.users-container {
+    padding: 30px;
+    margin-left: 20%;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fa;
 }
-
-.users-management-container-container {
-  max-width: 1200px;
-  margin: 0 auto;
+.users-content {
+    background: white;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-top: 32px;
+    margin-bottom: 24px;
 }
-
-.users-top-container-container > h1 {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 24px;
-  color: #333;
+.users-content h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
 }
-
-/* 검색 박스 */
 .users-search-box {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
 }
-
-.users-search-box select,
 .users-search-box input {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
+    flex: 5;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
 }
-
-.search-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+.users-search-box button, .search-button {
+    flex: 1;
+    min-width: 60px;
+    padding: 0 0;
+    background-color: #4e73df;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    transition: background 0.2s;
+    height: 48px;
 }
-
-.search-button:hover {
-  background-color: #0056b3;
+.users-search-box button:hover, .search-button:hover {
+    background-color: #2e59d9;
 }
-
-/* 테이블 스타일 */
 .users-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
-  overflow: hidden;
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-top: 24px;
 }
-
 .users-table th,
 .users-table td {
-  padding: 12px 14px;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-  font-size: 14px;
+    border: 1px solid #dee2e6;
+    padding: 14px 0;
+    text-align: center;
+    font-size: 15px;
 }
-
 .users-table th {
-  background-color: #271386;
-  font-weight: bold;
-  font-size: 1rem;
-  color: white;
-  width: 10%;
+    background-color: #f1f3f5;
+    color: #333;
+    font-weight: 600;
+    font-size: 16px;
 }
-
-.users-table td.product-title {
-  color: #007bff;
-  cursor: pointer;
-  font-weight: 500;
+.users-table td {
+    background-color: #fff;
+    color: #222;
+    font-size: 15px;
 }
-
-.no-results {
-  text-align: center;
-  color: #888;
-  padding: 20px;
+.product-title {
+    color: #3469f5;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
 }
-
-/* 액션 아이콘 버튼 */
+.product-title:hover {
+    color: orange;
+}
 .actions-btns-users {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
 }
-
-.actions-btns-users .approve-btn-users {
-  color: #28a745;
-  cursor: pointer;
+.approve-btn-users {
+    color: #22b14c;
+    font-size: 20px;
+    cursor: pointer;
 }
-
-.actions-btns-users .reject-btn-users {
-  color: #ffc107;
-  cursor: pointer;
+.reject-btn-users {
+    color: #eb4034;
+    font-size: 20px;
+    cursor: pointer;
 }
-
-.actions-btns-users .delete-btn-users {
-  color: #dc3545;
-  cursor: pointer;
+.delete-btn-users {
+    color: #888;
+    font-size: 20px;
+    cursor: pointer;
 }
-
-/* 페이지네이션 */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: 24px;
+.approve-btn-users:hover { color: #138f32;}
+.reject-btn-users:hover { color: #b8281b;}
+.delete-btn-users:hover { color: #222;}
+.users-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 28px 0 0 0;
+    gap: 6px;
+    flex-wrap: wrap;
 }
-
-.pagination button {
-  padding: 6px 12px;
-  font-size: 14px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
+.users-pagination-btn {
+    display: inline-block;
+    padding: 7px 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    min-width: 38px;
+    transition: background 0.15s, color 0.15s, border 0.15s;
 }
-
-.pagination button.active {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
+.users-pagination-btn.active,
+.users-pagination-btn:focus {
+    background-color: #4e73df;
+    color: #fff;
+    border-color: #4e73df;
+    outline: none;
 }
-
-.pagination button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
+.users-pagination-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background: #f5f6fa;
+    color: #b5b5b5;
+    border-color: #eee;
 }
-
-/* 엑셀 버튼 */
 .excel-export-button {
-  margin-top: 30px;
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  float: right;
+    width: 100%;
+    margin: 0 auto;
+    background: #22b14c;
+    color: #fff;
+    border: none;
+    padding: 16px 0;
+    border-radius: 8px;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    margin-top: 32px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.16s;
 }
-
 .excel-export-button:hover {
-  background-color: #388e3c;
+    background: #19a842;
+}
+@media (max-width: 900px) {
+    .users-container {
+        margin-left: 0%;
+        padding: 10px;
+    }
+    .users-content {
+        padding: 12px;
+    }
+    .users-search-box {
+        flex-direction: column;
+    }
+    .users-search-box input,
+    .users-search-box button {
+        width: 100%;
+        margin-bottom: 8px;
+        height: 40px;
+    }
+    .users-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        margin-top: 14px;
+    }
+    .users-table th,
+    .users-table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+    .users-pagination {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    .excel-export-button {
+        font-size: 1rem;
+        padding: 12px 0;
+    }
 }

@@ -1,250 +1,181 @@
-/* 기본 스타일 */
-.promotion-management-container {
-    display: flex;
-    overflow-x: hidden;
-    width: 80%;
+.promotion-container {
+    padding: 30px;
     margin-left: 20%;
-    height: 120vh;
-    overflow-y: hidden;
-    justify-content: center;
-  }
-  
-  .promotion-management-container-container {
-    justify-items: center;
-    max-width: 100%;
-    padding-left: 5%;
-    padding-right: 5%;
-    background-color: white;
-    border: 1px solid rgb(219, 221, 226);
-  }
-  
-  .promotion-container {
-    width: 95%;
-    height: 100%;
-  }
-  
-  h1 {
-    font-size: 40px;
-    color: #333;
-    text-align: left;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fa;
+}
+.promotion-content {
+    background: white;
+    padding: 32px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-top: 32px;
+    margin-bottom: 24px;
+}
+.promotion-content h1 {
     margin-bottom: 20px;
-  }
-  
-  /* 검색 박스 스타일 */
-  .promotion-search-box {
-    margin-top: 10%;
-    text-align: left;
+    font-size: 24px;
+    font-weight: 600;
+}
+.promotion-search-box {
     display: flex;
-  }
-  
-  .promotion-search-box input {
-    width: 30%;
-    padding: 10px;
-    font-size: 16px;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.promotion-search-box input {
+    flex: 5;
+    height: 48px;
+    padding: 0 14px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .promotion-search-box input:focus {
-    border-color: #007bff;
-  }
-  
-  .search-category {
-    width: 10%;
-    padding: 10px;
-    font-size: 15px;
-    margin-right: 2%;
-  }
-  
-  .search-button {
-    width: 10%;
+    border-radius: 6px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: 0.5s ease background-color;
-  }
-  
-  .search-button:hover {
-    background-color: rgb(191, 189, 189);
-  }
-  
-  /* 테이블 스타일 */
-  .promotion-table {
-    width: 1000px;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .promotion-table th:nth-child(1),
-  .promotion-table td:nth-child(1) {
-    width: 5%;
-  }
-  .promotion-table th:nth-child(4),
-  .promotion-table td:nth-child(4) {
-    width: 5%;
-  }
-  .promotion-table th:nth-child(5),
-  .promotion-table td:nth-child(5) {
-    width: 7%;
-  }
-  
-  .promotion-table th:nth-child(6),
-  .promotion-table td:nth-child(6) {
-    width: 5%;
-  }
-  .promotion-table th:nth-child(7),
-  .promotion-table td:nth-child(7) {
-    width: 5%;
-  }
-  
-  .promotion-table td {
-    background-color: #fff;
-    text-align: center;
-    vertical-align: middle;
-    word-wrap: break-word;
-  }
-  
-  .promotion-table th,
-  .promotion-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    text-align: center;
-  }
-  
-  .promotion-table th {
-    background-color: #271386;
-    font-weight: bold;
-    font-size: 1rem;
+}
+.promotion-search-box .search-button {
+    flex: 1;
+    height: 48px;
+    background-color: #4e73df;
     color: white;
-    width: 10%;
-  }
-  
-  .promotion-table td {
-    background-color: #fff;
-    font-size: 1rem;
-  }
-  
-  /* 페이지 버튼 */
- 
-  
-  
- 
-  
- 
-  
-  .write-btn-container {
-    width: 100%;
-    height: 50px;
-  }
-  
-  .write-btn {
-    margin-top: 10%;
-    width: 30%;
-    height: 100%;
+    border-radius: 6px;
     cursor: pointer;
-    background-color: #000;
-    color: white;
+    font-size: 16px;
     border: none;
-  }
-  
-  
-  .promotion-title:hover {
+    min-width: 60px;
+    transition: background 0.2s;
+}
+.promotion-search-box .search-button:hover {
+    background-color: #2e59d9;
+}
+.promotion-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-top: 24px;
+}
+.promotion-table th,
+.promotion-table td {
+    border: 1px solid #dee2e6;
+    padding: 14px 0;
+    text-align: center;
+    font-size: 15px;
+}
+.promotion-table th {
+    background-color: #f1f3f5;
+    color: #333;
+    font-weight: 600;
+    font-size: 16px;
+}
+.promotion-table td {
+    background-color: #fff;
+    color: #222;
+    font-size: 15px;
+}
+.promotion-title {
+    color: #3469f5;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.promotion-title:hover {
     color: orange;
-  }
-  
-  .size-stock {
+}
+.action-buttons {
     display: flex;
-    gap: 10px;
+    justify-content: center;
+    gap: 12px;
+    font-size: 1.1rem;
+}
+.delete-btn-promotion { color: #888; cursor: pointer; }
+.promotion-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 28px 0 0 0;
+    gap: 6px;
     flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .size-item {
-    padding: 5px 5px;
-  }
-  .action-buttons {
-    justify-content: center;
-    display: flex;
-    gap: 10px;
-  }
-  .delete-btn-promotion {
-    width: 10%;
-    height: 10%;
-   color: red;
-  }
-  /* 반응형 스타일 */
-  
-  /* 900px 이하 화면 (태블릿 이하) */
-  @media (max-width: 900px) {
-  
-    .promotion-management-container {
-        width: 100%;
-      overflow-x: hidden;
-      margin-left: 0%;
-      height: 100vh;
-        flex-direction: column;
+}
+.promotion-pagination-btn {
+    display: inline-block;
+    padding: 7px 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    min-width: 38px;
+    transition: background 0.15s, color 0.15s, border 0.15s;
+}
+.promotion-pagination-btn.active,
+.promotion-pagination-btn:focus {
+    background-color: #4e73df;
+    color: #fff;
+    border-color: #4e73df;
+    outline: none;
+}
+.promotion-pagination-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background: #f5f6fa;
+    color: #b5b5b5;
+    border-color: #eee;
+}
+.excel-export-button {
+    width: 100%;
+    margin: 0 auto;
+    background: #22b14c;
+    color: #fff;
+    border: none;
+    padding: 16px 0;
+    border-radius: 8px;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    margin-top: 32px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.16s;
+}
+.excel-export-button:hover {
+    background: #19a842;
+}
+@media (max-width: 900px) {
+    .promotion-container {
+        margin-left: 0%;
+        padding: 10px;
     }
-  
-    .promotion-management-container-container {
-      justify-items: center;
-      max-width: 90%;
-      overflow-x: hidden;
-      height: 100%;
-      padding-left: 5%;
-      padding-right: 5%;
+    .promotion-content {
+        padding: 12px;
     }
-
     .promotion-search-box {
-        margin-top: 5%;
         flex-direction: column;
-        align-items: flex-start;
     }
-  
-    .promotion-search-box input {
+    .promotion-search-box input,
+    .promotion-search-box .search-button {
         width: 100%;
-        margin-bottom: 10px;
-        margin-top: 10%;
+        margin-bottom: 8px;
+        height: 40px;
     }
-  
-    .search-category, .search-button {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
-  
     .promotion-table {
-        width: 100%;
+        display: block;
         overflow-x: auto;
+        white-space: nowrap;
+        margin-top: 14px;
     }
-  
     .promotion-table th,
     .promotion-table td {
         padding: 8px;
-        font-size: 0.7rem;
-
+        font-size: 13px;
     }
-  
-  
-    .write-btn {
-        width: 100%;
-        font-size: 20px;
+    .promotion-pagination {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
     }
-  
-    .write-btn-container {
-        height: 60px;
+    .excel-export-button {
+        font-size: 1rem;
+        padding: 12px 0;
     }
-    .delete-btn-promotion {
-      width: 40%;
-      height: 40%;
-      color: #f44336;
-   
-    }
-  }
-  
-  
-
-  
+}
