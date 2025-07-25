@@ -36,7 +36,7 @@ const ProductUpdate = () => {
     const fetchProduct = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://13.124.224.246:7778/api/products/Product/${id}`, {
+        const response = await axios.get(`http://localhost:7778/api/products/Product/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -44,7 +44,7 @@ const ProductUpdate = () => {
           const product = response.data.product;
           setForm(product);
           if (product.mainImage) {
-            setMainImagePreview(`http://13.124.224.246:7778${product.mainImage}`);
+            setMainImagePreview(`http://localhost:7778${product.mainImage}`);
           }
           if (product.additionalImages) {
             setInitialAdditionalImages(product.additionalImages);
@@ -165,7 +165,7 @@ const ProductUpdate = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `http://13.124.224.246:7778/api/products/update/${id}`,
+        `http://localhost:7778/api/products/update/${id}`,
         formData,
         {
           headers: {
@@ -198,7 +198,6 @@ const ProductUpdate = () => {
           { label: '소비자가', name: 'consumerPrice', type: 'number' },
           { label: '실구매가', name: 'price', type: 'number' },
           { label: '배송비', name: 'shippingFee', type: 'number' },
-          { label: '배송정보', name: 'shippingInfo' },
         ].map(({ label, name, type = 'text' }) => (
           <div key={name} className="product-update-field">
             <label>{label}</label>
@@ -306,7 +305,7 @@ const ProductUpdate = () => {
                 onDrop={(e) => handleDropPreview(e, i)}
                 onDragOver={(e) => e.preventDefault()}
               >
-                <img src={item.isInitial ? `http://13.124.224.246:7778${item.url}` : item.url} alt="상세 이미지" />
+                <img src={item.isInitial ? `http://localhost:7778${item.url}` : item.url} alt="상세 이미지" />
                 <button
                   type="button"
                   onClick={() => {

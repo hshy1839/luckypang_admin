@@ -20,7 +20,7 @@ const BoxOrder = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://13.124.224.246:7778/api/orders', {
+      const res = await axios.get('http://localhost:7778/api/orders', {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success && Array.isArray(res.data.orders)) {
@@ -53,7 +53,7 @@ const BoxOrder = () => {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.post(
-        `http://13.124.224.246:7778/api/orders/${orderId}/refund`,
+        `http://localhost:7778/api/orders/${orderId}/refund`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

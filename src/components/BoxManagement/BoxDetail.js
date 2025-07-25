@@ -18,7 +18,7 @@ const BoxDetail = () => {
         if (!token) return;
 
         const response = await axios.get(
-          `http://13.124.224.246:7778/api/box/${id}`,
+          `http://localhost:7778/api/box/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -45,7 +45,7 @@ const BoxDetail = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.delete(
-        `http://13.124.224.246:7778/api/box/${id}`,
+        `http://localhost:7778/api/box/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -112,14 +112,14 @@ const BoxDetail = () => {
             })}</td></tr>
             <tr>
               <th>대표 이미지</th>
-              <td>{box.mainImage && <img src={`http://13.124.224.246:7778${box.mainImage}`} alt="대표 이미지" style={{ width: '200px' }} />}</td>
+              <td>{box.mainImage && <img src={`http://localhost:7778${box.mainImage}`} alt="대표 이미지" style={{ width: '200px' }} />}</td>
             </tr>
             <tr>
               <th>상세 이미지</th>
               <td>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                   {box.additionalImages?.map((url, idx) => (
-                    <img key={idx} src={`http://13.124.224.246:7778${url}`} alt={`상세 ${idx}`} style={{ width: '150px' }} />
+                    <img key={idx} src={`http://localhost:7778${url}`} alt={`상세 ${idx}`} style={{ width: '150px' }} />
                   ))}
                 </div>
               </td>

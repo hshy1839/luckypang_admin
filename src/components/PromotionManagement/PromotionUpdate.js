@@ -24,7 +24,7 @@ const PromotionUpdate = () => {
                 }
 
                 const response = await axios.get(
-                    `http://13.124.224.246:7778/api/promotion/read/${id}`,
+                    `http://localhost:7778/api/promotion/read/${id}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ const PromotionUpdate = () => {
             }
 
             const response = await axios.put(
-                `http://13.124.224.246:7778/api/promotion/${id}`,
+                `http://localhost:7778/api/promotion/${id}`,
                 updatedPromotion,
                 {
                     headers: {

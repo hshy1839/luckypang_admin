@@ -11,7 +11,7 @@ const RefundTermEdit = () => {
   useEffect(() => {
     const fetchTerm = async () => {
       try {
-        const response = await axios.get('http://13.124.224.246:7778/api/terms/refundTerm');
+        const response = await axios.get('http://localhost:7778/api/terms/refundTerm');
         if (response.data?.success && response.data.term?.content) {
           setContent(response.data.term.content);
         }
@@ -29,7 +29,7 @@ const RefundTermEdit = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://13.124.224.246:7778/api/terms/refundTerm', // ✅ 이 경로가 백엔드 라우터와 일치
+        'http://localhost:7778/api/terms/refundTerm', // ✅ 이 경로가 백엔드 라우터와 일치
         { content },
         { headers: { Authorization: `Bearer ${token}` } }
       );

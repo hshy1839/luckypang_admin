@@ -18,7 +18,7 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch('http://13.124.224.246:7778/api/users/loginAdmin', {
+      const response = await fetch('http://localhost:7778/api/users/loginAdmin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),

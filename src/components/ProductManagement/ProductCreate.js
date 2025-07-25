@@ -55,7 +55,7 @@ const ProductCreate = () => {
     const fetchBoxList = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://13.124.224.246:7778/api/box', {
+        const res = await axios.get('http://localhost:7778/api/box', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -122,7 +122,7 @@ const ProductCreate = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://13.124.224.246:7778/api/products/productCreate',
+        'http://localhost:7778/api/products/productCreate',
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -145,7 +145,7 @@ const ProductCreate = () => {
     <div className="product-create-container">
       <h2>상품 등록</h2>
       <form onSubmit={handleSubmit} className="product-create-form">
-        {[{ label: '상품 이름', name: 'name' }, { label: '브랜드', name: 'brand' }, { label: '카테고리', name: 'category' }, { label: '소비자가', name: 'consumerPrice', type: 'number' }, { label: '실구매가', name: 'price', type: 'number' }, { label: '배송비', name: 'shippingFee', type: 'number' }, { label: '배송정보', name: 'shippingInfo' }].map(({ label, name, type = 'text' }) => {
+        {[{ label: '상품 이름', name: 'name' }, { label: '브랜드', name: 'brand' }, { label: '카테고리', name: 'category' }, { label: '소비자가', name: 'consumerPrice', type: 'number' }, { label: '실구매가', name: 'price', type: 'number' }, { label: '배송비', name: 'shippingFee', type: 'number' }].map(({ label, name, type = 'text' }) => {
           if (name === 'category') {
             return (
               <div key={name} className="product-create-field">

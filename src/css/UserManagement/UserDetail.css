@@ -1,109 +1,153 @@
 .user-detail-container {
-    font-family: 'Noto Sans KR', sans-serif;
-    max-width: 960px;
-    margin-left: 20%;
-    padding: 32px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-  
-  .product-name {
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 30px;
-    text-align: center;
-    color: #333;
-  }
-  
-  .user-detail-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 32px;
-  }
-  
-  .user-detail-table th,
-  .user-detail-table td {
-    border: 1px solid #ddd;
-    padding: 14px 16px;
-    text-align: left;
-    vertical-align: top;
-  }
-  
-  .user-detail-table th {
-    background-color: #f5f6f8;
-    color: #333;
-    font-weight: 600;
-    width: 180px;
-  }
-  
-  .user-detail-table td {
-    color: #555;
-    font-size: 15px;
-    background-color: #fff;
-  }
-  
-  .user-detail-table img {
-    border-radius: 6px;
-    border: 1px solid #eee;
-    background: #fafafa;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-  }
-  
-  .edit-button,
-  .delete-button {
-    padding: 12px 24px;
-    font-size: 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .edit-button {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .delete-button {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .edit-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .delete-button:hover {
-    background-color: #c82333;
-  }
-  
-  @media (max-width: 900px) {
-    .user-detail-container {
-      padding: 20px;
-      border-radius: 0;
-      margin-left: 0;
-    }
-  
-    .user-detail-table th,
-    .user-detail-table td {
-      padding: 10px;
-      font-size: 14px;
-    }
-  
-    .product-name {
-      font-size: 20px;
-    }
-  
-    .edit-button,
-    .delete-button {
-      font-size: 14px;
-      padding: 10px 16px;
-    }
-  }
-  
+  padding: 30px;
+  margin-left: 20%;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.user-detail-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.user-detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 32px;
+}
+
+.user-detail-table th {
+  width: 120px;
+  text-align: left;
+  vertical-align: top;
+  background-color: #f1f3f5;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.user-detail-table td {
+  padding: 12px 16px;
+  font-size: 15px;
+  background-color: #fff;
+  border-bottom: 1px solid #dee2e6;
+  line-height: 1.6;
+}
+
+.button-container {
+  text-align: right;
+  margin-bottom: 30px;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* 포인트 수동 지급 섹션 */
+.manual-point-form {
+  margin-bottom: 30px;
+}
+
+.manual-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.manual-input-row select,
+.manual-input-row input {
+  padding: 8px 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  height: 40px;
+}
+
+.manual-input-row select {
+  width: 100px;
+}
+
+.manual-input-row input[type="number"] {
+  width: 120px;
+}
+
+.manual-input-row input[type="text"] {
+  flex: 1;
+  min-width: 200px;
+}
+
+.point-submit-button {
+  margin-top: 10px;
+  background-color: #4e73df;
+  color: white;
+  padding: 10px 20px;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.point-submit-button:hover {
+  background-color: #2e59d9;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  gap: 6px;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  font-size: 13px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 32px; /* ✅ 숫자 버튼 너비 최소화 */
+  text-align: center;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #f1f3f5;
+}
+
+.pagination button:disabled {
+  background-color: #f8f9fa;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.pagination .active {
+  background-color: #4e73df;
+  color: white;
+  border-color: #4e73df;
+}

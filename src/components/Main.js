@@ -11,7 +11,7 @@ const Main = () => {
     const fetchPendingApprovalCount = async () => {
       try {
         const token = localStorage.getItem('token'); // 로그인 토큰 가져오기
-        const response = await axios.get('http://13.124.224.246:7778/api/users/userinfo', {
+        const response = await axios.get('http://localhost:7778/api/users/userinfo', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -34,7 +34,7 @@ const Main = () => {
     const fetchTotalProductsCount = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://13.124.224.246:7778/api/products/allProduct', {
+        const response = await axios.get('http://localhost:7778/api/products/allProduct', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -56,7 +56,7 @@ const Main = () => {
     const fetchActiveCouponsCount = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://13.124.224.246:7778/api/coupons', {
+        const response = await axios.get('http://localhost:7778/api/coupons', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

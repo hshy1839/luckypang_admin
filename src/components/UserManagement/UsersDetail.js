@@ -28,7 +28,7 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await axios.get(`http://13.124.224.246:7778/api/users/userinfo/${id}`, {
+        const response = await axios.get(`http://localhost:7778/api/users/userinfo/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -45,7 +45,7 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await axios.get(`http://13.124.224.246:7778/api/points/${id}`, {
+        const response = await axios.get(`http://localhost:7778/api/points/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -80,7 +80,7 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
         targetUserId: id  // 👈 추가
       };
   
-      const res = await axios.post(`http://13.124.224.246:7778/api/points/${id}`, payload, {
+      const res = await axios.post(`http://localhost:7778/api/points/${id}`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
   
@@ -106,7 +106,7 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await axios.delete(`http://13.124.224.246:7778/api/users/userinfo/${id}`, {
+      const response = await axios.delete(`http://localhost:7778/api/users/userinfo/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -143,34 +143,34 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
         </div>
 
         <h2 style={{ marginTop: '30px' }}>포인트 수동 지급/차감</h2>
-        <div className="manual-point-form">
-          <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-            <select
-              value={pointForm.type}
-              onChange={(e) => setPointForm({ ...pointForm, type: e.target.value })}
-            >
-              <option value="추가">추가</option>
-              <option value="감소">감소</option>
-              <option value="환불">환불</option>
-            
-            </select>
-            <input
-              type="number"
-              placeholder="금액"
-              value={pointForm.amount}
-              onChange={(e) => setPointForm({ ...pointForm, amount: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="설명 (선택)"
-              value={pointForm.description}
-              onChange={(e) => setPointForm({ ...pointForm, description: e.target.value })}
-            />
-            <button type="button" onClick={handlePointSubmit}>
-              포인트 반영
-            </button>
-          </div>
-        </div>
+<div className="manual-point-form">
+  <div className="manual-input-row">
+    <select
+      value={pointForm.type}
+      onChange={(e) => setPointForm({ ...pointForm, type: e.target.value })}
+    >
+      <option value="추가">추가</option>
+      <option value="감소">감소</option>
+      <option value="환불">환불</option>
+    </select>
+    <input
+      type="number"
+      placeholder="금액"
+      value={pointForm.amount}
+      onChange={(e) => setPointForm({ ...pointForm, amount: e.target.value })}
+    />
+    <input
+      type="text"
+      placeholder="설명"
+      value={pointForm.description}
+      onChange={(e) => setPointForm({ ...pointForm, description: e.target.value })}
+    />
+  </div>
+  <div className="manual-button-row">
+    <button type="button" onClick={handlePointSubmit}>포인트 반영</button>
+  </div>
+</div>
+
 
         <h2>유저 포인트 내역</h2>
         <table className="user-detail-table">
@@ -195,21 +195,32 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
             ))}
           </tbody>
         </table>
-        <div className="pagination">
+   <div className="pagination">
   <button
-    onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
     disabled={currentPage === 1}
   >
     이전
   </button>
-  <span style={{ margin: '0 10px' }}>{currentPage} </span>
+
+  {Array.from({ length: totalPages }, (_, i) => (
+    <button
+      key={i + 1}
+      className={currentPage === i + 1 ? 'active' : ''}
+      onClick={() => setCurrentPage(i + 1)}
+    >
+      {i + 1}
+    </button>
+  ))}
+
   <button
-    onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
+    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
     disabled={currentPage === totalPages}
   >
     다음
   </button>
 </div>
+
       </div>
     </div>
   );

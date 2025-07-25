@@ -18,7 +18,7 @@ const Event = () => {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) return;
-                const response = await axios.get('http://13.124.224.246:7778/api/event', {
+                const response = await axios.get('http://localhost:7778/api/event', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 if (response.data && response.data.success) {

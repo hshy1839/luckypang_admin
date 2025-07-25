@@ -11,7 +11,7 @@ const PrivacyTerm = () => {
   useEffect(() => {
     const fetchTerm = async () => {
       try {
-        const response = await axios.get('http://13.124.224.246:7778/api/terms/privacyTerm');
+        const response = await axios.get('http://localhost:7778/api/terms/privacyTerm');
         if (response.data?.success && response.data.term?.content) {
           setContent(response.data.term.content);
         } else {

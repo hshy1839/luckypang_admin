@@ -18,7 +18,7 @@ const ProductDetail = () => {
         if (!token) return;
 
         const response = await axios.get(
-          `http://13.124.224.246:7778/api/products/Product/${id}`,
+          `http://localhost:7778/api/products/Product/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -45,7 +45,7 @@ const ProductDetail = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.delete(
-        `http://13.124.224.246:7778/api/products/delete/${id}`,
+        `http://localhost:7778/api/products/delete/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -76,7 +76,6 @@ const ProductDetail = () => {
         실구매가: product.price,
         배송비: product.shippingFee,
         총결제금액: product.totalPrice,
-        배송정보: product.shippingInfo,
         상품설명: product.description,
         '발주처 링크': product.sourceLink,
         '발주처 품절 여부': product.isSourceSoldOut ? '품절' : '정상',
@@ -111,14 +110,14 @@ const ProductDetail = () => {
             <tr><th>확률</th><td>{product.probability} %</td></tr>
             <tr>
               <th>대표 이미지</th>
-              <td>{product.mainImage && <img src={`http://13.124.224.246:7778${product.mainImage}`} alt="대표 이미지" style={{ width: '200px' }} />}</td>
+              <td>{product.mainImage && <img src={`http://localhost:7778${product.mainImage}`} alt="대표 이미지" style={{ width: '200px' }} />}</td>
             </tr>
             <tr>
               <th>상세 이미지</th>
               <td>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                   {product.additionalImages?.map((url, idx) => (
-                    <img key={idx} src={`http://13.124.224.246:7778${url}`} alt={`상세 ${idx}`} style={{ width: '150px' }} />
+                    <img key={idx} src={`http://localhost:7778${url}`} alt={`상세 ${idx}`} style={{ width: '150px' }} />
                   ))}
                 </div>
               </td>
@@ -126,8 +125,6 @@ const ProductDetail = () => {
             <tr><th>소비자가</th><td>{product.consumerPrice?.toLocaleString()} 원</td></tr>
             <tr><th>실구매가</th><td>{product.price?.toLocaleString()} 원</td></tr>
             <tr><th>배송비</th><td>{product.shippingFee?.toLocaleString()} 원</td></tr>
-            <tr><th>총 결제금액</th><td>{product.totalPrice?.toLocaleString() || '자동 계산 예정'} 원</td></tr>
-            <tr><th>배송 정보</th><td>{product.shippingInfo}</td></tr>
             <tr><th>상품 설명</th><td>{product.description}</td></tr>
             <tr><th>발주처 링크</th><td><a href={product.sourceLink} target="_blank" rel="noopener noreferrer">{product.sourceLink}</a></td></tr>
             <tr><th>발주처 품절 여부</th><td>{product.isSourceSoldOut ? '품절' : '정상'}</td></tr>

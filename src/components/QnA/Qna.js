@@ -20,7 +20,7 @@ const Qna = () => {
                 const token = localStorage.getItem('token');
                 if (!token) return;
 
-                const response = await axios.get('http://13.124.224.246:7778/api/qnaQuestion/getinfoAll', {
+                const response = await axios.get('http://localhost:7778/api/qnaQuestion/getinfoAll', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
@@ -37,29 +37,30 @@ const Qna = () => {
         fetchQnaQuestions();
     }, []);
 
-    useEffect(() => {
-        handleSearch();
-        // eslint-disable-next-line
-    }, [searchTerm, searchCategory]);
+   
 
-    const handleSearch = () => {
-        const filteredQuestions = allQnaQuestions.filter((question) => {
-            if (searchCategory === 'all') {
-                return (
-                    question.title.includes(searchTerm) ||
-                    question.userId.username.includes(searchTerm)
-                );
-            } else if (searchCategory === 'title') {
-                return question.title.includes(searchTerm);
-            } else if (searchCategory === 'author') {
-                return question.userId.username.includes(searchTerm);
-            }
-            return true;
-        });
+  const handleSearch = () => {
+    const filteredQuestions = allQnaQuestions.filter((question) => {
+        const titleMatch = question.title?.includes(searchTerm);
+        const authorMatch = question.userId?.nickname?.includes(searchTerm);
+        const categoryMatch = question.category?.includes(searchTerm);
 
-        setQnaQuestions(filteredQuestions);
-        setCurrentPage(1);
-    };
+        if (searchCategory === 'all') {
+            return titleMatch || authorMatch || categoryMatch;
+        } else if (searchCategory === 'title') {
+            return titleMatch;
+        } else if (searchCategory === 'author') {
+            return authorMatch;
+        } else if (searchCategory === 'category') {
+            return categoryMatch;
+        }
+        return true;
+    });
+
+    setQnaQuestions(filteredQuestions);
+    setCurrentPage(1);
+};
+
 
     const handleQnaClick = (id) => {
         navigate(`/QnA/qna/qnaDetail/${id}`, { state: { id } });
@@ -91,15 +92,20 @@ const Qna = () => {
                 <h1>1:1 문의</h1>
 
                 <div className="qna-search-box">
-                    <select
-                        className="search-category"
-                        value={searchCategory}
-                        onChange={(e) => setSearchCategory(e.target.value)}
-                    >
-                        <option value="all">전체</option>
-                        <option value="title">제목</option>
-                        <option value="author">작성자</option>
-                    </select>
+                    <div className="search-select-wrapper">
+  <select
+    className="search-category"
+    value={searchCategory}
+    onChange={(e) => setSearchCategory(e.target.value)}
+  >
+    <option value="all">전체</option>
+    <option value="title">제목</option>
+    <option value="author">작성자</option>
+    <option value="category">카테고리</option>
+  </select>
+  <span className="select-icon">▼</span>
+</div>
+
                     <input
                         type="text"
                         placeholder="검색..."

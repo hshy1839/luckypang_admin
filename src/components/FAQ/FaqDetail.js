@@ -13,7 +13,7 @@ const FaqDetail = () => {
     const fetchFaq = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://13.124.224.246:7778/api/faq/detail/${id}`, {
+        const response = await axios.get(`http://localhost:7778/api/faq/detail/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.data && response.data.success) {
@@ -35,7 +35,7 @@ const FaqDetail = () => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`http://13.124.224.246:7778/api/faq/${id}`, {
+      const response = await axios.delete(`http://localhost:7778/api/faq/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
