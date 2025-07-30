@@ -1,0 +1,152 @@
+.point-manager-container {
+  margin-left: 20%; /* 사이드바 고려 */
+  padding: 40px 60px;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.point-manager-container h1 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.user-search-box {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+}
+
+.search-input {
+  box-sizing: border-box;
+  flex: 1;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+  line-height: 48px;
+  vertical-align: middle;
+}
+
+.search-btn {
+  box-sizing: border-box;
+  width: 120px;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 16px;
+  line-height: 48px;
+  background-color: #0d6efd;
+  color: white;
+  border: 1px solid #0d6efd;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.search-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.search-dropdown {
+  /* 기존 그대로 유지 */
+  position: absolute;
+  top: 52px;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 10;
+
+  /* 리스트 스타일 제거 */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-result-button {
+  width: 100%;
+  padding: 12px 14px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  color: #000; /* 텍스트 검정색 */
+  list-style: none; /* 혹시 버튼 내부에 리스트가 있을 경우 */
+  text-decoration: none;
+}
+
+
+.search-result-button:hover {
+  background-color: #f1f1f1;
+}
+
+.search-result-button.selected {
+  background-color: #e2e6ea;
+}
+
+.selected-user-box {
+  margin-bottom: 20px;
+  font-weight: bold;
+  background-color: #f8f9fa;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.point-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  background: #fff;
+  padding: 30px 24px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  gap: 12px;
+}
+
+.point-form select,
+.point-form input {
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.point-form input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.point-form button {
+  height: 46px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.point-form button:hover {
+  background-color: #45a049;
+}

@@ -52,6 +52,7 @@ import Faq from './components/FAQ/Faq';
 import FaqCreate from './components/FAQ/FaqCreate';
 import FaqDetail from './components/FAQ/FaqDetail';
 import FaqUpdate from './components/FAQ/FaqUpdate';
+import PointManager from './components/PointManagement/PointManager';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -106,7 +107,6 @@ function App() {
           <Route path="/products/productCreate" element={<PrivateRoute><Header /><ProductCreate /></PrivateRoute>} />
           <Route path="/products/productDetail/:id" element={<PrivateRoute><Header /><ProductDetail /></PrivateRoute>} />
           <Route path="/products/productDetail/:id/update" element={<PrivateRoute><Header /><ProductUpdate /></PrivateRoute>} />
-          {/* <Route path="/order" element={<PrivateRoute><Header /><Order /></PrivateRoute>} /> */}
           <Route path="/QnA/qna" element={<PrivateRoute><Header /><Qna /></PrivateRoute>} />
           <Route path="/setting" element={<PrivateRoute><Header /><Setting /></PrivateRoute>} />
           <Route path="/QnA/qna/qnaDetail/:id" element={<PrivateRoute><Header /><QnaDetail/></PrivateRoute>} />
@@ -124,6 +124,7 @@ function App() {
           <Route path="/box/boxUpdate/:id" element={<PrivateRoute><Header /><BoxUpdate /></PrivateRoute>} />
           {/* 포인트 관리 */}
           <Route path="/points" element={<PrivateRoute><Header /><Points /></PrivateRoute>} />
+          <Route path="/points/pointManager/:id" element={<PrivateRoute><Header /><PointManager /></PrivateRoute>} />
           {/* 박스 주문 내역 */}
           <Route path="/boxorder" element={<PrivateRoute><Header /><BoxOrder /></PrivateRoute>} />
           <Route path="/boxorder/detail/:id" element={<PrivateRoute><Header /><BoxOrderDetail /></PrivateRoute>} />
