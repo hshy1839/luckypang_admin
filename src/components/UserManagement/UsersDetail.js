@@ -7,18 +7,13 @@ import '../../css/UserManagement/UserDetail.css';
 const UsersDetail = () => {
   const [user, setUser] = useState(null);
   const [points, setPoints] = useState([]);
-  const [pointForm, setPointForm] = useState({
-    type: '추가',
-    amount: '',
-    description: '',
-  });
   const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 5;
+  const itemsPerPage = 5;
 
-const indexOfLast = currentPage * itemsPerPage;
-const indexOfFirst = indexOfLast - itemsPerPage;
-const currentPoints = points.slice(indexOfFirst, indexOfLast);
-const totalPages = Math.ceil(points.length / itemsPerPage);
+  const indexOfLast = currentPage * itemsPerPage;
+  const indexOfFirst = indexOfLast - itemsPerPage;
+  const currentPoints = points.slice(indexOfFirst, indexOfLast);
+  const totalPages = Math.ceil(points.length / itemsPerPage);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -50,12 +45,12 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
         });
 
         if (response.data?.success) {
-            const sorted = response.data.points.sort(
-              (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-            );
-            setPoints(sorted);
-          }
-          
+          const sorted = response.data.points.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          setPoints(sorted);
+        }
+
       } catch (err) {
         console.error('포인트 정보 로드 실패:', err);
       }
@@ -64,39 +59,6 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
     fetchUserDetail();
     fetchUserPoints();
   }, [id]);
-
-  const handlePointSubmit = async () => {
-    if (!pointForm.amount || isNaN(pointForm.amount)) {
-      alert('유효한 금액을 입력하세요.');
-      return;
-    }
-  
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) return;
-  
-      const payload = {
-        ...pointForm,
-        targetUserId: id  // 👈 추가
-      };
-  
-      const res = await axios.post(`http://localhost:7778/api/points/${id}`, payload, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-  
-      if (res.data?.success) {
-        alert('포인트가 반영되었습니다.');
-        setPointForm({ type: '추가', amount: '', description: '' });
-        setPoints(prev => [res.data.point, ...prev]);
-      } else {
-        alert('포인트 반영 실패');
-      }
-    } catch (error) {
-      console.error('포인트 지급 오류:', error);
-      alert('서버 오류');
-    }
-  };
-  
 
   const handleDelete = async () => {
     const confirmation = window.confirm('이 사용자를 삭제하시겠습니까?');
@@ -138,40 +100,6 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
           </tbody>
         </table>
 
-        <div className="button-container">
-          <button className="delete-button" onClick={handleDelete}>삭제</button>
-        </div>
-
-        <h2 style={{ marginTop: '30px' }}>포인트 수동 지급/차감</h2>
-<div className="manual-point-form">
-  <div className="manual-input-row">
-    <select
-      value={pointForm.type}
-      onChange={(e) => setPointForm({ ...pointForm, type: e.target.value })}
-    >
-      <option value="추가">추가</option>
-      <option value="감소">감소</option>
-      <option value="환불">환불</option>
-    </select>
-    <input
-      type="number"
-      placeholder="금액"
-      value={pointForm.amount}
-      onChange={(e) => setPointForm({ ...pointForm, amount: e.target.value })}
-    />
-    <input
-      type="text"
-      placeholder="설명"
-      value={pointForm.description}
-      onChange={(e) => setPointForm({ ...pointForm, description: e.target.value })}
-    />
-  </div>
-  <div className="manual-button-row">
-    <button type="button" onClick={handlePointSubmit}>포인트 반영</button>
-  </div>
-</div>
-
-
         <h2>유저 포인트 내역</h2>
         <table className="user-detail-table">
           <thead>
@@ -195,32 +123,37 @@ const totalPages = Math.ceil(points.length / itemsPerPage);
             ))}
           </tbody>
         </table>
-   <div className="pagination">
-  <button
-    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-    disabled={currentPage === 1}
-  >
-    이전
-  </button>
 
-  {Array.from({ length: totalPages }, (_, i) => (
-    <button
-      key={i + 1}
-      className={currentPage === i + 1 ? 'active' : ''}
-      onClick={() => setCurrentPage(i + 1)}
-    >
-      {i + 1}
-    </button>
-  ))}
+        <div className="pagination">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            이전
+          </button>
 
-  <button
-    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-    disabled={currentPage === totalPages}
-  >
-    다음
-  </button>
-</div>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              className={currentPage === i + 1 ? 'active' : ''}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
 
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            다음
+          </button>
+        </div>
+
+        {/* 🔽 삭제 버튼 아래로 이동 */}
+        <div className="button-container" style={{ marginTop: '40px' }}>
+          <button className="delete-button" onClick={handleDelete}>삭제</button>
+        </div>
       </div>
     </div>
   );

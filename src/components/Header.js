@@ -113,12 +113,6 @@ const Header = () => {
             </div>
           </Link>
 
-          <Link to="/promotion" onClick={handleLinkClick}>
-            <div className='header-section2-item'>
-              <FontAwesomeIcon icon={faBullhorn} className='header-section2-item-icon' />
-              <div className='header-section2-item-text'>광고 설정</div>
-            </div>
-          </Link>
 
           <Link to="/QnA/qna" onClick={handleLinkClick}>
             <div className='header-section2-item'>
