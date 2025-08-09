@@ -36,7 +36,7 @@ const ProductUpdate = () => {
     const fetchProduct = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://13.124.224.246:7778/api/products/Product/${id}`, {
+        const response = await axios.get(`https://luckytang-server.onrender.com/api/products/Product/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -44,7 +44,7 @@ const ProductUpdate = () => {
           const product = response.data.product;
           setForm(product);
           if (product.mainImage) {
-            setMainImagePreview(`http://13.124.224.246:7778${product.mainImage}`);
+            setMainImagePreview(`https://luckytang-server.onrender.com${product.mainImage}`);
           }
           if (product.additionalImages) {
             setInitialAdditionalImages(product.additionalImages);
@@ -165,7 +165,7 @@ const ProductUpdate = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.put(
-        `http://13.124.224.246:7778/api/products/update/${id}`,
+        `https://luckytang-server.onrender.com/api/products/update/${id}`,
         formData,
         {
           headers: {
@@ -305,7 +305,7 @@ const ProductUpdate = () => {
                 onDrop={(e) => handleDropPreview(e, i)}
                 onDragOver={(e) => e.preventDefault()}
               >
-                <img src={item.isInitial ? `http://13.124.224.246:7778${item.url}` : item.url} alt="상세 이미지" />
+                <img src={item.isInitial ? `https://luckytang-server.onrender.com${item.url}` : item.url} alt="상세 이미지" />
                 <button
                   type="button"
                   onClick={() => {

@@ -21,7 +21,7 @@ const FaqCreate = () => {
 
     try {
       const response = await axios.post(
-        'http://13.124.224.246:7778/api/faq',
+        'https://luckytang-server.onrender.com/api/faq',
         { category, question, answer },
         {
           headers: {
