@@ -128,7 +128,7 @@ const Header = () => {
             </div>
           </Link>
 
-          <Link to="/event" onClick={handleLinkClick}>
+          <Link to="/promotion" onClick={handleLinkClick}>
             <div className='header-section2-item'>
               <FontAwesomeIcon icon={faGift} className='header-section2-item-icon' />
               <div className='header-section2-item-text'>이벤트 관리</div>

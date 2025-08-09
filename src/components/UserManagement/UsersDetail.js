@@ -23,7 +23,7 @@ const UsersDetail = () => {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await axios.get(`http://localhost:7778/api/users/userinfo/${id}`, {
+        const response = await axios.get(`http://13.124.224.246:7778/api/users/userinfo/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -40,7 +40,7 @@ const UsersDetail = () => {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await axios.get(`http://localhost:7778/api/points/${id}`, {
+        const response = await axios.get(`http://13.124.224.246:7778/api/points/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -68,7 +68,7 @@ const UsersDetail = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await axios.delete(`http://localhost:7778/api/users/userinfo/${id}`, {
+      const response = await axios.delete(`http://13.124.224.246:7778/api/users/userinfo/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

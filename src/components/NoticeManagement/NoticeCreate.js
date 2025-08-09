@@ -36,7 +36,7 @@ const NoticeCreate = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:7778/api/notice',
+        'http://13.124.224.246:7778/api/notice',
         formData,
         {
           headers: {

@@ -16,7 +16,7 @@ const FaqUpdate = () => {
   useEffect(() => {
     const fetchFaq = async () => {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:7778/api/faq/detail/${id}`, {
+      const response = await axios.get(`http://13.124.224.246:7778/api/faq/detail/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
@@ -40,7 +40,7 @@ const FaqUpdate = () => {
 
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.put(`http://localhost:7778/api/faq/${id}`, form, {
+      const response = await axios.put(`http://13.124.224.246:7778/api/faq/${id}`, form, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

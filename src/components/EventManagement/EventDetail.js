@@ -13,7 +13,7 @@ const EventDetail = () => {
     const fetchEvent = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:7778/api/event/${id}`, {
+        const response = await axios.get(`http://13.124.224.246:7778/api/event/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.data && response.data.success) {
@@ -35,7 +35,7 @@ const EventDetail = () => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`http://localhost:7778/api/event/${id}`, {
+      const response = await axios.delete(`http://13.124.224.246:7778/api/event/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
@@ -78,7 +78,7 @@ const EventDetail = () => {
                   {event.eventImage?.map((img, i) => (
                     <img
                       key={i}
-                      src={`http://localhost:7778${img}`}
+                      src={`http://13.124.224.246:7778${img}`}
                       alt={`공지 이미지 ${i + 1}`}
                       className="event-image"
                     />

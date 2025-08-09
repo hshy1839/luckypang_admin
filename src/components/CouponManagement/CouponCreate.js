@@ -24,7 +24,7 @@ const CouponCreate = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:7778/api/coupon',
+        'http://13.124.224.246:7778/api/coupon',
         {
           name,
           code,
@@ -94,21 +94,20 @@ const CouponCreate = () => {
             onChange={(e) => setDiscountType(e.target.value)}
             required
           >
-            <option value="percentage">퍼센트 (%)</option>
-            <option value="fixed">고정 금액</option>
+            <option value="fixed">포인트</option>
           </select>
         </div>
 
         {/* Discount Value */}
         <div className="coupon-create-field">
-          <label className="coupon-create-label" htmlFor="discountValue">할인 값</label>
+          <label className="coupon-create-label" htmlFor="discountValue">포인트 값</label>
           <input
             className="coupon-create-input"
             type="number"
             id="discountValue"
             value={discountValue}
             onChange={(e) => setDiscountValue(e.target.value)}
-            placeholder="할인 값을 입력하세요"
+            placeholder="추가 될 포인트 값을 입력하세요"
             required
           />
         </div>

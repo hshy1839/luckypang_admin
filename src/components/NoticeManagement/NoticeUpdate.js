@@ -17,13 +17,13 @@ const NoticeUpdate = () => {
   useEffect(() => {
     const fetchNotice = async () => {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:7778/api/notice/${id}`, {
+      const response = await axios.get(`http://13.124.224.246:7778/api/notice/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
         setForm({ title: response.data.notice.title, content: response.data.notice.content });
         if (response.data.notice.noticeImage?.length > 0) {
-          setNoticeImagePreview(`http://localhost:7778${response.data.notice.noticeImage[0]}`);
+          setNoticeImagePreview(`http://13.124.224.246:7778${response.data.notice.noticeImage[0]}`);
         }
       }
     };
@@ -52,7 +52,7 @@ const NoticeUpdate = () => {
 
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.put(`http://localhost:7778/api/notice/${id}`, formData, {
+      const response = await axios.put(`http://13.124.224.246:7778/api/notice/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

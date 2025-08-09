@@ -24,7 +24,7 @@ const Promotion = () => {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await axios.get('http://localhost:7778/api/promotion/read', {
+            const response = await axios.get('http://13.124.224.246:7778/api/promotion/read', {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -36,7 +36,7 @@ const Promotion = () => {
                 setFilteredPromotions(sortedPromotions);
             }
         } catch (error) {
-            console.error('프로모션 정보를 가져오는데 실패했습니다.', error);
+            console.error('이벤트 정보를 가져오는데 실패했습니다.', error);
         }
     };
 
@@ -62,22 +62,22 @@ const Promotion = () => {
     };
 
     const handleDelete = async (id) => {
-        if (!window.confirm('프로모션을 삭제하시겠습니까?')) return;
+        if (!window.confirm('이벤트을 삭제하시겠습니까?')) return;
 
         try {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await axios.delete(`http://localhost:7778/api/promotion/delete/${id}`, {
+            const response = await axios.delete(`http://13.124.224.246:7778/api/promotion/delete/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
             if (response.data.success) {
-                alert('프로모션이 삭제되었습니다.');
+                alert('이벤트이 삭제되었습니다.');
                 fetchPromotions();
             }
         } catch (error) {
-            console.error('프로모션 삭제 실패:', error);
+            console.error('이벤트 삭제 실패:', error);
         }
     };
 
@@ -104,11 +104,11 @@ const Promotion = () => {
         <div className="promotion-container">
             <Header />
             <div className="promotion-content">
-                <h1>프로모션 관리</h1>
+                <h1>이벤트 관리</h1>
                 <div className="promotion-search-box">
                     <input
                         type="text"
-                        placeholder="프로모션 이름 검색..."
+                        placeholder="이벤트 이름 검색..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -120,7 +120,7 @@ const Promotion = () => {
                     <thead>
                         <tr>
                             <th>번호</th>
-                            <th>프로모션 이름</th>
+                            <th>이벤트 이름</th>
                             <th>생성 날짜</th>
                             <th>액션</th>
                         </tr>
@@ -134,7 +134,7 @@ const Promotion = () => {
                                         onClick={() => handlePromotionClick(promotion._id)}
                                         className='promotion-title'
                                     >
-                                        {promotion.name || 'Unknown Promotion'}
+                                        {promotion.title || 'Unknown Promotion'}
                                     </td>
                                     <td>
                                         {promotion.createdAt
@@ -191,7 +191,7 @@ const Promotion = () => {
                     </button>
                 </div>
                 <button className="excel-export-button" style={{marginTop: 40}} onClick={handleCreatePromotionClick}>
-                    프로모션 등록
+                    이벤트 등록
                 </button>
             </div>
         </div>

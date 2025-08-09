@@ -21,7 +21,7 @@ const Users = () => {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) return;
-                const response = await axios.get('http://localhost:7778/api/users/userinfo', {
+                const response = await axios.get('http://13.124.224.246:7778/api/users/userinfo', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 if (response.data && response.data.success) {
@@ -97,7 +97,7 @@ const Users = () => {
         if (!window.confirm("해당 사용자 계정을 승인하시겠습니까?")) return;
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:7778/api/users/userinfo/${id}`, { is_active: true },
+            await axios.put(`http://13.124.224.246:7778/api/users/userinfo/${id}`, { is_active: true },
                 { headers: { Authorization: `Bearer ${token}` } });
             setUsers(prev =>
                 prev.map(user => user._id === id ? { ...user, is_active: true } : user)
@@ -109,7 +109,7 @@ const Users = () => {
         if (!window.confirm("해당 사용자 계정을 사용중지 하시겠습니까?")) return;
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://localhost:7778/api/users/userinfo/${id}`, { is_active: false },
+            await axios.put(`http://13.124.224.246:7778/api/users/userinfo/${id}`, { is_active: false },
                 { headers: { Authorization: `Bearer ${token}` } });
             setUsers(prev =>
                 prev.map(user => user._id === id ? { ...user, is_active: false } : user)
@@ -121,7 +121,7 @@ const Users = () => {
         if (!window.confirm("해당 사용자를 삭제하시겠습니까?")) return;
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:7778/api/users/userinfo/${id}`,
+            await axios.delete(`http://13.124.224.246:7778/api/users/userinfo/${id}`,
                 { headers: { Authorization: `Bearer ${token}` } });
             setUsers(prev => prev.filter(user => user._id !== id));
         } catch (error) { alert('삭제 실패'); }
