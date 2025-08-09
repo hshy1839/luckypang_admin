@@ -110,20 +110,7 @@ const BoxDetail = () => {
               month: '2-digit',
               day: '2-digit',
             })}</td></tr>
-            <tr>
-              <th>대표 이미지</th>
-              <td>{box.mainImage && <img src={`http://13.124.224.246:7778${box.mainImage}`} alt="대표 이미지" style={{ width: '200px' }} />}</td>
-            </tr>
-            <tr>
-              <th>상세 이미지</th>
-              <td>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                  {box.additionalImages?.map((url, idx) => (
-                    <img key={idx} src={`http://13.124.224.246:7778${url}`} alt={`상세 ${idx}`} style={{ width: '150px' }} />
-                  ))}
-                </div>
-              </td>
-            </tr>
+         
             <tr>
   <th>등록 상품</th>
   <td>

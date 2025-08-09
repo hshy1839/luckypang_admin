@@ -251,27 +251,9 @@ const BoxCreate = () => {
           <input type="number" name="purchaseLimit" value={form.purchaseLimit} onChange={handleInputChange} />
         </div>
 
-        <div className="box-create-field">
-          <label>대표 이미지</label>
-          <input type="file" onChange={handleMainImageChange} accept="image/*" />
-          {mainImagePreview && <img src={mainImagePreview} alt="미리보기" className="image-preview" />}
-        </div>
+    
 
-        <div className="box-create-field">
-          <label>상세 이미지</label>
-          <input type="file" multiple onChange={handleAdditionalImageChange} accept="image/*" />
-          <div className="image-preview-list">
-            {additionalPreviews.map((url, i) => (
-              <div key={i} className="preview-item">
-                <img src={url} alt="상세 이미지" />
-                <button type="button" onClick={() => removeAdditionalImage(i)}>
-                  삭제
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
+     
 
  
 
