@@ -18,7 +18,7 @@ const ProductDetail = () => {
         if (!token) return;
 
         const response = await axios.get(
-          `http://13.124.224.246:7778/api/products/Product/${id}`,
+          `https://luckytang-server.onrender.com/api/products/Product/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -45,7 +45,7 @@ const ProductDetail = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.delete(
-        `http://13.124.224.246:7778/api/products/delete/${id}`,
+        `https://luckytang-server.onrender.com/api/products/delete/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -110,14 +110,14 @@ const ProductDetail = () => {
             <tr><th>확률</th><td>{product.probability} %</td></tr>
             <tr>
               <th>대표 이미지</th>
-              <td>{product.mainImage && <img src={`http://13.124.224.246:7778${product.mainImage}`} alt="대표 이미지" style={{ width: '200px' }} />}</td>
+              <td>{product.mainImage && <img src={`https://luckytang-server.onrender.com${product.mainImage}`} alt="대표 이미지" style={{ width: '200px' }} />}</td>
             </tr>
             <tr>
               <th>상세 이미지</th>
               <td>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                   {product.additionalImages?.map((url, idx) => (
-                    <img key={idx} src={`http://13.124.224.246:7778${url}`} alt={`상세 ${idx}`} style={{ width: '150px' }} />
+                    <img key={idx} src={`https://luckytang-server.onrender.com${url}`} alt={`상세 ${idx}`} style={{ width: '150px' }} />
                   ))}
                 </div>
               </td>

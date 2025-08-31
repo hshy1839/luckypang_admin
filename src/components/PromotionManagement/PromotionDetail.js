@@ -19,7 +19,7 @@ const PromotionDetail = () => {
         }
 
         const response = await axios.get(
-          `http://13.124.224.246:7778/api/promotion/read/${id}`,
+          `https://luckytang-server.onrender.com/api/promotion/read/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -51,7 +51,7 @@ const PromotionDetail = () => {
       }
 
       const response = await axios.delete(
-        `http://13.124.224.246:7778/api/promotion/delete/${id}`,
+        `https://luckytang-server.onrender.com/api/promotion/delete/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -104,7 +104,7 @@ const PromotionDetail = () => {
                         src={
                           String(img).startsWith('http')
                             ? img
-                            : `http://13.124.224.246:7778${img.startsWith('/') ? img : `/${img}`}`
+                            : `https://luckytang-server.onrender.com${img.startsWith('/') ? img : `/${img}`}`
                         }
                         alt={`이벤트 이미지 ${i + 1}`}
                         className="event-image"
