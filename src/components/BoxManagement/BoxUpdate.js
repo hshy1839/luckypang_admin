@@ -28,7 +28,7 @@ const BoxUpdate = () => {
   useEffect(() => {
     const fetchBox = async () => {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`https://luckytang-server.onrender.com/api/box/${id}`, {
+      const response = await axios.get(`http://13.124.224.246:7778/api/box/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
@@ -43,7 +43,7 @@ const BoxUpdate = () => {
           availableUntil: box.availableUntil?.substr(0, 10),
           purchaseLimit: box.purchaseLimit || '',
         });
-        if (box.mainImage) setMainImagePreview(`https://luckytang-server.onrender.com${box.mainImage}`);
+        if (box.mainImage) setMainImagePreview(`http://13.124.224.246:7778${box.mainImage}`);
         if (box.additionalImages) setInitialAdditionalImages(box.additionalImages);
       }
     };
@@ -105,7 +105,7 @@ const BoxUpdate = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put(`https://luckytang-server.onrender.com/api/box/${id}`, formData, {
+      const response = await axios.put(`http://13.124.224.246:7778/api/box/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -177,7 +177,7 @@ const BoxUpdate = () => {
           <div className="image-preview-list">
             {initialAdditionalImages.map((url, i) => (
               <div key={`initial-${i}`} className="preview-item">
-                <img src={`https://luckytang-server.onrender.com${url}`} alt="기존 상세 이미지" />
+                <img src={`http://13.124.224.246:7778${url}`} alt="기존 상세 이미지" />
                 <button type="button" onClick={() => removeInitialImage(i)}>삭제</button>
               </div>
             ))}

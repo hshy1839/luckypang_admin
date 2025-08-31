@@ -44,7 +44,7 @@ const Setting = () => {
             },
           ];
       
-          const response = await axios.post('https://luckytang-server.onrender.com/api/account', { accounts });
+          const response = await axios.post('http://13.124.224.246:7778/api/account', { accounts });
       
           if (response.data.success) {
             alert('계좌 정보가 성공적으로 저장되었습니다.');

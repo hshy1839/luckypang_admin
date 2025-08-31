@@ -48,7 +48,7 @@ const PromotionCreate = () => {
 
     try {
       const response = await axios.post(
-        'https://luckytang-server.onrender.com/api/promotion/create',
+        'http://13.124.224.246:7778/api/promotion/create',
         formData,
         {
           headers: {

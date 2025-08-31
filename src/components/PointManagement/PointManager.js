@@ -20,7 +20,7 @@ const PointManager = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`https://luckytang-server.onrender.com/api/users/search?keyword=${keyword}`, {
+      const res = await axios.get(`http://13.124.224.246:7778/api/users/search?keyword=${keyword}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -74,7 +74,7 @@ const PointManager = () => {
           targetUserId: user._id,
         };
 
-        await axios.post(`https://luckytang-server.onrender.com/api/points/${user._id}`, payload, {
+        await axios.post(`http://13.124.224.246:7778/api/points/${user._id}`, payload, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }

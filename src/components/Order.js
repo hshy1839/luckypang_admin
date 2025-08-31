@@ -18,7 +18,7 @@
 //                 return;
 //             }
 
-//             const response = await axios.get('https://luckytang-server.onrender.com/api/orderAll', {
+//             const response = await axios.get('http://13.124.224.246:7778/api/orderAll', {
 //                 headers: {
 //                     Authorization: `Bearer ${token}`,
 //                 },
@@ -40,7 +40,7 @@
 //     const fetchUserName = async (userId) => {
 //         try {
 //             const token = localStorage.getItem('token');
-//             const response = await axios.get(`https://luckytang-server.onrender.com/api/users/userinfo/${userId}`, {
+//             const response = await axios.get(`http://13.124.224.246:7778/api/users/userinfo/${userId}`, {
 //                 headers: {
 //                     Authorization: `Bearer ${token}`,
 //                 },
@@ -69,7 +69,7 @@
 //                 return null;
 //             }
     
-//             const response = await axios.get(`https://luckytang-server.onrender.com/api/shippinginfo/${userId}`, {
+//             const response = await axios.get(`http://13.124.224.246:7778/api/shippinginfo/${userId}`, {
 //                 headers: {
 //                     Authorization: `Bearer ${token}`,
 //                 },
@@ -99,7 +99,7 @@
 //         try {
 //             const token = localStorage.getItem('token');
 //             const response = await axios.put(
-//                 `https://luckytang-server.onrender.com/api/editPayment/${orderId}`, // 주문 ID를 URL에 포함
+//                 `http://13.124.224.246:7778/api/editPayment/${orderId}`, // 주문 ID를 URL에 포함
 //                 { paymentStatus: newStatus }, // 요청 본문에 paymentStatus만 전달
 //                 {
 //                     headers: {
@@ -124,7 +124,7 @@
 //         try {
 //             const token = localStorage.getItem('token');
 //             const response = await axios.put(
-//                 `https://luckytang-server.onrender.com/api/editOrder/${orderId}`, // 주문 ID를 URL에 포함
+//                 `http://13.124.224.246:7778/api/editOrder/${orderId}`, // 주문 ID를 URL에 포함
 //                 { orderStatus: newStatus }, // 요청 본문에 orderStatus만 전달
 //                 {
 //                     headers: {

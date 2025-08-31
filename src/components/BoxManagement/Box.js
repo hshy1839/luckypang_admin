@@ -22,7 +22,7 @@ const Box = () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) return;
-            const response = await axios.get('https://luckytang-server.onrender.com/api/box', {
+            const response = await axios.get('http://13.124.224.246:7778/api/box', {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (response.data.success && Array.isArray(response.data.boxes)) {
@@ -39,7 +39,7 @@ const Box = () => {
             fetchBoxes();
             return;
         }
-        axios.get('https://luckytang-server.onrender.com/api/box', {
+        axios.get('http://13.124.224.246:7778/api/box', {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         }).then(response => {
             if (response.data.success && Array.isArray(response.data.boxes)) {

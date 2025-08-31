@@ -23,7 +23,7 @@ const Product = () => {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await axios.get('https://luckytang-server.onrender.com/api/products/allProduct', {
+            const response = await axios.get('http://13.124.224.246:7778/api/products/allProduct', {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -47,7 +47,7 @@ const Product = () => {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await axios.get('https://luckytang-server.onrender.com/api/products/allProduct', {
+            const response = await axios.get('http://13.124.224.246:7778/api/products/allProduct', {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
