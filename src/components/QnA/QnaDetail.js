@@ -26,7 +26,7 @@ const QnaDetail = () => {
         if (!token) return;
 
         const response = await axios.get(
-          `https://luckytang-server.onrender.com/api/qnaQuestion/getinfoByid/${id}`,
+          `http://localhost:7778/api/qnaQuestion/getinfoByid/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -46,7 +46,7 @@ const QnaDetail = () => {
         if (!token) return;
 
         const response = await axios.get(
-          `https://luckytang-server.onrender.com/api/qnaQuestion/getAnswers/${id}`,
+          `http://localhost:7778/api/qnaQuestion/getAnswers/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -80,7 +80,7 @@ const QnaDetail = () => {
       if (!token) return;
 
       const response = await axios.post(
-        `https://luckytang-server.onrender.com/api/qnaQuestion/addAnswer/${id}`,
+        `http://localhost:7778/api/qnaQuestion/addAnswer/${id}`,
         {
           body: newAnswer,
           category: qna.category,
@@ -113,7 +113,7 @@ const QnaDetail = () => {
       if (!token) return;
 
       const response = await axios.delete(
-        `https://luckytang-server.onrender.com/api/qnaAnswer/${answerId}`,
+        `http://localhost:7778/api/qnaAnswer/${answerId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -144,7 +144,7 @@ const QnaDetail = () => {
       if (!token) return;
 
       const response = await axios.put(
-        `https://luckytang-server.onrender.com/api/qnaAnswer/${answerId}`,
+        `http://localhost:7778/api/qnaAnswer/${answerId}`,
         {
           body: editedAnswer,
         },

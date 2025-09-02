@@ -17,13 +17,13 @@ const EventUpdate = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`https://luckytang-server.onrender.com/api/event/${id}`, {
+      const response = await axios.get(`http://localhost:7778/api/event/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
         setForm({ title: response.data.event.title, content: response.data.event.content });
         if (response.data.event.eventImage?.length > 0) {
-          setEventImagePreview(`https://luckytang-server.onrender.com${response.data.event.eventImage[0]}`);
+          setEventImagePreview(`http://localhost:7778${response.data.event.eventImage[0]}`);
         }
       }
     };
@@ -52,7 +52,7 @@ const EventUpdate = () => {
 
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.put(`https://luckytang-server.onrender.com/api/event/${id}`, formData, {
+      const response = await axios.put(`http://localhost:7778/api/event/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

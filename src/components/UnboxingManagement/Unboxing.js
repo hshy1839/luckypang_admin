@@ -19,7 +19,7 @@ const UnboxingManagement = () => {
   const fetchUnboxings = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('https://luckytang-server.onrender.com/api/orders/unboxed/all', {
+      const res = await axios.get('http://localhost:7778/api/orders/unboxed/all', {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success && Array.isArray(res.data.orders)) {

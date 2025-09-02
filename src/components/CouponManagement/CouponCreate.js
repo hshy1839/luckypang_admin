@@ -24,7 +24,7 @@ const CouponCreate = () => {
 
     try {
       const response = await axios.post(
-        'https://luckytang-server.onrender.com/api/coupon',
+        'http://localhost:7778/api/coupon',
         {
           name,
           code,

@@ -11,7 +11,7 @@ const PurchaseTerm = () => {
   useEffect(() => {
     const fetchTerm = async () => {
       try {
-        const response = await axios.get('https://luckytang-server.onrender.com/api/terms/purchaseTerm');
+        const response = await axios.get('http://localhost:7778/api/terms/purchaseTerm');
         if (response.data?.success && response.data.term?.content) {
           setContent(response.data.term.content);
         } else {

@@ -1,8 +1,18 @@
+// src/components/PromotionManagement/PromotionUpdate.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../Header';
-import '../../css/PromotionManagement/PromotionUpdate.css'; // 전용 CSS
+import '../../css/PromotionManagement/PromotionUpdate.css';
+
+const API_BASE = 'http://localhost:7778';
+
+// presigned/절대 URL이면 그대로, 아니면 S3 key를 /media/{key}로 변환
+function resolveImageSrc(value) {
+  if (!value) return '';
+  if (/^https?:\/\//i.test(value)) return value;
+  return `${API_BASE.replace(/\/$/, '')}/media/${value}`;
+}
 
 const PromotionUpdate = () => {
   const { id } = useParams();
@@ -11,7 +21,6 @@ const PromotionUpdate = () => {
   const [loading, setLoading] = useState(true);
   const [promotion, setPromotion] = useState(null);
 
-  // ✅ name → title 로 변경
   const [form, setForm] = useState({
     title: '',
     link: '',
@@ -23,14 +32,13 @@ const PromotionUpdate = () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          alert('로그인 정보가 없습니다.');
+          alert('로그인이 필요합니다.');
           return;
         }
 
-        const res = await axios.get(
-          `https://luckytang-server.onrender.com/api/promotion/read/${id}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        const res = await axios.get(`${API_BASE}/api/promotion/read/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         if (res.data?.success && res.data.promotion) {
           const p = res.data.promotion;
@@ -41,7 +49,7 @@ const PromotionUpdate = () => {
             content: p.content || '',
           });
         } else {
-          alert('프로모션 정보를 불러오지 못했습니다.');
+          alert(res.data?.message || '프로모션 정보를 불러오지 못했습니다.');
         }
       } catch (e) {
         console.error('promotion 상세 조회 실패:', e);
@@ -54,8 +62,18 @@ const PromotionUpdate = () => {
     fetchPromotionDetail();
   }, [id]);
 
-  const createdAt = promotion?.created_at || promotion?.createdAt;
-  const images = promotion?.promotionImage || [];
+  const createdAt = promotion?.createdAt || promotion?.created_at;
+
+  // ✅ 이미지 소스: presigned 배열 우선, 없으면 key 배열 → /media/{key}
+  const mainUrls = (promotion?.promotionImageUrls?.length
+    ? promotion.promotionImageUrls
+    : (Array.isArray(promotion?.promotionImage) ? promotion.promotionImage : [])
+  ).map(resolveImageSrc);
+
+  const detailUrls = (promotion?.promotionDetailImageUrls?.length
+    ? promotion.promotionDetailImageUrls
+    : (Array.isArray(promotion?.promotionDetailImage) ? promotion.promotionDetailImage : [])
+  ).map(resolveImageSrc);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -69,28 +87,26 @@ const PromotionUpdate = () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        alert('로그인 정보가 없습니다.');
+        alert('로그인이 필요합니다.');
         return;
       }
 
-      // ✅ title 전송
       const payload = {
         title: form.title?.trim(),
         link: form.link?.trim(),
         content: form.content ?? '',
+        // 여기서는 텍스트만 수정. 이미지 교체는 별도 업로드 화면/폼에서 처리(파일 업로드 필요)
       };
 
-      const res = await axios.put(
-        `https://luckytang-server.onrender.com/api/promotion/${id}`,
-        payload,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await axios.put(`${API_BASE}/api/promotion/${id}`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       if (res.data?.success) {
         alert('프로모션이 수정되었습니다.');
         navigate(`/promotion/promotionDetail/${id}`);
       } else {
-        alert('수정에 실패했습니다.');
+        alert(res.data?.message || '수정에 실패했습니다.');
       }
     } catch (e) {
       console.error('promotion 수정 실패:', e);
@@ -120,8 +136,8 @@ const PromotionUpdate = () => {
                 <td>
                   <input
                     type="text"
-                    name="title"                // ✅ name=title
-                    value={form.title}          // ✅ value=title
+                    name="title"
+                    value={form.title}
                     onChange={onChange}
                     placeholder="프로모션 제목을 입력하세요"
                     className="promotion-update-input"
@@ -130,7 +146,19 @@ const PromotionUpdate = () => {
                 </td>
               </tr>
 
-            
+              <tr>
+                <th>링크</th>
+                <td>
+                  <input
+                    type="text"
+                    name="link"
+                    value={form.link}
+                    onChange={onChange}
+                    placeholder="관련 링크(선택)"
+                    className="promotion-update-input"
+                  />
+                </td>
+              </tr>
 
               <tr>
                 <th>작성일</th>
@@ -138,19 +166,35 @@ const PromotionUpdate = () => {
               </tr>
 
               <tr>
-                <th>이미지</th>
+                <th>메인 이미지</th>
                 <td>
                   <div className="promotion-update-images">
-                    {images.length > 0 ? (
-                      images.map((img, i) => (
+                    {mainUrls.length > 0 ? (
+                      mainUrls.map((src, i) => (
                         <img
-                          key={i}
-                          src={
-                            String(img).startsWith('http')
-                              ? img
-                              : `https://luckytang-server.onrender.com${String(img).startsWith('/') ? img : `/${img}`}`
-                          }
-                          alt={`프로모션 이미지 ${i + 1}`}
+                          key={`main-${i}`}
+                          src={src}
+                          alt={`프로모션 메인 이미지 ${i + 1}`}
+                          className="promotion-update-image"
+                        />
+                      ))
+                    ) : (
+                      <span>-</span>
+                    )}
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th>상세 이미지</th>
+                <td>
+                  <div className="promotion-update-images">
+                    {detailUrls.length > 0 ? (
+                      detailUrls.map((src, i) => (
+                        <img
+                          key={`detail-${i}`}
+                          src={src}
+                          alt={`프로모션 상세 이미지 ${i + 1}`}
                           className="promotion-update-image"
                         />
                       ))

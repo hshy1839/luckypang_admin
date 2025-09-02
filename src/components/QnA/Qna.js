@@ -20,7 +20,7 @@ const Qna = () => {
                 const token = localStorage.getItem('token');
                 if (!token) return;
 
-                const response = await axios.get('https://luckytang-server.onrender.com/api/qnaQuestion/getinfoAll', {
+                const response = await axios.get('http://localhost:7778/api/qnaQuestion/getinfoAll', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 

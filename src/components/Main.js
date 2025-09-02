@@ -43,10 +43,10 @@ const Main = () => {
     const fetchData = async () => {
       try {
         const [productRes, orderRes] = await Promise.all([
-          axios.get('https://luckytang-server.onrender.com/api/products/allProduct', {
+          axios.get('http://localhost:7778/api/products/allProduct', {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get('https://luckytang-server.onrender.com/api/orders', {
+          axios.get('http://localhost:7778/api/orders', {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);

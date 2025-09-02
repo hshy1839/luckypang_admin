@@ -18,7 +18,7 @@ const Event = () => {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) return;
-                const response = await axios.get('https://luckytang-server.onrender.com/api/event', {
+                const response = await axios.get('http://localhost:7778/api/event', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 if (response.data && response.data.success) {

@@ -18,7 +18,7 @@ const BoxDetail = () => {
         if (!token) return;
 
         const response = await axios.get(
-          `https://luckytang-server.onrender.com/api/box/${id}`,
+          `http://localhost:7778/api/box/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -45,7 +45,7 @@ const BoxDetail = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.delete(
-        `https://luckytang-server.onrender.com/api/box/${id}`,
+        `http://localhost:7778/api/box/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

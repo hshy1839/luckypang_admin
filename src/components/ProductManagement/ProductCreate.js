@@ -55,7 +55,7 @@ const ProductCreate = () => {
     const fetchBoxList = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://luckytang-server.onrender.com/api/box', {
+        const res = await axios.get('http://localhost:7778/api/box', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -122,7 +122,7 @@ const ProductCreate = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'https://luckytang-server.onrender.com/api/products/productCreate',
+        'http://localhost:7778/api/products/productCreate',
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },

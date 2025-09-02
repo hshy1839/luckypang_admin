@@ -1,13 +1,24 @@
+// src/components/EventManagement/EventDetail.js  (파일 경로는 네 프로젝트 구조에 맞춰)
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import '../../css/EventManagement/EventDetail.css';
 
+const API_BASE = 'http://localhost:7778';
+
+// presigned/절대 URL이면 그대로, 아니면 S3 key를 /media/{key}로 변환
+function resolveImageSrc(value) {
+  if (!value) return '';
+  if (/^https?:\/\//i.test(value)) return value;
+  return `${API_BASE.replace(/\/$/, '')}/media/${value}`;
+}
+
 const PromotionDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [promotion, setPromotion] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPromotionDetail = async () => {
@@ -15,21 +26,24 @@ const PromotionDetail = () => {
         const token = localStorage.getItem('token');
         if (!token) {
           console.log('로그인 정보가 없습니다.');
+          setLoading(false);
           return;
         }
 
-        const response = await axios.get(
-          `https://luckytang-server.onrender.com/api/promotion/read/${id}`,
+        const resp = await axios.get(
+          `${API_BASE}/api/promotion/read/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        if (response.data && response.data.success) {
-          setPromotion(response.data.promotion);
+        if (resp.data?.success) {
+          setPromotion(resp.data.promotion);
         } else {
-          console.log('Promotion 상세 데이터 로드 실패');
+          console.log(resp.data?.message || 'Promotion 상세 데이터 로드 실패');
         }
       } catch (error) {
         console.error('Promotion 상세 정보를 가져오는데 실패했습니다.', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -50,31 +64,44 @@ const PromotionDetail = () => {
         return;
       }
 
-      const response = await axios.delete(
-        `https://luckytang-server.onrender.com/api/promotion/delete/${id}`,
+      const resp = await axios.delete(
+        `${API_BASE}/api/promotion/delete/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      if (response.data && response.data.success) {
+      if (resp.data?.success) {
         alert('이벤트이 삭제되었습니다.');
         navigate('/promotion');
       } else {
-        alert('삭제에 실패했습니다.');
+        alert(resp.data?.message || '삭제에 실패했습니다.');
       }
     } catch (error) {
-      console.error('상품 삭제 중 오류가 발생했습니다.', error);
+      console.error('이벤트 삭제 중 오류가 발생했습니다.', error);
       alert('삭제 중 오류 발생');
     }
   };
 
-  if (!promotion) return <div>로딩 중...</div>;
+  if (loading) return <div>로딩 중...</div>;
+  if (!promotion) return <div>데이터가 없습니다.</div>;
 
-  // 안전 처리: 날짜/이미지 필드 다양한 케이스 대응
-  const createdAt = promotion.created_at || promotion.createdAt;
-  const images =
-    promotion.promotionImage ||
-    promotion.images ||
-    [];
+  // 날짜 필드 안전 처리
+  const createdAt = promotion.createdAt || promotion.created_at || promotion.created;
+
+  // ✅ 이미지 소스 만들기
+  // 1) presigned 배열 우선 사용
+  // 2) 없으면 key 배열을 /media/{key} 로 변환
+  const mainUrls = (promotion.promotionImageUrls?.length
+    ? promotion.promotionImageUrls
+    : (Array.isArray(promotion.promotionImage) ? promotion.promotionImage : [])
+  ).map(resolveImageSrc);
+
+  const detailUrls = (promotion.promotionDetailImageUrls?.length
+    ? promotion.promotionDetailImageUrls
+    : (Array.isArray(promotion.promotionDetailImage) ? promotion.promotionDetailImage : [])
+  ).map(resolveImageSrc);
+
+  // 메인 + 상세 합쳐서 보여주기 (원하면 섹션 나눠도 OK)
+  const allImages = [...mainUrls, ...detailUrls];
 
   return (
     <div className="event-detail-container">
@@ -86,9 +113,8 @@ const PromotionDetail = () => {
           <tbody>
             <tr>
               <th>제목</th>
-              <td>{ promotion.title}</td>
+              <td>{promotion.title}</td>
             </tr>
-            
             <tr>
               <th>작성일</th>
               <td>{createdAt ? new Date(createdAt).toLocaleString() : '-'}</td>
@@ -97,15 +123,11 @@ const PromotionDetail = () => {
               <th>이미지</th>
               <td>
                 <div className="event-images">
-                  {Array.isArray(images) && images.length > 0 ? (
-                    images.map((img, i) => (
+                  {allImages.length > 0 ? (
+                    allImages.map((src, i) => (
                       <img
                         key={i}
-                        src={
-                          String(img).startsWith('http')
-                            ? img
-                            : `https://luckytang-server.onrender.com${img.startsWith('/') ? img : `/${img}`}`
-                        }
+                        src={src}
                         alt={`이벤트 이미지 ${i + 1}`}
                         className="event-image"
                       />
@@ -116,14 +138,11 @@ const PromotionDetail = () => {
                 </div>
               </td>
             </tr>
-            {/* ✅ 이미지 아래 content 표시 */}
             <tr>
               <th>내용</th>
               <td>
                 <div className="event-content">
-                  {promotion.content && promotion.content.trim()
-                    ? promotion.content
-                    : '-'}
+                  {promotion.content && promotion.content.trim() ? promotion.content : '-'}
                 </div>
               </td>
             </tr>

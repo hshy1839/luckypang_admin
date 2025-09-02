@@ -25,7 +25,7 @@ const Coupon = () => {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await axios.get('https://luckytang-server.onrender.com/api/coupons', {
+            const response = await axios.get('http://localhost:7778/api/coupons', {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -69,7 +69,7 @@ const Coupon = () => {
             const token = localStorage.getItem('token');
             if (!token) return;
             const response = await axios.put(
-                `https://luckytang-server.onrender.com/api/coupon/${id}`,
+                `http://localhost:7778/api/coupon/${id}`,
                 { isActive },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -89,7 +89,7 @@ const Coupon = () => {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await axios.delete(`https://luckytang-server.onrender.com/api/coupon/${id}`, {
+            const response = await axios.delete(`http://localhost:7778/api/coupon/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (response.data.success) {

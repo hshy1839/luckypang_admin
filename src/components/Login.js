@@ -18,7 +18,7 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch('https://luckytang-server.onrender.com/api/users/loginAdmin', {
+      const response = await fetch('http://localhost:7778/api/users/loginAdmin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),

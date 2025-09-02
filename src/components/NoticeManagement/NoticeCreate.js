@@ -1,59 +1,69 @@
+// src/components/NoticeManagement/NoticeCreate.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../css/NoticeManagement/NoticeCreate.css';
 
+const API_BASE = 'http://localhost:7778';
+
 const NoticeCreate = () => {
   const [title, setTitle] = useState('');
-  const [noticeImage, setNoticeImage] = useState(null);
-  const [noticeImagePreview, setNoticeImagePreview] = useState(null);
+  const [noticeImages, setNoticeImages] = useState([]);               // 여러 장 지원
+  const [noticeImagePreviews, setNoticeImagePreviews] = useState([]); // 미리보기 배열
   const [content, setContent] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleNoticeImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setNoticeImage(file);
-      const previewUrl = URL.createObjectURL(file);
-      setNoticeImagePreview(previewUrl);
-    }
+    const files = Array.from(e.target.files || []);
+    setNoticeImages(files);
+
+    // 미리보기 URL 생성
+    const previews = files.map((f) => URL.createObjectURL(f));
+    setNoticeImagePreviews(previews);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!title || !content) {
-      alert('모든 필드를 입력해주세요.');
+      alert('제목과 내용을 입력해주세요.');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('로그인이 필요합니다.');
       return;
     }
 
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('noticeImage', noticeImage);
-
-    const token = localStorage.getItem('token');
+    formData.append('title', title.trim());
+    formData.append('content', content.trim());
+    // 서버 라우터가 upload.fields([{ name: 'noticeImage', maxCount: 10 }]) 이므로
+    // 같은 필드명으로 여러 번 append
+    noticeImages.forEach((file) => formData.append('noticeImage', file));
 
     try {
-      const response = await axios.post(
-        'https://luckytang-server.onrender.com/api/notice',
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      setSubmitting(true);
+      const response = await axios.post(`${API_BASE}/api/notice`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // multipart는 브라우저가 boundary를 자동으로 넣으므로 명시만 해주면 됩니다.
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-      if (response.status === 200) {
+      if (response.data?.success) {
         alert('공지사항이 성공적으로 등록되었습니다.');
         navigate('/notice');
       } else {
-        alert('공지사항 등록 실패: ' + response.data.message);
+        alert('공지사항 등록 실패: ' + (response.data?.message || '알 수 없는 오류'));
       }
     } catch (error) {
-      console.error('공지사항 등록 실패:', error.message);
+      console.error('공지사항 등록 실패:', error);
       alert('공지사항 등록 중 오류가 발생했습니다.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -73,12 +83,13 @@ const NoticeCreate = () => {
             required
           />
         </div>
+
         <div className="notice-create-field">
           <label className="notice-create-label" htmlFor="content">내용</label>
-          <input
-            className="notice-create-input"
-            type="text"
+          <textarea
+            className="notice-create-textarea"
             id="content"
+            rows={6}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="내용을 입력하세요"
@@ -94,17 +105,25 @@ const NoticeCreate = () => {
             id="noticeImage"
             onChange={handleNoticeImageChange}
             accept="image/*"
+            multiple                                   // 여러 장 업로드 지원
           />
-          {noticeImage && (
-            <img
-              src={noticeImagePreview}
-              alt="공지사항 이미지 미리보기"
-              className="notice-create-image-preview"
-            />
+          {noticeImagePreviews?.length > 0 && (
+            <div className="notice-create-image-preview-grid">
+              {noticeImagePreviews.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  alt={`공지 이미지 미리보기 ${idx + 1}`}
+                  className="notice-create-image-preview"
+                />
+              ))}
+            </div>
           )}
         </div>
 
-        <button type="submit" className="notice-create-button">등록</button>
+        <button type="submit" className="notice-create-button" disabled={submitting}>
+          {submitting ? '등록 중...' : '등록'}
+        </button>
       </form>
     </div>
   );

@@ -11,7 +11,7 @@ const PrivacyTermEdit = () => {
   useEffect(() => {
     const fetchTerm = async () => {
       try {
-        const response = await axios.get('https://luckytang-server.onrender.com/api/terms/privacyTerm');
+        const response = await axios.get('http://localhost:7778/api/terms/privacyTerm');
         if (response.data?.success && response.data.term?.content) {
           setContent(response.data.term.content);
         }
@@ -29,7 +29,7 @@ const PrivacyTermEdit = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'https://luckytang-server.onrender.com/api/terms/privacyTerm', // ✅ 이 경로가 백엔드 라우터와 일치
+        'http://localhost:7778/api/terms/privacyTerm', // ✅ 이 경로가 백엔드 라우터와 일치
         { content },
         { headers: { Authorization: `Bearer ${token}` } }
       );

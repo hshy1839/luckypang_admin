@@ -17,7 +17,7 @@ const Points = () => {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await axios.get('https://luckytang-server.onrender.com/api/points', {
+        const response = await axios.get('http://localhost:7778/api/points', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
