@@ -53,6 +53,7 @@ import FaqCreate from './components/FAQ/FaqCreate';
 import FaqDetail from './components/FAQ/FaqDetail';
 import FaqUpdate from './components/FAQ/FaqUpdate';
 import PointManager from './components/PointManagement/PointManager';
+import CancelRequest from './components/BoxOrderManagement/CancelRequest';
 
 function App() {
   const [loading, setLoading] = useState(true); // 초기 로딩 상태를 true로 설정
@@ -122,12 +123,14 @@ function App() {
           <Route path="/box/create" element={<PrivateRoute><Header /><BoxCreate /></PrivateRoute>} />
           <Route path="/box/boxDetail/:id" element={<PrivateRoute><Header /><BoxDetail /></PrivateRoute>} />
           <Route path="/box/boxUpdate/:id" element={<PrivateRoute><Header /><BoxUpdate /></PrivateRoute>} />
+          
           {/* 포인트 관리 */}
           <Route path="/points" element={<PrivateRoute><Header /><Points /></PrivateRoute>} />
           <Route path="/points/pointManager/:id" element={<PrivateRoute><Header /><PointManager /></PrivateRoute>} />
           {/* 박스 주문 내역 */}
           <Route path="/boxorder" element={<PrivateRoute><Header /><BoxOrder /></PrivateRoute>} />
           <Route path="/boxorder/detail/:id" element={<PrivateRoute><Header /><BoxOrderDetail /></PrivateRoute>} />
+          <Route path="/box/cancel" element={<PrivateRoute><Header /><CancelRequest /></PrivateRoute>} />
           {/*언박싱 내역 */}
           <Route path="/unboxing" element={<PrivateRoute><Header /><Unboxing /></PrivateRoute>} />
           {/* 약관 */}

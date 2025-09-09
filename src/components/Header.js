@@ -82,6 +82,7 @@ const Header = () => {
               <Link to="/box" className='submenu-item-employee'>박스 목록</Link>
               <Link to="/boxorder" className='submenu-item-employee'>주문 내역</Link>
               <Link to="/unboxing" className='submenu-item-employee'>언박싱 내역</Link>
+              <Link to="/box/cancel" className='submenu-item-employee'>취소 신청</Link>
             </div>
           </div>
 

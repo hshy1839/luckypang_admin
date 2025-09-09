@@ -20,7 +20,7 @@ const BoxOrder = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:7778/api/orders', {
+      const res = await axios.get('http://localhost:7778/api/orders/all', {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success && Array.isArray(res.data.orders)) {

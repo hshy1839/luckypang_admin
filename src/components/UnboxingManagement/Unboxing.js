@@ -16,20 +16,46 @@ const UnboxingManagement = () => {
     fetchUnboxings();
   }, []);
 
-  const fetchUnboxings = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:7778/api/orders/unboxed/all', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res.data.success && Array.isArray(res.data.orders)) {
-        setUnboxings(res.data.orders);
-        setFiltered(res.data.orders);
-      }
-    } catch (err) {
-      console.error('언박싱 내역 불러오기 실패:', err);
+const fetchUnboxings = async () => {
+  try {
+    const raw = localStorage.getItem('token');
+    const token = raw && raw !== 'undefined' && raw !== 'null' ? raw : '';
+
+    const headers = {};
+    if (token) headers.Authorization = `Bearer ${token}`;
+
+    const url = 'http://localhost:7778/api/orders/unboxed/all';
+    const res = await axios.get(url, { headers });
+
+    console.log('[unboxed/all] status:', res.status, res.data);
+
+    if (res.data?.success && Array.isArray(res.data.orders)) {
+      setUnboxings(res.data.orders);
+      setFiltered(res.data.orders);
+    } else {
+      setUnboxings([]);
+      setFiltered([]);
     }
-  };
+  } catch (err) {
+    console.error(
+      '언박싱 내역 불러오기 실패:',
+      err?.response?.status,
+      err?.response?.data || err.message
+    );
+
+    // 400 등 실패 시 토큰 없이 재시도(옵션)
+    if (err?.response?.status === 400) {
+      try {
+        const res2 = await axios.get('http://localhost:7778/api/orders/unboxed/all');
+        if (res2.data?.success && Array.isArray(res2.data.orders)) {
+          setUnboxings(res2.data.orders);
+          setFiltered(res2.data.orders);
+        }
+      } catch (_) {}
+    }
+  }
+};
+
 
   const handleSearch = () => {
     if (!searchTerm) {
