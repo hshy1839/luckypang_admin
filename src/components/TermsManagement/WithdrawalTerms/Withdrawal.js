@@ -11,7 +11,7 @@ const Withdrawal = () => {
   useEffect(() => {
     const fetchTerm = async () => {
       try {
-        const response = await axios.get('https://luckytang-server.onrender.com/api/terms/withdrawal');
+        const response = await axios.get('http://13.124.224.246:7778/api/terms/withdrawal');
         if (response.data?.success && response.data.term?.content) {
           setContent(response.data.term.content);
         } else {

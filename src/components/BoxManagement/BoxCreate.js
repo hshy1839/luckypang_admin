@@ -135,7 +135,7 @@ const BoxCreate = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `https://luckytang-server.onrender.com/api/products/search?${searchType}=${productSearch}`,
+        `http://13.124.224.246:7778/api/products/search?${searchType}=${productSearch}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -182,7 +182,7 @@ const BoxCreate = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('https://luckytang-server.onrender.com/api/box', formData, {
+      const response = await axios.post('http://13.124.224.246:7778/api/box', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

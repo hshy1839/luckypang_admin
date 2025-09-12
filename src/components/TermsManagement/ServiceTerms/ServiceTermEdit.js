@@ -11,7 +11,7 @@ const ServiceTermEdit = () => {
   useEffect(() => {
     const fetchTerm = async () => {
       try {
-        const response = await axios.get('https://luckytang-server.onrender.com/api/terms/serviceTerm');
+        const response = await axios.get('http://13.124.224.246:7778/api/terms/serviceTerm');
         if (response.data?.success && response.data.term?.content) {
           setContent(response.data.term.content);
         }
@@ -29,7 +29,7 @@ const ServiceTermEdit = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'https://luckytang-server.onrender.com/api/terms/serviceTerm', // ✅ 이 경로가 백엔드 라우터와 일치
+        'http://13.124.224.246:7778/api/terms/serviceTerm', // ✅ 이 경로가 백엔드 라우터와 일치
         { content },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../../css/NoticeManagement/NoticeUpdate.css';
 
-const API_BASE = 'https://luckytang-server.onrender.com';
+const API_BASE = 'http://13.124.224.246:7778';
 
 // presigned/절대 URL이면 그대로, 아니면 S3 key를 /media/{key}로 변환
 function resolveImageSrc(value) {
