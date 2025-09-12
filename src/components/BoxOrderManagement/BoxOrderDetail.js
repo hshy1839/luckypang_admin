@@ -22,7 +22,7 @@ const BoxOrderDetail = () => {
     const fetchOrderDetail = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`http://13.124.224.246:7778/api/orders/${id}`, {
+        const res = await axios.get(`http://13.124.224.246:7778/api/order/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -43,7 +43,7 @@ const BoxOrderDetail = () => {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.patch(
-        `http://13.124.224.246:7778/api/order/${id}/tracking`,
+        `http://13.124.224.246:7778/api/orders/${id}/tracking`,
         { trackingNumber, trackingCompany },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -18,7 +18,7 @@ const ProductUpdate = () => {
   const [form, setForm] = useState({
     name: '',
     brand: '',
-    category: '',
+    category: '',               // ← 박스 이름 문자열로 사용
     probability: '',
     consumerPrice: '',
     price: '',
@@ -31,6 +31,9 @@ const ProductUpdate = () => {
     statusDetail: '판매중',
     refundProbability: '',
   });
+
+  // 박스 목록(카테고리로 사용): [{_id, name}]
+  const [boxOptions, setBoxOptions] = useState([]);
 
   // 대표 이미지(신규 업로드 파일 + 미리보기 URL)
   const [mainImage, setMainImage] = useState(null);
@@ -51,7 +54,25 @@ const ProductUpdate = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // 상세 불러오기
+  // 박스 목록 불러오기 (카테고리 옵션)
+  useEffect(() => {
+    const fetchBoxes = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get(`${API_BASE}/api/box`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.data?.success && Array.isArray(res.data.boxes)) {
+          setBoxOptions(res.data.boxes.map(b => ({ _id: b._id, name: b.name })));
+        }
+      } catch (e) {
+        console.error('박스 목록 불러오기 실패:', e);
+      }
+    };
+    fetchBoxes();
+  }, []);
+
+  // 상품 상세 불러오기
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -69,7 +90,7 @@ const ProductUpdate = () => {
             ...prev,
             name: p.name || '',
             brand: p.brand || '',
-            category: p.category || '',
+            category: p.category || '',            // ← 서버 저장된 문자열 그대로
             probability: p.probability ?? '',
             consumerPrice: p.consumerPrice ?? '',
             price: p.price ?? '',
@@ -202,7 +223,6 @@ const ProductUpdate = () => {
     // 리스트에서 다시 키/프리뷰/파일 배열을 재구성
     const nextInitialKeys = [];
     const nextInitialUrls = [];
-    const nextAddedFiles = [];
     const nextAddedPreviews = [];
 
     reordered.forEach(item => {
@@ -210,16 +230,11 @@ const ProductUpdate = () => {
         nextInitialKeys.push(item.key);
         nextInitialUrls.push(item.url);
       } else {
-        // fileIndex를 신뢰하지 않고 현재 additionalPreviews의 URL로 매칭
-        // 여기서는 item.url이 현재 추가 프리뷰의 값이므로 그대로 push
         nextAddedPreviews.push(item.url);
-        // 파일은 url 매칭이 어려우니, 같은 순서로 유지되도록 기존 additionalImages에서 재구성
-        // 간단히: 현재 nextAddedPreviews 길이에 맞게 기존 additionalImages 순서를 따라간다
       }
     });
 
-    // 추가 파일 배열은 기존 additionalImages의 순서를 유지한 채, nextAddedPreviews 길이에 맞게 앞에서부터 자른다.
-    // (미세한 순서 동기화를 완벽히 하려면 url↔file을 매핑 보존하는 구조로 더 정교화할 수 있음)
+    // 추가 파일 배열은 기존 순서를 유지한 채, nextAddedPreviews 길이에 맞게 앞에서부터 자름
     const flatAdded = [...additionalImages];
     const rebuiltFiles = flatAdded.slice(0, nextAddedPreviews.length);
 
@@ -252,10 +267,6 @@ const ProductUpdate = () => {
     if (initialAdditionalImageKeys.length > 0) {
       initialAdditionalImageKeys.forEach(key => fd.append('initialAdditionalImages', key));
       fd.append('retainAdditionalImages', 'true');
-    } else {
-      // 기존을 모두 제거하고 신규로만 구성하고 싶다면:
-      // fd.append('retainAdditionalImages', 'false');
-      // 여기서는 빈 유지목록이면 서버가 알아서 판단하도록 생략
     }
 
     try {
@@ -311,8 +322,13 @@ const ProductUpdate = () => {
           <label>카테고리</label>
           <select name="category" value={form.category} onChange={handleInputChange} required>
             <option value="" disabled hidden>선택하세요</option>
-            <option value="5,000원 박스">5,000원 박스</option>
-            <option value="10,000원 박스">10,000원 박스</option>
+            {boxOptions.map(b => (
+              <option key={b._id} value={b.name}>{b.name}</option>
+            ))}
+            {/* 저장된 카테고리가 현재 박스 목록에 없을 때 안전장치 */}
+            {!boxOptions.find(b => b.name === form.category) && form.category && (
+              <option value={form.category}>{form.category} (이전값)</option>
+            )}
           </select>
         </div>
 

@@ -111,20 +111,45 @@ const BoxDetail = () => {
               day: '2-digit',
             })}</td></tr>
          
-            <tr>
+    <tr>
   <th>등록 상품</th>
   <td>
-    <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-      {box.products?.map((item, idx) => (
-        <li key={idx} style={{ marginBottom: '6px' }}>
-          <strong>{item.product?.name}</strong>
-          {item.product?.brand && ` / ${item.product.brand}`}
-          {' '}– 확률: {item.probability}%
-        </li>
-      ))}
-    </ul>
+    {(!box.products || box.products.length === 0) ? (
+      <div style={{ color: '#888' }}>등록된 상품이 없습니다.</div>
+    ) : (
+      <div className="box-products-wrap">
+        <table className="box-products-table">
+          <thead>
+            <tr>
+              <th style={{ width: 70 }}>번호</th>
+              <th>상품명</th>
+              <th style={{ width: 220 }}>브랜드</th>
+              <th style={{ width: 140, textAlign: 'right' }}>확률(%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {box.products.map((item, idx) => {
+              const name = item.product?.name || '-';
+              const brand = item.product?.brand || '-';
+              const prob = Number(item.probability ?? 0);
+              const probText = Number.isFinite(prob) ? prob.toFixed(2) : '0.00';
+              return (
+                <tr key={item.product?._id || idx}>
+                  <td>{idx + 1}</td>
+                  <td className="ellipsis">{name}</td>
+                  <td className="ellipsis">{brand}</td>
+                  <td style={{ textAlign: 'right' }}>{probText}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+
+        </table>
+      </div>
+    )}
   </td>
 </tr>
+
             <tr><th>등록일</th><td>{new Date(box.createdAt).toLocaleString()}</td></tr>
           </tbody>
         </table>

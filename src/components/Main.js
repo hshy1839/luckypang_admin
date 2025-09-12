@@ -46,7 +46,7 @@ const Main = () => {
           axios.get('http://13.124.224.246:7778/api/products/allProduct', {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get('http://13.124.224.246:7778/api/orders', {
+          axios.get('http://13.124.224.246:7778/api/orders/all', {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);

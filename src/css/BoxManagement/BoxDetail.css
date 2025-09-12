@@ -83,6 +83,59 @@
     background-color: #c82333;
   }
   
+  .box-products-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* 기본 테이블 스타일 */
+.box-products-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px; /* 컬럼이 너무 좁아지지 않게 */
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.box-products-table thead th {
+  background: #f8fafc;
+  color: #111827;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.box-products-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+  color: #111827;
+}
+
+.box-products-table tbody tr:nth-child(odd) td {
+  background: #fcfcfd;
+}
+
+.box-products-table tfoot td {
+  padding: 12px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+/* 긴 텍스트 말줄임 처리 */
+.box-products-table .ellipsis {
+  max-width: 420px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
   @media (max-width: 900px) {
     .box-detail-container {
       padding: 20px;
