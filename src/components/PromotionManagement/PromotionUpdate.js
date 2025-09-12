@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import '../../css/PromotionManagement/PromotionUpdate.css';
 
-const API_BASE = 'http://localhost:7778';
+const API_BASE = 'http://13.124.224.246:7778';
 
 // presigned/절대 URL이면 그대로, 아니면 S3 key를 /media/{key}로 변환
 function resolveImageSrc(value) {

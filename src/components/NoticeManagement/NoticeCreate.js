@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../css/NoticeManagement/NoticeCreate.css';
 
-const API_BASE = 'http://localhost:7778';
+const API_BASE = 'http://13.124.224.246:7778';
 
 const NoticeCreate = () => {
   const [title, setTitle] = useState('');

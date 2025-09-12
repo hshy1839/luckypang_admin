@@ -8,7 +8,7 @@ import { saveAs } from 'file-saver';
 import '../../css/ProductManagement/ProductDetail.css';
 
 // ✅ 고정 URL (CRA + 로컬 개발)
-const API_BASE = 'http://localhost:7778';
+const API_BASE = 'http://13.124.224.246:7778';
 
 // key가 오면 /media/{key} 로 보여주기 (백엔드 프록시 필요)
 function resolveImageSrc(value) {

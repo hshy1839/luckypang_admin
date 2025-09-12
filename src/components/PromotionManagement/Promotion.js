@@ -24,7 +24,7 @@ const Promotion = () => {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await axios.get('http://localhost:7778/api/promotion/read', {
+            const response = await axios.get('http://13.124.224.246:7778/api/promotion/read', {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -68,7 +68,7 @@ const Promotion = () => {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await axios.delete(`http://localhost:7778/api/promotion/delete/${id}`, {
+            const response = await axios.delete(`http://13.124.224.246:7778/api/promotion/delete/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 

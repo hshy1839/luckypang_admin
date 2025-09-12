@@ -5,7 +5,7 @@ import '../../css/BoxOrderManagement/BoxOrder.css';
 import Header from '../Header';
 import * as XLSX from 'xlsx';
 
-const API_BASE = 'http://localhost:7778';
+const API_BASE = 'http://13.124.224.246:7778';
 
 const CancelRequest = () => {
   const [orders, setOrders] = useState([]);             
