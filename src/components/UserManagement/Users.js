@@ -35,7 +35,7 @@ const Users = () => {
           setLoading(false);
           return;
         }
-        const response = await axios.get('http://13.124.224.246:7778/api/users/userinfo', {
+        const response = await axios.get('https://luckytang-server.onrender.com/api/users/userinfo', {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -136,7 +136,7 @@ const Users = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://13.124.224.246:7778/api/users/userinfo/${id}`,
+        `https://luckytang-server.onrender.com/api/users/userinfo/${id}`,
         { is_active: true },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -152,7 +152,7 @@ const Users = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://13.124.224.246:7778/api/users/userinfo/${id}`,
+        `https://luckytang-server.onrender.com/api/users/userinfo/${id}`,
         { is_active: false },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -168,7 +168,7 @@ const Users = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.delete(
-        `http://13.124.224.246:7778/api/users/userinfo/${id}`,
+        `https://luckytang-server.onrender.com/api/users/userinfo/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setUsers(prev => prev.filter(u => u._id !== id));

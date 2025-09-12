@@ -24,7 +24,7 @@ const fetchUnboxings = async () => {
     const headers = {};
     if (token) headers.Authorization = `Bearer ${token}`;
 
-    const url = 'http://13.124.224.246:7778/api/orders/unboxed/all';
+    const url = 'https://luckytang-server.onrender.com/api/orders/unboxed/all';
     const res = await axios.get(url, { headers });
 
     console.log('[unboxed/all] status:', res.status, res.data);
@@ -46,7 +46,7 @@ const fetchUnboxings = async () => {
     // 400 등 실패 시 토큰 없이 재시도(옵션)
     if (err?.response?.status === 400) {
       try {
-        const res2 = await axios.get('http://13.124.224.246:7778/api/orders/unboxed/all');
+        const res2 = await axios.get('https://luckytang-server.onrender.com/api/orders/unboxed/all');
         if (res2.data?.success && Array.isArray(res2.data.orders)) {
           setUnboxings(res2.data.orders);
           setFiltered(res2.data.orders);

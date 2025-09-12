@@ -4,7 +4,7 @@ import * as XLSX from 'xlsx';
 import axios from 'axios';
 
 export default function ProductExcelImport({
-  apiBase = 'http://13.124.224.246:7778',
+  apiBase = 'https://luckytang-server.onrender.com',
   createPath = '/api/products/productCreate',
   onDone,
 }) {

@@ -5,7 +5,7 @@ import axios from 'axios';
 import Header from '../Header';
 import '../../css/NoticeManagement/NoticeDetail.css';
 
-const API_BASE = 'http://13.124.224.246:7778';
+const API_BASE = 'https://luckytang-server.onrender.com';
 
 // key가 오면 /media/{key}로 프록시(백엔드 프록시 라우트 필요). 프리사인/절대 URL이면 그대로 사용.
 function resolveImageSrc(value) {

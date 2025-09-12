@@ -36,7 +36,7 @@ const EventCreate = () => {
 
     try {
       const response = await axios.post(
-        'http://13.124.224.246:7778/api/event',
+        'https://luckytang-server.onrender.com/api/event',
         formData,
         {
           headers: {

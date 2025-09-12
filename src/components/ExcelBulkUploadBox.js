@@ -1,7 +1,7 @@
 // src/api/products.bulkUpload.js
 import axios from 'axios';
 
-const API_BASE = 'http://13.124.224.246:7778';
+const API_BASE = 'https://luckytang-server.onrender.com';
 
 const getAuthHeaders = () => {
   const raw = localStorage.getItem('token');
